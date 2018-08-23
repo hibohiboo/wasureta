@@ -1,0 +1,16 @@
+version: '3'
+services:
+  # ビルドツール
+  webpack:
+    build: ./webpack
+    volumes:
+      - ./config/webpack/.babelrc:/app/.babelrc
+      - ./config/webpack/tsconfig.json:/app/tsconfig.json
+      - ./config/webpack/webpack.config.js:/app/webpack.config.js
+      - ../src/:/app/src
+      - ../public:/app/dist
+    environment:
+      - NODE_ENV=develop
+    command: [npm, run, dev-server]
+    ports:
+      -  8080:8080
