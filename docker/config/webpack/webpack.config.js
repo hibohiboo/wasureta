@@ -111,6 +111,15 @@ module.exports = {
   ],
   serve: {
     content: opts.dest,
+    // dockerのコンテナ上でサーバを動かすときは以下の設定で全ての接続を受け入れる
+    host:"0.0.0.0",
+    port: 8080, 
     open: true
+  },
+  // vagrantの仕様でポーリングしないとファイルの変更を感知できない
+  watchOptions: {
+    aggregateTimeout: 300,
+    // ５秒毎にポーリング
+    poll: 5000
   }
 }
