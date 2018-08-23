@@ -113,8 +113,26 @@ module.exports = {
     content: opts.dest,
     // dockerのコンテナ上でサーバを動かすときは以下の設定で全ての接続を受け入れる
     host:"0.0.0.0",
-    port: 8080, 
+    port: 8000, 
     open: true
+  },
+  
+  // 開発サーバの設定
+  devServer: {
+    // // public/index.htmlをデフォルトのホームとする
+    // contentBase: './public',
+    // // バンドルしたファイルを/assets/js/フォルダに出力したものとする。
+    // publicPath: "/assets/js/",
+    // インラインモード
+    inline: true,
+    // 8080番ポートで起動
+    port: 8080,
+    // dockerのコンテナ上でサーバを動かすときは以下の設定で全ての接続を受け入れる
+    host:"0.0.0.0",
+    // hot loadを有効にする
+    hot: true,
+    // ログレベルをinfoに
+    clientLogLevel: "info",
   },
   // vagrantの仕様でポーリングしないとファイルの変更を感知できない
   watchOptions: {
