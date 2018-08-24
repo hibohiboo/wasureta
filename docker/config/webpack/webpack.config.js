@@ -15,6 +15,7 @@ const extensionConversions = {
   pug: 'html',
   sass: 'css',
   js: 'js',
+  ts: 'js'
 }
 
 const files = {}
