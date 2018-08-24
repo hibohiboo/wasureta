@@ -103,6 +103,9 @@ module.exports = {
       }
     ]
   },
+  externals: {
+    jquery: 'jQuery'
+  },
   plugins: [
     new ExtractTextPlugin('[name]'),
     new CopyWebpackPlugin(
