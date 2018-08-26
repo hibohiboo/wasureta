@@ -23,3 +23,14 @@ services:
     environment:
       - SHELL=/bin/bash
     command: [npm, run, watch]
+  # デプロイツール
+  firebase:
+    build: ./firebase
+    env_file: .env
+    volumes:
+      - ../app/public:/app/public
+      - ../app/.firebaserc:/app/.firebaserc
+      - ../app/firebase.json:/app/firebase.json
+    ports:
+      - 5000:5000
+      - 9005:9005
