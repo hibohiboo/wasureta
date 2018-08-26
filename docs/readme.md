@@ -1,7 +1,9 @@
 ## 履歴
 
-
+### 開発環境作成
 [pug, typescript設定時点](https://github.com/hibohiboo/wasureta/tree/c826b63b3a90cfd7c81b3183f94d6ba193185184)  
+
+### デプロイ設定
 
 ./bin/firebase-login-token-generate.shを使ってトークンを作成して.envファイルに以下の形式で保存
 
@@ -12,6 +14,9 @@ FIREBASE_TOKEN=生成したトークン
 ./bin/firebase-deploy.shでデプロイ
 
 https://wasureta-d6b34.firebaseapp.com/
+
+
+[pug, typescript設定時点](https://github.com/hibohiboo/wasureta/tree/8df5438e5affb5c3c2339d2b2c81723f81ae22e6)  
 
 ## 参考
 
