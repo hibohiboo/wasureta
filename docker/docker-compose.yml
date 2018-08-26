@@ -8,9 +8,18 @@ services:
       - ./config/webpack/tsconfig.json:/app/tsconfig.json
       - ./config/webpack/webpack.config.js:/app/webpack.config.js
       - ../src/:/app/src
-      - ../public:/app/dist
+      - ../app/public:/app/dist
     environment:
       - NODE_ENV=develop
     command: [npm, run, dev-server]
     ports:
       -  8080:8080
+  # htmlテンプレートエンジン
+  pug:
+    build: ./pug
+    volumes:
+      - ../src/templates:/app/src
+      - ../app/public:/app/dist
+    environment:
+      - SHELL=/bin/bash
+    command: [npm, run, watch]
