@@ -1,11 +1,18 @@
+- 
+  var linklist=[
+    {"link":"/", "text": "トップページ"}, 
+    {"link":"/rulebook.html", "text": "ルールブック"},
+  ]
 nav.light-blue.lighten-1(role='navigation')
   .nav-wrapper.container
-    a#logo-container.brand-logo(href='#') Logo
+    a#logo-container.brand-logo(href='/') 廃棄世界漂流サバイバルTRPG
     ul.right.hide-on-med-and-down
-      li
-        a(href='#') Navbar Link
+      each obj in linklist
+        li
+          a(href=obj.link)= obj.text
     ul#nav-mobile.sidenav
-      li
-        a(href='#') Navbar Link
+      each obj in linklist
+        li
+          a(href=obj.link)= obj.text
     a.sidenav-trigger(href='#', data-target='nav-mobile')
       i.material-icons menu
