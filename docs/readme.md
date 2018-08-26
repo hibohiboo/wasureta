@@ -16,7 +16,15 @@ FIREBASE_TOKEN=生成したトークン
 https://wasureta-d6b34.firebaseapp.com/
 
 
-[pug, typescript設定時点](https://github.com/hibohiboo/wasureta/tree/8df5438e5affb5c3c2339d2b2c81723f81ae22e6)  
+[デプロイ設定](https://github.com/hibohiboo/wasureta/tree/8df5438e5affb5c3c2339d2b2c81723f81ae22e6)  
+
+### GA導入
+
+[参考][*9]
+
+[GA導入](https://github.com/hibohiboo/wasureta/tree/97c9d30c15815e4389f8a62d7c63cdeac93481ad)  
+
+
 
 ## 参考
 
@@ -37,4 +45,5 @@ https://wasureta-d6b34.firebaseapp.com/
 [*6]:https://ics.media/entry/12140
 [*7]:https://qiita.com/clockmaker/items/8620cf6bd99d810dbf2a
 [*8]:https://github.com/toduq/webpack-template
+[*9]:https://www.leadplus.net/blog/google-tag-manager.html
 
