@@ -7,12 +7,11 @@ html(lang='ja')
     include meta_common
     block meta
       meta(name='og:type', content="game") 
-    // CSS
+    //- CSS
     link(href='https://fonts.googleapis.com/icon?family=Material+Icons', rel='stylesheet')
     link(href='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css', rel='stylesheet')
     link(href='/assets/css/style.css', type='text/css', rel='stylesheet', media='screen,projection')
     block css
-  body
-    block body
-      include body
-    block footjs
+    include google-tag-head
+  block body
+    include body
