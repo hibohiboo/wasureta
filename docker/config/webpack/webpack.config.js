@@ -109,7 +109,12 @@ module.exports = {
             use: jsLoader
           }
         ]
-      }
+      },
+      {
+        test:    /\.elm$/,
+        exclude: [/elm-stuff/, /node_modules/],
+        loader:  'elm-webpack-loader?verbose=true&warn=true',
+      },
     ]
   },
   externals: {
