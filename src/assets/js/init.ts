@@ -4,6 +4,6 @@ import * as jQuery from 'jquery';
   $(function(){
 
     $('.sidenav').sidenav();
-
+    
   }); // end of document ready
 })(jQuery); // end of jQuery name space

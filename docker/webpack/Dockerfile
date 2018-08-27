@@ -59,9 +59,9 @@ RUN yarn add --dev json-loader
 RUN yarn add --dev yaml-loader
 
 # ライブラリ追加
-RUN yarn add  lodash
-RUN yarn add  eventemitter3
-RUN yarn add  firebase
+RUN yarn add lodash
+RUN yarn add eventemitter3
+RUN yarn add firebase
 RUN yarn add globule
 
 # 追加: (後で移動)
@@ -82,3 +82,26 @@ RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"dev-server\": \"webpack-dev-server
 RUN yarn add materialize-css@next
 RUN yarn add @types/jquery
 RUN yarn add @types/materialize-css
+
+# elm
+RUN yarn add elm@0.18
+RUN yarn add --dev elm-test
+RUN yarn add --dev elm-format@exp
+RUN yarn add --dev elm-webpack-loader
+
+RUN yarn elm package install elm-lang/core -y
+RUN yarn elm package install elm-lang/mouse -y
+RUN yarn elm package install elm-lang/keyboard -y
+RUN yarn elm package install elm-lang/dom -y 
+RUN yarn elm package install elm-lang/http -y
+RUN yarn elm package install elm-lang/navigation -y
+RUN yarn elm package install evancz/url-parser -y
+RUN yarn elm package install NoRedInk/elm-decode-pipeline -y
+
+ADD ./ensure_libsysconfcpus.sh /app/ensure_libsysconfcpus.sh
+ADD ./replace_elm_make.sh /app/replace_elm_make.sh
+RUN /app/ensure_libsysconfcpus.sh
+RUN /app/replace_elm_make.sh
+# https://medium.com/webpack/webpack-4-migration-guide-for-plugins-loaders-20a79b927202
+# deprecateなthis.optionsをthis.queryに置き換え。
+RUN sed -i -e "s/this\.options/this\.query/g" /app/node_modules/elm-webpack-loader/index.js

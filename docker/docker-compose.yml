@@ -9,6 +9,8 @@ services:
       - ./config/webpack/webpack.config.js:/app/webpack.config.js
       - ../src/:/app/src
       - ../app/public:/app/dist
+      - elmcache1:/app/elm-stuff
+      - elmcache2:/app/tests/elm-stuff
     environment:
       - NODE_ENV=develop
     command: [npm, run, dev-server]
@@ -34,3 +36,6 @@ services:
     ports:
       - 5000:5000
       - 9005:9005
+volumes:
+  elmcache1: # 名前付きボリューム名
+  elmcache2:
