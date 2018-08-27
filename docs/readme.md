@@ -24,7 +24,11 @@ https://wasureta-d6b34.firebaseapp.com/
 
 [GA導入](https://github.com/hibohiboo/wasureta/tree/97c9d30c15815e4389f8a62d7c63cdeac93481ad)  
 
+### elm 導入
 
+[参考][*10]
+[参考][*11]
+[elm導入](https://github.com/hibohiboo/wasureta/tree/06c13daf973ad13233a1e1132baa789609ca4501)  
 
 ## 参考
 
@@ -46,4 +50,5 @@ https://wasureta-d6b34.firebaseapp.com/
 [*7]:https://qiita.com/clockmaker/items/8620cf6bd99d810dbf2a
 [*8]:https://github.com/toduq/webpack-template
 [*9]:https://www.leadplus.net/blog/google-tag-manager.html
-
+[*10]:http://pastelinc.hatenablog.com/entry/2018/08/04/114836
+[*11]:https://qiita.com/hibohiboo/items/88e0578121079e0671a3

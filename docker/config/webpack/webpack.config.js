@@ -13,16 +13,16 @@ const opts = {
 }
 
 const extensionConversions = {
-  // pug: 'html',
   sass: 'css',
   js: 'js',
-  ts: 'js'
+  ts: 'js',
+  elm: 'js'
 }
 
 const files = {}
 Object.keys(extensionConversions).forEach(from => {
   const to = extensionConversions[from]
-  globule.find([`assets/**/*.${from}`, `!assets/**/_*.${from}`], {cwd: opts.src}).forEach(filename => {
+  globule.find([`assets/**/*.${from}`, `!assets/**/_*.${from}`, `!assets/**/*.elm`], {cwd: opts.src}).forEach(filename => {
     files[filename.replace(new RegExp(`.${from}$`, 'i'), `.${to}`)] = path.join(opts.src, filename)
   })
 })
@@ -68,16 +68,6 @@ module.exports = {
   mode: process.env.ENV ? 'development' : 'production',
   module: {
     rules: [
-      // {
-      //   test: /\.pug$/,
-      //   use: ExtractTextPlugin.extract(pugLoader),
-      //   // use: [{
-      //   //   loader: 'apply-loader'
-      //   // }, {
-      //   //   loader: 'pug-loader',
-      //   //   options: { pretty: true }
-      //   // }]
-      // },
       {
         test: /\.ts$/,
         use: 'ts-loader'
