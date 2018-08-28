@@ -33,20 +33,45 @@ block main
       h4 名前の設定
       p 名前を決定する。
 
-      h4 能力値の決定
-      p 肉体、敏捷、知覚、精神の4つの能力値を持つ。
+      h4 【能力値】の決定
+      p 【肉体】、【敏捷】、【知覚】、【精神】の4つの能力値を持つ。
       p 20点を割り振ること。最低値は１とする。
-      dl 
-        dt 肉体
-        dd 力の強さ、持久力など体の強さ
-        dt 敏捷
-        dd 機敏さ、器用さなど体の使い方
-        dt 知覚
-        dd 視力、聴力、観察力など五感の鋭さ
-        dt 精神
-        dd 閃き、知識、精神的タフさなど頭の使い方
+      dl.collection
+        dt 
+          i.material-icons favorite
+          | 【肉体】
+        dd 力の強さ、持久力など。体の強さ
+        dt 
+          i.material-icons directions_run
+          | 【敏捷】
+        dd 機敏さ、器用さなど。体の使い方
+        dt 
+          i.material-icons visibility
+          | 【知覚】
+        dd 視力、聴力、観察力など。五感の鋭さ
+        dt 
+          i.material-icons search
+          | 【精神】
+        dd 閃き、知識、精神的タフさなど。頭の使い方
+      
       h4 アクションの取得
       p 以下の4つの基本アクションを取得している。
+      
+      .row
+        +actionCard('調べる', 'assets/images/tn.png', 'visibility【知覚】', 'オブジェクト1つの調査を行う。')
+        .col.s12.m6.l3
+          .card
+            .card-image
+              img(src='assets/images/tn.png' alt="調べる")
+            .card-content
+              span.card-title.black-text 調べる
+              ul.collection.with-header
+                li.collection-header
+                  i.material-icons visibility 【知覚】
+                li.collection-item 
+                | オブジェクト1つの調査を行う。
+
+
 
       //- 判定
       include includes/rulebook/check

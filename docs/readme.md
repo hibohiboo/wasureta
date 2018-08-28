@@ -30,6 +30,14 @@ https://wasureta-d6b34.firebaseapp.com/
 [参考][*11]
 [elm導入](https://github.com/hibohiboo/wasureta/tree/06c13daf973ad13233a1e1132baa789609ca4501)  
 
+
+## 利用したい技術
+
+[ティラノスクリプト](http://strikeworks.jp/)
+[ねこ卓](http://seesaawiki.jp/trpg_tool_guide/d/%A4%CD%A4%B3%C2%EE%B3%B5%CD%D7)
+[Udonarium](http://seesaawiki.jp/trpg_tool_guide/d/Udonarium%b3%b5%cd%d7)
+[ココフォリア](http://seesaawiki.jp/trpg_tool_guide/d/%a5%b3%a5%b3%a5%d5%a5%a9%a5%ea%a5%a2%b3%b5%cd%d7)
+
 ## 参考
 
 [SPA ではない Webpack 設定サンプル][*1]  

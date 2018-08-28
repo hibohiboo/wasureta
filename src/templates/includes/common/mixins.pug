@@ -1,0 +1,11 @@
+mixin actionCard(name, image, param, text)
+    .col.s12.m6.l3
+      .card
+        .card-image
+          img(src=image alt=name)
+        .card-content
+          span.card-title.black-text= name
+          ul.collection.with-header
+            li.collection-header
+              i.material-icons= param
+            li.collection-item= text
