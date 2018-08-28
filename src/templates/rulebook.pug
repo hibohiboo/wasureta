@@ -38,40 +38,26 @@ block main
       p 20点を割り振ること。最低値は１とする。
       dl.collection
         dt 
-          i.material-icons favorite
-          | 【肉体】
+          i.material-icons= param_str
         dd 力の強さ、持久力など。体の強さ
         dt 
-          i.material-icons directions_run
-          | 【敏捷】
+          i.material-icons= param_dex
         dd 機敏さ、器用さなど。体の使い方
         dt 
-          i.material-icons visibility
-          | 【知覚】
+          i.material-icons= param_sen
         dd 視力、聴力、観察力など。五感の鋭さ
         dt 
-          i.material-icons search
-          | 【精神】
+          i.material-icons= param_min
         dd 閃き、知識、精神的タフさなど。頭の使い方
       
       h4 アクションの取得
-      p 以下の4つの基本アクションを取得している。
-      
+      p キャラクターは以下の4つの基本アクションを取得している。
+      p アクションの成否を求める必要があるときは、各アクションに指定された【能力値】での判定を行う。
       .row
-        +actionCard('調べる', 'assets/images/tn.png', 'visibility【知覚】', 'オブジェクト1つの調査を行う。')
-        .col.s12.m6.l3
-          .card
-            .card-image
-              img(src='assets/images/tn.png' alt="調べる")
-            .card-content
-              span.card-title.black-text 調べる
-              ul.collection.with-header
-                li.collection-header
-                  i.material-icons visibility 【知覚】
-                li.collection-item 
-                | オブジェクト1つの調査を行う。
-
-
+        +actionCard('殴る', 'assets/images/break.png', param_str, 'たたく。 壊す。')
+        +actionCard('走る', 'assets/images/run.png', param_dex, '逃げる。急ぐ。')
+        +actionCard('調べる', 'assets/images/search.png', param_sen, '隠されたものを見つける。観察する。')
+        +actionCard('考える', 'assets/images/think.png', param_min, '閃く。本を調べる。')
 
       //- 判定
       include includes/rulebook/check
