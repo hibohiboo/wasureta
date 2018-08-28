@@ -19,5 +19,5 @@ RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"pug\": \"pug -o \/app\/dist -P \",
 RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"build-pug\": \"npm run build-pug:index \&\& npm run build-pug:characters\",/g" /app/package.json
 RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"build-pug:index\": \"pug -o \/app\/dist -P \/app\/src\/*.pug \",/g" /app/package.json
 RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"build-pug:characters\": \"pug -o \/app\/dist\/characters -P \/app\/src\/characters\/*.pug \",/g" /app/package.json
-RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"watch\": \"chokidar '\/app\/src\/*.pug' -p -c 'npm run build-pug' \",/g" /app/package.json
+RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"watch\": \"chokidar '\/app\/**\/*.pug' -p -c 'npm run build-pug' \",/g" /app/package.json
 

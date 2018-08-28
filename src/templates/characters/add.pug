@@ -1,0 +1,37 @@
+extends ../includes/common/layout
+//- _layout.pugをベースに作成
+
+//- タイトルのブロック
+block title
+  //- 最初にこのページで使用する変数を読み込む
+  include ../includes/index/variables
+  title= title
+
+block main
+  .container
+    h1.center 新規作成
+    .row
+      form.col.s12
+        .row
+          .input-field.col.s6
+            input#first_name.validate(placeholder='入力してください', type='text')
+            label(for='first_name') 名前
+        .row
+          .input-field.col.s2
+            input#strength.validate(placeholder='Placeholder', type='number', min="1", value="5")
+            label(for='strength') 肉体
+          .input-field.col.s2
+            input#dexterity.validate(placeholder='Placeholder', type='number', min="1", value="5")
+            label(for='dexterity') 敏捷
+          .input-field.col.s2
+            input#sense.validate(placeholder='Placeholder', type='number', min="1", value="5")
+            label(for='sense') 感覚
+          .input-field.col.s2
+            input#mind.validate(placeholder='Placeholder', type='number', min="1", value="5")
+            label(for='mind') 精神
+        .row
+          .input-field.col.s12
+            input#password.validate(type='password')
+            label(for='password') Password
+            span.helper-text(data-error='wrong', data-success='right') パスワードを設定しなかった場合は誰でも編集できます。
+

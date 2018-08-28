@@ -3,19 +3,19 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
-    <title>廃棄世界漂流サバイバルTRPG - ルールブック</title>
+    <title>廃棄世界漂流サバイバルTRPG</title>
     <meta name="description" content="これは、棄てられた世界の残骸の積もったゴミ箱の中で生き延びる人々を演じるゲームです。プレイヤーの分身であるキャラクター（以下、PC)は、砂漠に島のように浮かんだ世界の名残の中でサバイバルを行います。">
-    <meta name="keywords" content="TRPG,廃墟,砂漠,孤独,文明崩壊,サバイバル,漂流,ルールブック">
+    <meta name="keywords" content="TRPG,廃墟,砂漠,孤独,文明崩壊,サバイバル,漂流">
     <meta name="robots">
     <meta name="og:sitename" content="廃棄世界TRPG">
     <meta name="og:locale" content="ja_JP">
-    <meta name="og:title" content="廃棄世界漂流サバイバルTRPG - ルールブック">
+    <meta name="og:title" content="廃棄世界漂流サバイバルTRPG">
     <meta name="og:description" content="これは、棄てられた世界の残骸の積もったゴミ箱の中で生き延びる人々を演じるゲームです。プレイヤーの分身であるキャラクター（以下、PC)は、砂漠に島のように浮かんだ世界の名残の中でサバイバルを行います。">
     <meta name="og:url" content="https://wasureta-d1775.firebaseapp.com/wasureta/">
     <meta name="twitter:site" content="@hibohiboo">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:creator" content="@hibohiboo">
-    <meta name="twitter:title" content="廃棄世界漂流サバイバルTRPG - ルールブック">
+    <meta name="twitter:title" content="廃棄世界漂流サバイバルTRPG">
     <meta name="twitter:description" content="これは、棄てられた世界の残骸の積もったゴミ箱の中で生き延びる人々を演じるゲームです。プレイヤーの分身であるキャラクター（以下、PC)は、砂漠に島のように浮かんだ世界の名残の中でサバイバルを行います。">
     <meta name="og:type" content="game">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -50,45 +50,40 @@
       </div>
     </nav>
     <div class="container">
-      <h1 class="center">基本ルールブック</h1>
-      <div class="section">
-        <h2>プレイヤーセクション</h2>
-        <h3>はじめに</h3>
-        <p>
-           砂漠の瓦礫の中で目が覚める。意識を失う前とまるで違う世界。
-          これは夢ではないのだと、喉の渇きが訴えていた。
-        </p>
-        <p>
-          本ゲームは、崩壊後の世界を生きることを選んだ人々を演じるゲームである。プレイヤーの分身であるキャラクター（以下、PC)は、壊れた世界の処分場に放り出される。
-          生き残れ。
-        </p>
-        <h4>かっこの種類</h4>
-        <ul> 
-          <li>【】：キャラクターの能力値を表す。</li>
-          <li>《》：アクションを表す。</li>
-          <li>＜＞：このゲームで使われる固有名詞を表す。</li>
-        </ul>
-        <h4>端数の処理</h4>
-        <p>このゲームでは、割り算を行う場合常に端数は切り上げとする。</p>
-        <h3>キャラクター</h3>
-        <p>キャラクターの作成について。</p>
-        <h4>名前の設定</h4>
-        <p>名前を決定する。</p>
-        <h4>能力値の決定</h4>
-        <p>肉体、敏捷、知覚、精神の4つの能力値を持つ。</p>
-        <p>20点を割り振ること。最低値は１とする。</p>
-        <dl> 
-          <dt>肉体</dt>
-          <dd>力の強さ、持久力など体の強さ</dd>
-          <dt>敏捷</dt>
-          <dd>機敏さ、器用さなど体の使い方</dd>
-          <dt>知覚</dt>
-          <dd>視力、聴力、観察力など五感の鋭さ</dd>
-          <dt>精神</dt>
-          <dd>閃き、知識、精神的タフさなど頭の使い方</dd>
-        </dl>
-        <h4>アクションの取得</h4>
-        <p>以下の4つの基本アクションを取得している。</p>
+      <h1 class="center">新規作成</h1>
+      <div class="row">
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s6">
+              <input class="validate" id="first_name" placeholder="入力してください" type="text">
+              <label for="first_name">名前</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s2">
+              <input class="validate" id="strength" placeholder="Placeholder" type="number" min="1" value="5">
+              <label for="strength">肉体</label>
+            </div>
+            <div class="input-field col s2">
+              <input class="validate" id="dexterity" placeholder="Placeholder" type="number" min="1" value="5">
+              <label for="dexterity">敏捷</label>
+            </div>
+            <div class="input-field col s2">
+              <input class="validate" id="sense" placeholder="Placeholder" type="number" min="1" value="5">
+              <label for="sense">感覚</label>
+            </div>
+            <div class="input-field col s2">
+              <input class="validate" id="mind" placeholder="Placeholder" type="number" min="1" value="5">
+              <label for="mind">精神</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input class="validate" id="password" type="password">
+              <label for="password">Password</label><span class="helper-text" data-error="wrong" data-success="right">パスワードを設定しなかった場合は誰でも編集できます。</span>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
     <footer class="page-footer orange">
