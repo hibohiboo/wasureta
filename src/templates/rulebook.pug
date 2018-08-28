@@ -39,10 +39,11 @@ block main
       p 名前を決定する。
 
       h4 【能力値】の決定
-      p キャラクターは【肉体】、【敏捷】、【知覚】、【精神】、【幸運】の5つの能力値を持つ。
+      p キャラクターは【肉体】、【敏捷】、【知覚】、【精神】、【幸運】、【？？？】の6つの能力値を持つ。
       p 【能力値】は判定に使用される。
       p 【肉体】、【敏捷】、【知覚】、【精神】の4つの能力値に20点を割り振ること。最低値は１とする。
       p 【幸運】の能力値は5である。
+      p 【？？？】はプレイヤーが自由に名前を付けることができる。【？？？】の能力値は10である。
       dl.collection
         dt 
           i.material-icons= param_str
@@ -59,6 +60,9 @@ block main
         dt 
           i.material-icons= param_luck
         dd 幸運。
+        dt 
+          i.material-icons cached 【？？？】
+        dd 自由項目。交渉、推理、胆力、歌、演技力など。
 
       h4 《アクション》の取得
       p 《アクション》はそのキャラクターが取れる行動を指す。
@@ -72,7 +76,8 @@ block main
         +actionCard('走る', 'assets/images/run.png', param_dex, '逃げる。急ぐ。')
         +actionCard('調べる', 'assets/images/search.png', param_sense, '見つける。観察。')
         +actionCard('考える', 'assets/images/think.png', param_mind, '閃く。本を調べる。')
-
+      .row
+        +actionCard('???', 'assets/images/puzzle.png', 'cached 【？？？】', '自由項目。セッションに一度だけ、使用できそうな状況でGMが許可すれば使用できる。名推理、ネゴシエーションなど。')
       //- 判定
       include includes/rulebook/check
       //- セッションの流れ
