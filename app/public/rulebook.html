@@ -58,25 +58,33 @@
            砂漠の瓦礫の中で目が覚める。意識を失う前とまるで違う世界。
           これは夢ではないのだと、喉の渇きが訴えていた。
         </p>
+        <p>本ゲームは、崩壊後の世界を生きることを選んだ人々を演じるゲームである。</p>
         <p>
-          本ゲームは、崩壊後の世界を生きることを選んだ人々を演じるゲームである。プレイヤーの分身であるキャラクター（以下、PC)は、壊れた世界の処分場に放り出される。
-          生き残れ。
-        </p>
-        <h4>かっこの種類</h4>
-        <ul> 
-          <li>【】：キャラクターの能力値を表す。</li>
-          <li>《》：アクションを表す。</li>
-          <li>＜＞：このゲームで使われる固有名詞を表す。</li>
-        </ul>
-        <h4>端数の処理</h4>
-        <p>このゲームでは、割り算を行う場合常に端数は切り上げとする。</p>
+          プレイヤーの分身であるキャラクター（以下、PC)は、壊れた世界の処分場に放り出される。生き残れ。</p>
+        <div class="collection with-header">
+          <div class="collection-header">用語</div>
+          <div class="collection-item">ndx：n面ダイスをx個ふるという意味。</div>
+          <div class="collection-item">1d10： 10面ダイス１つを振る。10面ダイスは1から10までの値をとるものとする。</div>
+        </div>
+        <div class="collection with-header">
+          <div class="collection-header"> かっこの種類</div>
+          <div class="collection-item">【】：キャラクターの能力値を表す。</div>
+          <div class="collection-item">《》：アクションを表す。</div>
+          <div class="collection-item">＜＞：このゲームで使われる固有名詞を表す。</div>
+        </div>
+        <div class="collection with-header">
+          <div class="collection-header"> その他</div>
+          <div class="collection-item">端数の処理：このゲームでは、割り算を行う場合常に端数は切り上げとする。</div>
+        </div>
         <h3>キャラクター</h3>
         <p>キャラクターの作成について。</p>
         <h4>名前の設定</h4>
         <p>名前を決定する。</p>
         <h4>【能力値】の決定</h4>
-        <p>【肉体】、【敏捷】、【知覚】、【精神】の4つの能力値を持つ。</p>
-        <p>20点を割り振ること。最低値は１とする。</p>
+        <p>キャラクターは【肉体】、【敏捷】、【知覚】、【精神】、【幸運】の5つの能力値を持つ。</p>
+        <p>【能力値】は判定に使用される。</p>
+        <p>【肉体】、【敏捷】、【知覚】、【精神】の4つの能力値に20点を割り振ること。最低値は１とする。</p>
+        <p>【幸運】の能力値は5である。</p>
         <dl class="collection">
           <dt> <i class="material-icons">favorite【肉体】</i></dt>
           <dd>力の強さ、持久力など。体の強さ</dd>
@@ -86,10 +94,16 @@
           <dd>視力、聴力、観察力など。五感の鋭さ</dd>
           <dt> <i class="material-icons">search 【精神】</i></dt>
           <dd>閃き、知識、精神的タフさなど。頭の使い方</dd>
+          <dt> <i class="material-icons">toys 【幸運】</i></dt>
+          <dd>幸運。</dd>
         </dl>
-        <h4>アクションの取得</h4>
-        <p>キャラクターは以下の4つの基本アクションを取得している。</p>
-        <p>アクションの成否を求める必要があるときは、各アクションに指定された【能力値】での判定を行う。</p>
+        <h4>《アクション》の取得</h4>
+        <p>《アクション》はそのキャラクターが取れる行動を指す。</p>
+        <p>＜ダメージ＞を受けると《アクション》を１つ＜使用不可＞状態にする。</p>
+        <p>全ての《アクション》が＜使用不可＞になったキャラクターは＜行動不能＞状態になる。</p>
+        <h5>《基本アクション》の取得</h5>
+        <p>キャラクターは以下の4つの《基本アクション》を取得している。</p>
+        <p>《アクション》の成否を求める必要があるときは、各《アクション》に指定された【能力値】での判定を行う。</p>
         <div class="row">
             <div class="col s12 m6 l3">
               <div class="card">
@@ -119,7 +133,7 @@
                 <div class="card-content"><span class="card-title black-text">調べる</span>
                   <ul class="collection with-header">
                     <li class="collection-header"><i class="material-icons">visibility 【知覚】</i></li>
-                    <li class="collection-item">隠されたものを見つける。観察する。</li>
+                    <li class="collection-item">見つける。観察。</li>
                   </ul>
                 </div>
               </div>
@@ -135,6 +149,40 @@
                 </div>
               </div>
             </div>
+        </div>
+        <h3>判定</h3>
+        <ul class="collection with-header">
+          <li class="collection-header">判定を行うべきとき</li>
+          <li class="collection-item">キャラクターが成功するか失敗するか分からない行動をとったとき</li>
+          <li class="collection-item">ダイスを振ったほうが盛り上がるとき</li>
+        </ul>
+        <h4> </h4>
+        <ul class="collection with-header">
+          <li class="collection-header">判定を行うべきではないとき</li>
+          <li class="collection-item">キャラクターの行動が確実に成功するとき</li>
+          <li class="collection-item">キャラクターの行動が確実に失敗するとき</li>
+          <li class="collection-item">キャラクターの行動の成否が問題にならないとき</li>
+          <li class="collection-item">ダイスを振っても盛り上がらないとき</li>
+        </ul>
+        <h4>判定方法</h4>
+        <p>判定は以下の順番で行う</p>
+        <h5>1. 【能力値】の決定</h5>
+        <p>判定に使用する【能力値】を決定する。</p>
+        <p>（例） 「その道をしらべたいのなら、 <i class="material-icons">visibility 【知覚】</i>での判定になるね」 </p>
+        <h5>2. 成功率の決定</h5>
+        <p>修正を加え、判定の成功率を決定する。</p>
+        <p>
+          (例) 「この道は、壊れた瓦礫が積みあがっていて見通しがわるい。-2の修正だ。君の<i class="material-icons">visibility 【知覚】</i>は5だね。成功率は3だよ。」</p>
+        <h5>3. ダイスロール</h5>
+        <p>成功率が決定したら、1d10を振る。1d10は1から10までの値をとる。</p>
+        <p>出目が成功率以下であれば成功となる。</p>
+        <div class="row">
+          <div class="col l4">
+            <ul class="collection l4">
+              <li class="collection-item"><span class="green badge white-text">成功</span>出目 <= 成功率</li>
+              <li class="collection-item"><span class="red badge white-text">失敗</span>出目 > 成功率</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
