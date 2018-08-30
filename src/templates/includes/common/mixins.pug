@@ -9,3 +9,7 @@ mixin actionCard(name, image, param, text)
             li.collection-header
               i.material-icons= param
             li.collection-item= text
+mixin checkbox(name, value, checked)
+  label
+    input(type="checkbox", value=value, checked=checked) 
+    span= name

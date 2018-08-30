@@ -41,7 +41,7 @@
         <ul class="right hide-on-med-and-down">
           <li><a href="/">トップページ</a></li>
           <li><a href="/about.html">このサイトについて</a></li>
-          <li><span id="loginUser">test</span></li>
+          <li><span id="loginUser"> </span></li>
         </ul>
         <ul class="sidenav" id="nav-mobile">
           <li><a href="/">トップページ</a></li>
@@ -76,179 +76,236 @@
           <div class="collection-header"> その他</div>
           <div class="collection-item">端数の処理：このゲームでは、割り算を行う場合常に端数は切り上げとする。</div>
         </div>
+        <h3>レギュレーション</h3>
+        <div class="regulation">
+            <label>
+              <input type="checkbox" value="base-regulation" checked="checked"><span>基本</span>
+            </label>
+            <label>
+              <input type="checkbox" value="survival-regulation"><span>サバイバル</span>
+            </label>
+        </div>
+        <dl class="collection">
+          <dt>基本</dt>
+          <dd>本ゲームを遊ぶ上で、基本となるルール。 <span class="base-regulation">表示中</span></dd>
+          <dt>サバイバル</dt>
+          <dd>極限状況で生き延びることに重点を置いたルール。 <span class="survival-regulation">表示中</span></dd>
+        </dl>
         <h3>キャラクター</h3>
         <p>キャラクターの作成について。</p>
         <h4>名前の設定</h4>
-        <p>名前を決定する。</p>
-        <h4>【能力値】の決定</h4>
-        <p>キャラクターは【肉体】、【敏捷】、【知覚】、【精神】、【幸運】、【？？？】の6つの能力値を持つ。</p>
-        <p>【能力値】は判定に使用される。</p>
-        <p>【肉体】、【敏捷】、【知覚】、【精神】の4つの能力値に20点を割り振ること。最低値は１とする。</p>
-        <p>【幸運】の能力値は5である。</p>
-        <p>【？？？】はプレイヤーが自由に名前を付けることができる。【？？？】の能力値は10である。</p>
-        <dl class="collection">
-          <dt> <i class="material-icons">favorite【肉体】</i></dt>
-          <dd>力の強さ、持久力など。体の強さ</dd>
-          <dt> <i class="material-icons">directions_run 【敏捷】</i></dt>
-          <dd>機敏さ、器用さなど。体の使い方</dd>
-          <dt> <i class="material-icons">visibility 【知覚】</i></dt>
-          <dd>視力、聴力、観察力など。五感の鋭さ</dd>
-          <dt> <i class="material-icons">search 【精神】</i></dt>
-          <dd>閃き、知識、精神的タフさなど。頭の使い方</dd>
-          <dt> <i class="material-icons">toys 【幸運】</i></dt>
-          <dd>幸運。</dd>
-          <dt> <i class="material-icons">cached 【？？？】</i></dt>
-          <dd>自由項目。交渉、推理、胆力、歌、演技力など。</dd>
-        </dl>
+        <div class="base-regulation">
+          <p>名前を決定する。</p>
+          <h4>【能力値】の決定</h4>
+          <p>キャラクターは【肉体】、【敏捷】、【知覚】、【精神】、【幸運】、【？？？】の6つの能力値を持つ。</p>
+          <p>【能力値】は判定に使用される。</p>
+          <p>【肉体】、【敏捷】、【知覚】、【精神】の4つの能力値に20点を割り振ること。最低値は１とする。</p>
+          <p>【幸運】の能力値は5である。</p>
+          <p>【？？？】はプレイヤーが自由に名前を付けることができる。【？？？】の能力値は10である。</p>
+          <dl class="collection">
+            <dt> <i class="material-icons">favorite【肉体】</i></dt>
+            <dd>力の強さ、持久力など。体の強さ</dd>
+            <dt> <i class="material-icons">directions_run 【敏捷】</i></dt>
+            <dd>機敏さ、器用さなど。体の使い方</dd>
+            <dt> <i class="material-icons">visibility 【知覚】</i></dt>
+            <dd>視力、聴力、観察力など。五感の鋭さ</dd>
+            <dt> <i class="material-icons">search 【精神】</i></dt>
+            <dd>閃き、知識、精神的タフさなど。頭の使い方</dd>
+            <dt> <i class="material-icons">toys 【幸運】</i></dt>
+            <dd>幸運。</dd>
+            <dt> <i class="material-icons">cached 【？？？】</i></dt>
+            <dd>自由項目。交渉、推理、胆力、歌、演技力など。</dd>
+          </dl>
+        </div>
         <h4>《アクション》の取得</h4>
-        <p>《アクション》はそのキャラクターが取れる行動を指す。</p>
-        <p>＜ダメージ＞を受けると《アクション》を１つ＜使用不可＞状態にする。</p>
-        <p>全ての《アクション》が＜使用不可＞になったキャラクターは＜行動不能＞状態になる。</p>
-        <h5>《基本アクション》の取得</h5>
-        <p>キャラクターは以下の4つの《基本アクション》を取得している。</p>
-        <p>《アクション》の成否を求める必要があるときは、各《アクション》に指定された【能力値】での判定を行う。</p>
-        <div class="row">
-            <div class="col s12 m6 l3">
-              <div class="card">
-                <div class="card-image"><img src="assets/images/break.png" alt="殴る"></div>
-                <div class="card-content"><span class="card-title black-text">殴る</span>
-                  <ul class="collection with-header">
-                    <li class="collection-header"><i class="material-icons">favorite【肉体】</i></li>
-                    <li class="collection-item">たたく。 壊す。</li>
-                  </ul>
+        <div class="base-regulation">
+          <p>《アクション》はそのキャラクターが取れる行動を指す。</p>
+          <p>＜ダメージ＞を受けると《アクション》を１つ＜使用不可＞状態にする。</p>
+          <p>全ての《アクション》が＜使用不可＞になったキャラクターは＜行動不能＞状態になる。</p>
+          <h5>《基本アクション》の取得</h5>
+          <p>キャラクターは以下の4つの《基本アクション》を取得している。</p>
+          <p>《アクション》の成否を求める必要があるときは、各《アクション》に指定された【能力値】での判定を行う。</p>
+          <div class="row">
+              <div class="col s12 m6 l3">
+                <div class="card">
+                  <div class="card-image"><img src="assets/images/break.png" alt="殴る"></div>
+                  <div class="card-content"><span class="card-title black-text">殴る</span>
+                    <ul class="collection with-header">
+                      <li class="collection-header"><i class="material-icons">favorite【肉体】</i></li>
+                      <li class="collection-item">たたく。 壊す。</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col s12 m6 l3">
-              <div class="card">
-                <div class="card-image"><img src="assets/images/run.png" alt="走る"></div>
-                <div class="card-content"><span class="card-title black-text">走る</span>
-                  <ul class="collection with-header">
-                    <li class="collection-header"><i class="material-icons">directions_run 【敏捷】</i></li>
-                    <li class="collection-item">逃げる。急ぐ。</li>
-                  </ul>
+              <div class="col s12 m6 l3">
+                <div class="card">
+                  <div class="card-image"><img src="assets/images/run.png" alt="走る"></div>
+                  <div class="card-content"><span class="card-title black-text">走る</span>
+                    <ul class="collection with-header">
+                      <li class="collection-header"><i class="material-icons">directions_run 【敏捷】</i></li>
+                      <li class="collection-item">逃げる。急ぐ。</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col s12 m6 l3">
-              <div class="card">
-                <div class="card-image"><img src="assets/images/search.png" alt="調べる"></div>
-                <div class="card-content"><span class="card-title black-text">調べる</span>
-                  <ul class="collection with-header">
-                    <li class="collection-header"><i class="material-icons">visibility 【知覚】</i></li>
-                    <li class="collection-item">見つける。観察。</li>
-                  </ul>
+              <div class="col s12 m6 l3">
+                <div class="card">
+                  <div class="card-image"><img src="assets/images/search.png" alt="調べる"></div>
+                  <div class="card-content"><span class="card-title black-text">調べる</span>
+                    <ul class="collection with-header">
+                      <li class="collection-header"><i class="material-icons">visibility 【知覚】</i></li>
+                      <li class="collection-item">見つける。観察。</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col s12 m6 l3">
-              <div class="card">
-                <div class="card-image"><img src="assets/images/think.png" alt="考える"></div>
-                <div class="card-content"><span class="card-title black-text">考える</span>
-                  <ul class="collection with-header">
-                    <li class="collection-header"><i class="material-icons">search 【精神】</i></li>
-                    <li class="collection-item">閃く。本を調べる。</li>
-                  </ul>
+              <div class="col s12 m6 l3">
+                <div class="card">
+                  <div class="card-image"><img src="assets/images/think.png" alt="考える"></div>
+                  <div class="card-content"><span class="card-title black-text">考える</span>
+                    <ul class="collection with-header">
+                      <li class="collection-header"><i class="material-icons">search 【精神】</i></li>
+                      <li class="collection-item">閃く。本を調べる。</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col s12 m6 l3">
-              <div class="card">
-                <div class="card-image"><img src="assets/images/puzzle.png" alt="???"></div>
-                <div class="card-content"><span class="card-title black-text">???</span>
-                  <ul class="collection with-header">
-                    <li class="collection-header"><i class="material-icons">cached 【？？？】</i></li>
-                    <li class="collection-item">自由項目。セッションに一度だけ、使用できそうな状況でGMが許可すれば使用できる。名推理、ネゴシエーションなど。</li>
-                  </ul>
+          </div>
+          <div class="row">
+              <div class="col s12 m6 l3">
+                <div class="card">
+                  <div class="card-image"><img src="assets/images/puzzle.png" alt="???"></div>
+                  <div class="card-content"><span class="card-title black-text">???</span>
+                    <ul class="collection with-header">
+                      <li class="collection-header"><i class="material-icons">cached 【？？？】</i></li>
+                      <li class="collection-item">自由項目。セッションに一度だけ、使用できそうな状況でGMが許可すれば使用できる。名推理、ネゴシエーションなど。</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
-            </div>
-        </div>
-        <h3>判定</h3>
-        <ul class="collection with-header">
-          <li class="collection-header">判定を行うべきとき</li>
-          <li class="collection-item">キャラクターが成功するか失敗するか分からない行動をとったとき</li>
-          <li class="collection-item">ダイスを振ったほうが盛り上がるとき</li>
-        </ul>
-        <h4> </h4>
-        <ul class="collection with-header">
-          <li class="collection-header">判定を行うべきではないとき</li>
-          <li class="collection-item">キャラクターの行動が確実に成功するとき</li>
-          <li class="collection-item">キャラクターの行動が確実に失敗するとき</li>
-          <li class="collection-item">キャラクターの行動の成否が問題にならないとき</li>
-          <li class="collection-item">ダイスを振っても盛り上がらないとき</li>
-        </ul>
-        <h4>判定方法</h4>
-        <p>判定は以下の順番で行う</p>
-        <h5>1. 【能力値】の決定</h5>
-        <p>判定に使用する【能力値】を決定する。</p>
-        <p>（例） 「その道に《調べる》のアクションを行うなら、 <i class="material-icons">visibility 【知覚】</i>での判定になるね」 </p>
-        <h5>2. 成功率の決定</h5>
-        <p>修正を加え、判定の成功率を決定する。</p>
-        <p>
-          (例) 「この道は、壊れた瓦礫が積みあがっていて見通しがわるい。-2の修正だ。君の<i class="material-icons">visibility 【知覚】</i>は5だね。成功率は3だよ。」</p>
-        <h5>3. ダイスロール</h5>
-        <p>成功率が決定したら、1d10を振る。1d10は1から10までの値をとる。</p>
-        <p>出目が成功率以下であれば成功となる。</p>
-        <div class="row">
-          <div class="col l4">
-            <ul class="collection l4">
-              <li class="collection-item"><span class="green badge white-text">成功</span>出目 <= 成功率</li>
-              <li class="collection-item"><span class="red badge white-text">失敗</span>出目 > 成功率</li>
-            </ul>
           </div>
         </div>
+        <h3>判定</h3>
+        <div class="base-regulation">
+          <ul class="collection with-header">
+            <li class="collection-header">判定を行うべきとき</li>
+            <li class="collection-item">キャラクターが成功するか失敗するか分からない行動をとったとき</li>
+            <li class="collection-item">ダイスを振ったほうが盛り上がるとき</li>
+          </ul>
+          <h4> </h4>
+          <ul class="collection with-header">
+            <li class="collection-header">判定を行うべきではないとき</li>
+            <li class="collection-item">キャラクターの行動が確実に成功するとき</li>
+            <li class="collection-item">キャラクターの行動が確実に失敗するとき</li>
+            <li class="collection-item">キャラクターの行動の成否が問題にならないとき</li>
+            <li class="collection-item">ダイスを振っても盛り上がらないとき</li>
+          </ul>
+        </div>
+        <h4>判定方法</h4>
+        <div class="base-regulation">
+          <p>判定は以下の順番で行う</p>
+          <h5>1. 【能力値】の決定</h5>
+          <p>判定に使用する【能力値】を決定する。</p>
+          <p>（例） 「その道に《調べる》のアクションを行うなら、 <i class="material-icons">visibility 【知覚】</i>での判定になるね」 </p>
+          <h5>2. 成功率の決定</h5>
+          <p>修正を加え、判定の成功率を決定する。</p>
+          <p>成功率が10以上となった場合はダイスを振らずに自動成功としてよい。</p>
+          <p>
+            (例) 「この道は、壊れた瓦礫が積みあがっていて見通しがわるい。-2の修正だ。君の<i class="material-icons">visibility 【知覚】</i>は5だね。成功率は3だよ。」</p>
+          <h5>3. ダイスロール</h5>
+          <p>成功率が決定したら、1d10を振る。1d10は1から10までの値をとる。</p>
+          <p>出目が成功率以下であれば成功となる。</p>
+          <div class="row">
+            <div class="col l4">
+              <ul class="collection l4">
+                <li class="collection-item"><span class="green badge white-text">成功</span>出目 <= 成功率</li>
+                <li class="collection-item"><span class="red badge white-text">失敗</span>出目 > 成功率</li>
+              </ul>
+            </div>
+          </div>
+          <h4>成功度</h4>
+          <p>成功率から出目を引いた値が成功度となる。</p>
+          <p>(例) 成功率7のときに、出目は3であった。このとき、成功度は7-3で4となる。</p>
+          <p>ダイスを振らずに自動成功した場合の成功度は0となる。</p>
+        </div>
         <h3>セッション</h3>
-        <p>セッションは、いくつかのフェイズに分かれている。 各フェイズは順番に進行する。</p>
-        <ol>
-          <li>導入フェイズ</li>
-          <li>探索フェイズ</li>
-          <li>終了フェイズ</li>
-        </ol>
+        <div class="base-regulation">
+          <p>セッションは、いくつかのフェイズに分かれている。 各フェイズは順番に進行する。</p>
+          <ol>
+            <li>導入フェイズ</li>
+            <li>探索フェイズ</li>
+            <li>終了フェイズ</li>
+          </ol>
+        </div>
         <h4>サイクル</h4>
-        <p>このゲームでは、セッション中のプレイヤーの行動機会を均等にするために、 サイクルという概念を使用する。 </p>
-        <p>各キャラクターは未行動と行動済の状態をもつ。</p>
-        <p>全員が行動済となったらサイクルを終了する。</p>
-        <p>サイクル終了時の処理で未行動の状態に戻る。</p>
-        <p>一日は昼と夜の2サイクルである。</p>
+        <div class="base-regulation">
+          <p>このゲームでは、セッション中のプレイヤーの行動機会を均等にするために、 サイクルという概念を使用する。 </p>
+          <p>各キャラクターは未行動と行動済の状態をもつ。</p>
+          <p>全員が行動済となったらサイクルを終了する。</p>
+          <p>サイクル終了時の処理で未行動の状態に戻る。</p>
+          <p>一日は昼と夜の2サイクルである。</p>
+        </div>
         <h4>導入フェイズ</h4>
-        <p>導入フェイズではキャラクターの顔合わせと、状況の説明を行う。</p>
-        <p>水を手に入れないと死ぬこと、協力して進んだほうがよいことを理解してもらったら探索フェイズへと進む。</p>
+        <div class="base-regulation">
+          <p>導入フェイズではキャラクターの顔合わせと、状況の説明を行う。</p>
+        </div>
+        <div class="survival-regulation">
+          <p>水を手に入れないと死ぬこと、協力して進んだほうがよいことを理解してもらったら探索フェイズへと進む。</p>
+        </div>
         <h4>探索フェイズ</h4>
-        <p>探索フェイズではキャラクターたちが生き延びるための探索を行う。</p>
-        <p>セッションの終了条件を満たしたら終了フェイズに移行する。</p>
-        <p>探索フェイズは以下の流れで進行する。</p>
-        <h5>オブジェクト</h5>
-        <p>探索フェイズで描写されるあらゆるものは＜オブジェクト＞と呼ばれる。</p>
-        <p>キャラクターやアイテム、道や場所、イベントなどもすべて＜オブジェクト＞である。</p>
-        <ol>
-          <li>移動</li>
-          <li>エリアの描写</li>
-          <li>自由行動</li>
-          <li>終了処理</li>
-        </ol>
+        <div class="base-regulation">
+          <p>探索フェイズではキャラクターたちが生き延びるための探索を行う。</p>
+          <p>セッションの終了条件を満たしたら終了フェイズに移行する。</p>
+          <p>探索フェイズは以下の流れで進行する。</p>
+          <ol>
+            <li>移動</li>
+            <li>エリアの描写</li>
+            <li>自由行動</li>
+            <li>終了処理</li>
+          </ol>
+          <h5>オブジェクト</h5>
+          <p>探索フェイズで描写されるあらゆるものは＜オブジェクト＞と呼ばれる。</p>
+          <p>キャラクターやアイテム、道や場所、イベントなどもすべて＜オブジェクト＞である。</p>
+        </div>
         <h5>移動</h5>
-        <p>＜道＞を通って隣接するエリアに移動する。</p>
-        <p>《走る》のアクションが使用可能な場合、2エリアまでの移動が可能になる。</p>
-        <p>イベントオブジェクトが設置されている場合、その効果を解決する。</p>
-        <p>(例) 落石。修正0の《走る》アクションに失敗した場合、1の＜ダメージ＞。</p>
+        <div class="base-regulation">
+          <p>＜道＞を通って隣接するエリアに移動する。</p>
+          <p>《走る》のアクションが使用可能な場合、2エリアまでの移動が可能になる。</p>
+          <p>イベントオブジェクトが設置されている場合、その効果を解決する。</p>
+          <p>(例) 落石。修正0の《走る》アクションに失敗した場合、1の＜ダメージ＞。</p>
+        </div>
         <h5>エリアの描写</h5>
-        <p>エリアがどんな場所かの説明と、NPCとの遭遇などを行う。</p>
-        <p>最後に、エリアに存在する＜オブジェクト＞を説明すること。</p>
+        <div class="base-regulation">
+          <p>エリアがどんな場所かの説明と、NPCとの遭遇などを行う。</p>
+          <p>最後に、エリアに存在する＜オブジェクト＞を説明すること。</p>
+        </div>
         <h5>自由行動</h5>
-        <p>エリア内の＜オブジェクト＞を調べるなどする。</p>
-        <p>オブジェクトごとに基本の情報と、行える《アクション》、成功率が設定されている。</p>
-        <p>アクションの結果によって、あらたな＜オブジェクト＞が現れたり、情報やアイテムを得ることができる。</p>
-        <p>（例）「＜オブジェクト＞＜上に伸びる道＞と＜下に伸びる道＞がある。上に伸びる道は《調べる》のアクションが可能だ。成功率は10で、アクションを行ったら行動済みになるよ」</p>
-        <p>＜オブジェクト＞の効果で行動済みになるか、自分の意志で行動済みとなることができる。</p>
-        <p>全員が行動済みとなったら終了処理へ移動する。</p>
+        <div class="base-regulation">
+          <p>エリア内の＜オブジェクト＞を調べるなどする。</p>
+          <p>オブジェクトごとに基本の情報と、行える《アクション》、成功率が設定されている。</p>
+          <p>アクションの結果によって、あらたな＜オブジェクト＞が現れたり、情報やアイテムを得ることができる。</p>
+          <p>（例）「＜オブジェクト＞＜上に伸びる道＞と＜下に伸びる道＞がある。上に伸びる道は《調べる》のアクションが可能だ。成功率は10で、アクションを行ったら行動済みになるよ」</p>
+          <p>＜オブジェクト＞の効果で行動済みになるか、自分の意志で行動済みとなることができる。</p>
+          <p>全員が行動済みとなったら終了処理へ移動する。</p>
+        </div>
         <h5>終了処理</h5>
-        <p>全員未行動状態に戻る。</p>
-        <p>夜（偶数サイクル）の場合、その日に食事をしたか、水を飲んだかのチェックを行う。</p>
-        <p>水を飲んでいない場合、＜衰弱状態＞のレベルが1上がる。初期値は0である。＜衰弱状態＞のレベルが3になると＜行動不能＞となる。</p>
-        <p>食事をしていない場合、ダメージ1をうける。</p>
+        <div class="base-regulation">
+          <p>全員未行動状態に戻る。</p>
+        </div>
+        <div class="survival-regulation">
+          <p>夜（偶数サイクル）の場合、その日に食事をしたか、水を飲んだかのチェックを行う。</p>
+          <p>水を飲んでいない場合、＜衰弱状態＞のレベルが1上がる。初期値は0である。＜衰弱状態＞のレベルが3になると＜行動不能＞となる。</p>
+          <p>食事をしていない場合、ダメージ1をうける。</p>
+        </div>
+        <h4>終了フェイズ</h4>
+        <div class="base-regulation">
+          <p>終了フェイズでは、エピローグを行う。</p>
+          <p>エピローグが終了したら、経験点計算を行う。</p>
+        </div>
+        <div class="survival-regulation">
+          <p>十分な水と食料があれば＜衰弱状態＞のレベルを0に戻し、ダメージをすべて回復することができる。</p>
+          <p>水と食料が十分でない場合の処理については、作成中。</p>
+        </div>
       </div>
     </div>
     <footer class="page-footer orange">
@@ -259,9 +316,10 @@
             <p class="grey-text text-lighten-4">棄てられた世界が、虚無の砂へと還るまでに</p>
           </div>
           <div class="col l3 s12">
-            <h5 class="white-text">目次</h5>
+            <h5 class="white-text"> </h5>
             <ul>
-              <li><a class="white-text" href="./rulebook.html">ルールブック</a></li>
+              <li><a class="white-text" href="/agreement.html">利用規約</a></li>
+              <li><a class="white-text" href="/privacy-policy.html">プライバシーポリシー</a></li>
             </ul>
           </div>
           <div class="col l3 s12">
@@ -281,6 +339,8 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
     <script src="/assets/js/init.js"></script>
-    <script defer src="assets/js/login.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase.js"></script>
+    <script defer src="/assets/js/login.js"></script>
+    <script src="assets/js/rulebook.js"></script>
   </body>
 </html>

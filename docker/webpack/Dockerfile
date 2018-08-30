@@ -105,3 +105,5 @@ RUN /app/replace_elm_make.sh
 # https://medium.com/webpack/webpack-4-migration-guide-for-plugins-loaders-20a79b927202
 # deprecateなthis.optionsをthis.queryに置き換え。
 RUN sed -i -e "s/this\.options/this\.query/g" /app/node_modules/elm-webpack-loader/index.js
+RUN yarn add firebaseui
+RUN yarn add vue

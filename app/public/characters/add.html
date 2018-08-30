@@ -41,7 +41,7 @@
         <ul class="right hide-on-med-and-down">
           <li><a href="/">トップページ</a></li>
           <li><a href="/about.html">このサイトについて</a></li>
-          <li><span id="loginUser">test</span></li>
+          <li><span id="loginUser"> </span></li>
         </ul>
         <ul class="sidenav" id="nav-mobile">
           <li><a href="/">トップページ</a></li>
@@ -49,7 +49,7 @@
         </ul><a class="sidenav-trigger" href="#" data-target="nav-mobile"><i class="material-icons">menu</i></a>
       </div>
     </nav>
-    <div class="container">
+    <div class="container" id="editform">
       <h1 class="center">新規作成</h1>
       <div class="row">
         <form class="col s12">
@@ -61,20 +61,34 @@
           </div>
           <div class="row">
             <div class="input-field col s2">
-              <input class="validate" id="strength" placeholder="Placeholder" type="number" min="1" value="5">
+              <input class="validate" id="strength" placeholder="肉体" type="number" min="1" value="5"/>
               <label for="strength">肉体</label>
             </div>
             <div class="input-field col s2">
-              <input class="validate" id="dexterity" placeholder="Placeholder" type="number" min="1" value="5">
+              <input class="validate" id="dexterity" placeholder="敏捷" type="number" min="1" value="5"/>
               <label for="dexterity">敏捷</label>
             </div>
             <div class="input-field col s2">
-              <input class="validate" id="sense" placeholder="Placeholder" type="number" min="1" value="5">
+              <input class="validate" id="sense" placeholder="感覚" type="number" min="1" value="5"/>
               <label for="sense">感覚</label>
             </div>
             <div class="input-field col s2">
-              <input class="validate" id="mind" placeholder="Placeholder" type="number" min="1" value="5">
+              <input class="validate" id="mind" placeholder="精神" type="number" min="1" value="5"/>
               <label for="mind">精神</label>
+            </div>
+            <div class="input-field col s2">
+              <input class="validate" id="luck" placeholder="幸運" type="number" min="1" value="5" readonly>
+              <label for="luck">幸運</label>
+            </div>
+            <div class="input-field col s2">
+              <input class="validate" id="param_6" type="number" min="1" value="10" readonly>
+              <label for="param_6">{{param_six}}</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s6">
+              <input class="validate" v-model="param_six" type="text">
+              <label>任意能力</label>
             </div>
           </div>
           <div class="row">
@@ -94,9 +108,10 @@
             <p class="grey-text text-lighten-4">棄てられた世界が、虚無の砂へと還るまでに</p>
           </div>
           <div class="col l3 s12">
-            <h5 class="white-text">目次</h5>
+            <h5 class="white-text"> </h5>
             <ul>
-              <li><a class="white-text" href="./rulebook.html">ルールブック</a></li>
+              <li><a class="white-text" href="/agreement.html">利用規約</a></li>
+              <li><a class="white-text" href="/privacy-policy.html">プライバシーポリシー</a></li>
             </ul>
           </div>
           <div class="col l3 s12">
@@ -116,6 +131,9 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
     <script src="/assets/js/init.js"></script>
-    <script defer src="assets/js/login.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase.js"></script>
+    <script defer src="/assets/js/login.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <script src="/assets/js/characters/edit.js"></script>
   </body>
 </html>

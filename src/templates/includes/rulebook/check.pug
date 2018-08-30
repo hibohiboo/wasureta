@@ -1,39 +1,46 @@
 h3 判定
-ul.collection.with-header
-  li.collection-header 判定を行うべきとき
-  li.collection-item キャラクターが成功するか失敗するか分からない行動をとったとき
-  li.collection-item ダイスを振ったほうが盛り上がるとき
+.base-regulation
+  ul.collection.with-header
+    li.collection-header 判定を行うべきとき
+    li.collection-item キャラクターが成功するか失敗するか分からない行動をとったとき
+    li.collection-item ダイスを振ったほうが盛り上がるとき
 
-h4 
-ul.collection.with-header
-  li.collection-header 判定を行うべきではないとき
-  li.collection-item キャラクターの行動が確実に成功するとき
-  li.collection-item キャラクターの行動が確実に失敗するとき
-  li.collection-item キャラクターの行動の成否が問題にならないとき
-  li.collection-item ダイスを振っても盛り上がらないとき
+  h4 
+  ul.collection.with-header
+    li.collection-header 判定を行うべきではないとき
+    li.collection-item キャラクターの行動が確実に成功するとき
+    li.collection-item キャラクターの行動が確実に失敗するとき
+    li.collection-item キャラクターの行動の成否が問題にならないとき
+    li.collection-item ダイスを振っても盛り上がらないとき
 
 h4 判定方法
-p 判定は以下の順番で行う
-h5 1. 【能力値】の決定
-p 判定に使用する【能力値】を決定する。
-p （例） 「その道に《調べる》のアクションを行うなら、 
-  i.material-icons= param_sense
-  | での判定になるね」 
-h5 2. 成功率の決定
-p 修正を加え、判定の成功率を決定する。
-p (例) 「この道は、壊れた瓦礫が積みあがっていて見通しがわるい。
-  | -2の修正だ。君の
-  i.material-icons= param_sense
-  | は5だね。成功率は3だよ。」
-h5 3. ダイスロール
-p 成功率が決定したら、1d10を振る。1d10は1から10までの値をとる。
-p 出目が成功率以下であれば成功となる。
-.row
-  .col.l4
-    ul.collection.l4
-      li.collection-item
-        span.green.badge.white-text 成功
-        | 出目 <= 成功率
-      li.collection-item
-        span.red.badge.white-text 失敗
-        | 出目 > 成功率
+.base-regulation
+  p 判定は以下の順番で行う
+  h5 1. 【能力値】の決定
+  p 判定に使用する【能力値】を決定する。
+  p （例） 「その道に《調べる》のアクションを行うなら、 
+    i.material-icons= param_sense
+    | での判定になるね」 
+  h5 2. 成功率の決定
+  p 修正を加え、判定の成功率を決定する。
+  p 成功率が10以上となった場合はダイスを振らずに自動成功としてよい。
+  p (例) 「この道は、壊れた瓦礫が積みあがっていて見通しがわるい。
+    | -2の修正だ。君の
+    i.material-icons= param_sense
+    | は5だね。成功率は3だよ。」
+  h5 3. ダイスロール
+  p 成功率が決定したら、1d10を振る。1d10は1から10までの値をとる。
+  p 出目が成功率以下であれば成功となる。
+  .row
+    .col.l4
+      ul.collection.l4
+        li.collection-item
+          span.green.badge.white-text 成功
+          | 出目 <= 成功率
+        li.collection-item
+          span.red.badge.white-text 失敗
+          | 出目 > 成功率
+  h4 成功度
+  p 成功率から出目を引いた値が成功度となる。
+  p (例) 成功率7のときに、出目は3であった。このとき、成功度は7-3で4となる。
+  p ダイスを振らずに自動成功した場合の成功度は0となる。

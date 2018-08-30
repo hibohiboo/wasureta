@@ -1,5 +1,5 @@
 extends ../includes/common/layout
-//- _layout.pugをベースに作成
+
 
 //- タイトルのブロック
 block title
@@ -7,8 +7,19 @@ block title
   include ../includes/index/variables
   title= title
 
+block footjs
+  script(src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js")
+  script(src='/assets/js/characters/edit.js')
+
+//- block mainで使うスニペット
+
+mixin status(name, id)
+  .input-field.col.s2
+    input(id=id).validate(placeholder=name, type='number', min="1", value="5")
+    label(for=id)=name
+
 block main
-  .container
+  .container#editform
     h1.center 新規作成
     .row
       form.col.s12
@@ -17,18 +28,21 @@ block main
             input#first_name.validate(placeholder='入力してください', type='text')
             label(for='first_name') 名前
         .row
+          +status('肉体', 'strength')
+          +status('敏捷', 'dexterity')
+          +status('感覚', 'sense')
+          +status('精神', 'mind')
           .input-field.col.s2
-            input#strength.validate(placeholder='Placeholder', type='number', min="1", value="5")
-            label(for='strength') 肉体
+            input#luck.validate(placeholder='幸運', type='number', min="1", value="5", readonly)
+            label(for='luck') 幸運
           .input-field.col.s2
-            input#dexterity.validate(placeholder='Placeholder', type='number', min="1", value="5")
-            label(for='dexterity') 敏捷
-          .input-field.col.s2
-            input#sense.validate(placeholder='Placeholder', type='number', min="1", value="5")
-            label(for='sense') 感覚
-          .input-field.col.s2
-            input#mind.validate(placeholder='Placeholder', type='number', min="1", value="5")
-            label(for='mind') 精神
+            input#param_6.validate(type='number', min="1", value="10", readonly)
+            label(for='param_6') {{param_six}}
+        .row
+          .input-field.col.s6
+
+            input.validate(v-model="param_six", type="text")
+            label 任意能力
         .row
           .input-field.col.s12
             input#password.validate(type='password')

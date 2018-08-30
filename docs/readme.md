@@ -30,6 +30,14 @@ https://wasureta-d6b34.firebaseapp.com/
 [参考][*11]
 [elm導入](https://github.com/hibohiboo/wasureta/tree/06c13daf973ad13233a1e1132baa789609ca4501)  
 
+### mixin使用
+
+[mixin](https://github.com/hibohiboo/wasureta/tree/77f0e34b1669334e4bd2daad32c60129137f193b)  
+
+### firebaseでの認証
+[firebase認証](https://github.com/hibohiboo/wasureta/tree/12ce941e9131378f81151114b10f26b55e9c15ac)  
+
+
 
 ## 利用したい技術
 
@@ -37,6 +45,8 @@ https://wasureta-d6b34.firebaseapp.com/
 [ねこ卓](http://seesaawiki.jp/trpg_tool_guide/d/%A4%CD%A4%B3%C2%EE%B3%B5%CD%D7)
 [Udonarium](http://seesaawiki.jp/trpg_tool_guide/d/Udonarium%b3%b5%cd%d7)
 [ココフォリア](http://seesaawiki.jp/trpg_tool_guide/d/%a5%b3%a5%b3%a5%d5%a5%a9%a5%ea%a5%a2%b3%b5%cd%d7)
+[lotus](http://function.topaz.ne.jp/download/download.html)
+
 
 ## 参考
 
@@ -47,7 +57,7 @@ https://wasureta-d6b34.firebaseapp.com/
 [webpack4の注意点][*4]  
 [vue.js webpack4][*5]  
 [設定ファイル不要のwebpack 4で、BabelやTypeScriptのゼロコンフィグのビルド環境を作ってみる][*7]  
-
+[FIREBASE AUTHを使ったメール認証・TWITTER認証のサンプル (REACT版)][*12]
 
 [*1]:https://syon.github.io/refills/rid/1481295/
 [*2]:https://qiita.com/toduq/items/2e0b08bb722736d7968c
@@ -60,3 +70,4 @@ https://wasureta-d6b34.firebaseapp.com/
 [*9]:https://www.leadplus.net/blog/google-tag-manager.html
 [*10]:http://pastelinc.hatenablog.com/entry/2018/08/04/114836
 [*11]:https://qiita.com/hibohiboo/items/88e0578121079e0671a3
+[*12]:https://pigbo.co/posts/363

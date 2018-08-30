@@ -9,3 +9,7 @@
   padding: 0 15px; }
   .icon-block .material-icons {
     font-size: inherit; }
+
+.survival-regulation {
+  background-color: #98fb98;
+  display: none; }

@@ -66,6 +66,10 @@ module.exports = {
     path: opts.dest
   },
   mode: process.env.ENV ? 'development' : 'production',
+  // typescript の import User from './User'のように、拡張子を省略する設定
+  resolve: {
+    extensions: ['.ts', '.js', '.json', '.elm']
+  },
   module: {
     rules: [
       {
@@ -108,7 +112,10 @@ module.exports = {
     ]
   },
   externals: {
-    jquery: 'jQuery'
+    jquery: 'jQuery',
+    firebase: 'firebase',
+    firebaseui: 'firebaseui',
+    vue: 'Vue'
   },
   plugins: [
     new ExtractTextPlugin('[name]'),
