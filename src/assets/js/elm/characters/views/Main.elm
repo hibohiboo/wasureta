@@ -11,23 +11,28 @@ port logout : () -> Cmd msg
 
 type alias CharacterImage =
     { src: String,
+      filename: String,
       maker: String,
       makerUrl: String
     }
 type alias Character =
     { name : String,
-      image: Maybe String
+      image: Maybe CharacterImage
     }
 
--- imageDecoder : Decoder UserPhoto
--- imageDecoder =
---     Decode.map CharacterImage (Decode.nullable Decode.string)
+imageDecoder : Decoder CharacterImage
+imageDecoder =
+    decode CharacterImage
+        |> Json.Decode.Pipeline.required "src" Decode.string
+        |> Json.Decode.Pipeline.optional "filename" Decode.string ""
+        |> Json.Decode.Pipeline.optional "maker" Decode.string ""
+        |> Json.Decode.Pipeline.optional "makerUrl" Decode.string ""
 
 decoder : Decoder Character
 decoder =
     decode Character
         |> Json.Decode.Pipeline.required "name" Decode.string
-        |> Json.Decode.Pipeline.optional "image" (Decode.nullable Decode.string) Nothing
+        |> Json.Decode.Pipeline.optional "image" (Decode.nullable imageDecoder) Nothing
 
 
 decodeCharacterFromJson : Value -> Maybe Character
@@ -92,7 +97,7 @@ view model =
                     ],
                     div[class "row"][
                       div[class "col m7 push-m5 s12"][
-                        charImage char
+                        charImage char.image
                       ],
                       div[class "col m5 pull-m7 s12"][
                         charParameter char
@@ -108,17 +113,14 @@ charParameter char =
                        div[class "col l3"][text char.name]
           ]
 
-charImage : Character -> Html Msg
-charImage char =
-      let 
-        image = char.image
-        url = 
-          case image of 
-          Nothing -> ""
-          Just image -> image
-      in
+charImage : Maybe CharacterImage -> Html Msg
+charImage image =
+      case image of 
+          Nothing -> 
+            div[][]
+          Just image -> 
          div[class "card-image"][
-              img[src url][]
+              img[src image.src][]
          ]
 
 
