@@ -3,18 +3,5 @@
     {"link":"/", "text": "トップページ"}, 
     {"link":"/about.html", "text": "このサイトについて"},
   ]
-nav.light-blue.lighten-1(role='navigation')
-  .nav-wrapper.container
-    a#logo-container.brand-logo(href='/') 廃棄世界漂流
-    ul.right.hide-on-med-and-down
-      each obj in linklist
-        li
-          a(href=obj.link)= obj.text
-      li
-        span#loginUser 
-    ul#nav-mobile.sidenav
-      each obj in linklist
-        li
-          a(href=obj.link)= obj.text
-    a.sidenav-trigger(href='#', data-target='nav-mobile')
-      i.material-icons menu
+nav#navigation.light-blue.lighten-1(role='navigation')
+

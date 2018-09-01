@@ -8,6 +8,7 @@ import Html.Events exposing (..)
 
 
 port logout : () -> Cmd msg
+port sidenav : () -> Cmd msg
 
 
 type alias User =
@@ -45,7 +46,7 @@ type alias Model =
 
 init : Value -> ( Model, Cmd Msg )
 init val =
-    ( { user = decodeUserFromJson val }, Cmd.none )
+    ( { user = decodeUserFromJson val }, Cmd.batch [ sidenav () ] )
 
 
 
@@ -61,8 +62,8 @@ type Msg
 -- ビュー
 
 
-view : Model -> Html Msg
-view model =
+loginView : Model -> String -> Html Msg
+loginView model str_class=
     let
         user =
             model.user
@@ -72,17 +73,34 @@ view model =
     in
         case user of
             Nothing ->
-                span []
-                    [ a [ href "./sign-in.html" ]
-                        [ text "ログイン" ]
-                    ]
+               a [ href "./sign-in.html", class str_class ]
+                 [ text "ログイン" ]
 
             Just user ->
-                span []
-                    [ a [ onClick Logout ]
-                        [ text "ログアウト" ]
-                    ]
+               a [ onClick Logout, class str_class ]
+                 [ text "ログアウト" ]
 
+
+view: Model -> Html Msg
+view model = 
+  div[class "nav-wrapper container"][
+    a[id "logo-container", class "brand-logo", href "/"][
+      text "廃棄世界漂流"
+    ] ,
+    ul[class "right hide-on-med-and-down"][
+      li[][
+        loginView model "white-text"
+      ]
+    ],
+    ul[id "nav-mobile", class "sidenav"][
+      li[][
+        loginView model "black-text"
+      ]
+    ],
+    a[class "sidenav-trigger", href "#", attribute "data-target" "nav-mobile"][
+      i[class "material-icons"][text "menu"]
+    ]
+  ]
 
 
 -- 更新

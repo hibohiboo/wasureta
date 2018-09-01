@@ -1,8 +1,8 @@
 import * as firebase from 'firebase';
 import User from './models/User';
 
-const Elm = require('./elm/Main.elm');
-const mountNode = document.getElementById('loginUser');
+const Elm = require('./elm/navigation/Main.elm');
+const mountNode = document.getElementById('navigation');
 
 
 if (!firebase.apps.length) {
@@ -26,6 +26,10 @@ auth.onAuthStateChanged((firebaseUser)=>{
     auth.signOut().then(()=> {
       // console.log("Signed out.");
     });
+  });
+  // elmのdom構築が終わった後にjsのイベントを発火させる
+  app.ports.sidenav.subscribe(()=>{
+    $('.sidenav').sidenav();
   });
 
 });
