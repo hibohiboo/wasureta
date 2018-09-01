@@ -7,17 +7,36 @@ block title
   include includes/rulebook/variables
   title= このサイトについて
 
+mixin link(name, url)
+  a.collection-item(href=url)=name
+
 block main
   .container
     h1.center このサイトについて
     .section
       h2 利用素材
       p このサイトで利用している画像などは以下の素材サイト様よりお借りしています。
-      ul
-        li: a(href="http://pictogram2.com/?page_id=2") ヒューマンピクトグラム2.0
-      h2 プライバシーポリシー
-      h3 google利用規約
-      p google analyticsを使用しています。
-      p firebase の authentication機能を使用しています。
-      P
-        a(href="https://policies.google.com/privacy?hl=ja") Google利用規約
+      .collection
+        +link("ヒューマンピクトグラム2.0", "http://pictogram2.com/?page_id=2") 
+
+      h2 参考作品
+      p このゲームは以下のものを参考に作られています。
+      .collection
+        +link("迷宮キングダム", "http://www.bouken.jp/product/makeyou/") 
+        +link("コードレイヤード", "http://www.fear.co.jp/codelayerd/") 
+        +link("ネクロニカ", "http://www.nechronica.com/top.html") 
+        +link("UREG", "http://linedline.wixsite.com/yuugakugei/ureg")
+        +link("エグゾドライブ", "https://kakuyomu.jp/works/1177354054884850859")
+        +link("LOST 廃墟の森の子供たち", "https://lostrpg-751c1.firebaseapp.com/lost/")
+      
+      h2 開発ツール
+      .collection
+        +link("virtual box", "https://www.virtualbox.org/") 
+        +link("vagrant", "https://www.vagrantup.com/")
+        +link("docker", "https://www.docker.com/")
+        +link("firebase", "https://firebase.google.com/")
+        +link("pug", "https://pugjs.org/api/getting-started.html")
+        +link("materializecss", "https://materializecss.com/")
+        +link("js開発", "https://github.com/hibohiboo/wasureta/blob/master/docker/webpack/package.json")
+
+

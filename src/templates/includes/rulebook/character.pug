@@ -1,0 +1,41 @@
+h3 キャラクター
+p キャラクターの作成について。
+h4 名前の設定
+.base-regulation
+  p 名前を決定する。
+
+  h4 【能力値】の決定
+  p キャラクターは【肉体】、【敏捷】、【知覚】、【精神】、【幸運】、【？？？】の6つの能力値を持つ。
+  p 【能力値】は判定に使用される。
+  p 【肉体】、【敏捷】、【知覚】、【精神】の4つの能力値に20点を割り振ること。最低値は１とする。
+  p 【幸運】の能力値は5である。
+  p 【？？？】はプレイヤーが自由に名前を付けることができる。【？？？】の能力値は10である。
+  dl.collection
+    dt #[+param(param_str)] 
+    dd 力の強さ、持久力など。体の強さ
+    dt #[+param(param_dex)] 
+    dd 機敏さ、器用さなど。体の使い方
+    dt #[+param(param_sense)] 
+    dd 視力、聴力、観察力など。五感の鋭さ
+    dt #[+param(param_mind)] 
+    dd 閃き、知識、精神的タフさなど。頭の使い方
+    dt #[+param(param_luck)] 
+    dd 幸運。
+    dt #[+param('cached 【？？？】')] 
+    dd 自由項目。交渉、推理、胆力、歌、演技力など。
+
+h4 《アクション》の取得
+.base-regulation
+  p 《アクション》はそのキャラクターが取れる行動を指す。
+  p ＜ダメージ＞を受けると《アクション》を１つ＜使用不可＞状態にする。
+  p 全ての《アクション》が＜使用不可＞になったキャラクターは＜行動不能＞状態になる。
+  h5 《基本アクション》の取得
+  p キャラクターは以下の4つの《基本アクション》を取得している。
+  p 《アクション》の成否を求める必要があるときは、各《アクション》に指定された【能力値】での判定を行う。
+  .row
+    +actionCard('殴る', 'assets/images/break.png', param_str, 'たたく。 壊す。')
+    +actionCard('走る', 'assets/images/run.png', param_dex, '逃げる。急ぐ。')
+    +actionCard('調べる', 'assets/images/search.png', param_sense, '見つける。観察。')
+    +actionCard('考える', 'assets/images/think.png', param_mind, '閃く。本を調べる。')
+  .row
+    +actionCard('???', 'assets/images/puzzle.png', 'cached 【？？？】', '自由項目。セッションに一度だけ、使用できそうな状況でGMが許可すれば使用できる。名推理、ネゴシエーションなど。')

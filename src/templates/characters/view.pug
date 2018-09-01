@@ -1,0 +1,13 @@
+extends ../includes/common/layout
+//- _layout.pugをベースに作成
+//- タイトルのブロック
+block title
+  //- 最初にこのページで使用する変数を読み込む
+  include ../includes/index/variables
+  title= title
+
+block footjs
+  script(src="/assets/js/characters/view.js")
+
+block main
+  #main
