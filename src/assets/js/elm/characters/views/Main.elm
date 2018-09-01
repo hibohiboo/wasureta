@@ -132,10 +132,12 @@ view model =
                       ],
                     div[class "row"][text "アクション"],
                     div[class "row"][
-                      actionCard "/assets/images/break.png" "殴る" "favorite 【肉体】" "たたく。 壊す。",
-                      actionCard "/assets/images/run.png" "走る" "directions_run 【敏捷】" "逃げる。急ぐ。",
-                      actionCard "/assets/images/search.png" "調べる" "visibility 【知覚】" "見つける。観察。",
-                      actionCard "/assets/images/think.png" "考える" "search 【精神】" "閃く。本を調べる。"
+                        actionCard "/assets/images/break.png" "殴る" "favorite 【肉体】" "たたく。 壊す。" "http://pictogram2.com/" "ピクトグラム2.0"
+                      , actionCard "/assets/images/run.png" "走る" "directions_run 【敏捷】" "逃げる。急ぐ。" "http://pictogram2.com/" "ピクトグラム2.0"
+                      , actionCard "/assets/images/search.png" "調べる" "visibility 【知覚】" "見つける。観察。" "http://pictogram2.com/" "ピクトグラム2.0"
+                      , actionCard "/assets/images/think.png" "考える" "search 【精神】" "閃く。本を調べる。" "http://pictogram2.com/" "ピクトグラム2.0"
+                      , actionCard "/assets/images/animal_ookami_tooboe.png" "野生の勘" "cached 【野生】" "野生の勘で閃きを得る" "https://www.irasutoya.com/" "いらすとや"
+                      
                     ]
                   ]
                 ]
@@ -196,12 +198,13 @@ paramIcon : String -> Html Msg
 paramIcon param = i[class "material-icons"][text param]
 
 
-actionCard : String -> String -> String -> String -> Html Msg
-actionCard image name param detail = 
+actionCard : String -> String -> String -> String -> String -> String -> Html Msg
+actionCard image name param detail makerUrl   fileInfo = 
     div[class "col s12 m6 l3"][
       div[class "card"][
         div[class "card-image"][
-          img[src image, alt name][]
+          img[src image, alt name][],
+           a[class "card-title black-text", href makerUrl, style [("font-size", "14px")]][text fileInfo] 
         ],
         div[class "card-content"][
           span[class "card-title black-text"][text name],
