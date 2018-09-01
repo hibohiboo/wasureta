@@ -17,7 +17,7 @@ const char = {
       sense: 7,
       mind: 3,
       luck: 5,
-      free: 10,
+      free: 8,
       freeName: "野生"
     }
   };
