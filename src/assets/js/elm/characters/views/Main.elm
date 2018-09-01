@@ -120,7 +120,9 @@ charImage image =
             div[][]
           Just image -> 
          div[class "card-image"][
+           div[class "pc-image"][
               img[src image.src][]
+           ]
          ]
 
 
