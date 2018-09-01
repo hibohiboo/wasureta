@@ -123,16 +123,23 @@ view model =
                       text char.name
                     ],
                     div[class "row"][
-                      div[class "col m7 push-m5 s12"][
-                        charImage char.image
+                        div[class "col m7 push-m5 s12"][
+                          charImage char.image
+                        ],
+                        div[class "col m5 pull-m7 s12"][
+                          charParameter char
+                        ]
                       ],
-                      div[class "col m5 pull-m7 s12"][
-                        charParameter char
-                      ]
-                      ]
+                    div[class "row"][text "アクション"],
+                    div[class "row"][
+                      actionCard "/assets/images/break.png" "殴る" "favorite 【肉体】" "たたく。 壊す。",
+                      actionCard "/assets/images/run.png" "走る" "directions_run 【敏捷】" "逃げる。急ぐ。",
+                      actionCard "/assets/images/search.png" "調べる" "visibility 【知覚】" "見つける。観察。",
+                      actionCard "/assets/images/think.png" "考える" "search 【精神】" "閃く。本を調べる。"
                     ]
                   ]
-               ]
+                ]
+              ]
 
 charParameter : Character -> Html Msg
 charParameter char = 
@@ -181,9 +188,31 @@ charParameters param =
 charaParameter : String -> Int -> Html Msg
 charaParameter param value = 
               div[class "col l6 s12"][
-                i[class "material-icons"][text param],
+                paramIcon param,
                 span[class "pc-param-number"][text (toString value)]
               ]
+
+paramIcon : String -> Html Msg
+paramIcon param = i[class "material-icons"][text param]
+
+
+actionCard : String -> String -> String -> String -> Html Msg
+actionCard image name param detail = 
+    div[class "col s12 m6 l3"][
+      div[class "card"][
+        div[class "card-image"][
+          img[src image, alt name][]
+        ],
+        div[class "card-content"][
+          span[class "card-title black-text"][text name],
+          ul[class "collection with-header"][
+            li[class "collection-header"][paramIcon param],
+            li[class "collection-iitem"][text detail]
+          ]
+        ]
+      ]
+    ]
+
 -- 更新
 
 
