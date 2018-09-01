@@ -60,6 +60,8 @@ https://wasureta-d6b34.firebaseapp.com/
 [FIREBASE AUTHを使ったメール認証・TWITTER認証のサンプル (REACT版)][*12]
 [webpackの使い方 chunk][*13]  
 [webpackの使い方][*14]  
+[chart.js][*15]
+[chart.js radar][*16]
 
 [*1]:https://syon.github.io/refills/rid/1481295/
 [*2]:https://qiita.com/toduq/items/2e0b08bb722736d7968c
@@ -75,3 +77,5 @@ https://wasureta-d6b34.firebaseapp.com/
 [*12]:https://pigbo.co/posts/363
 [*13]:https://qiita.com/soarflat/items/1b5aa7163c087a91877d
 [*14]:https://qiita.com/soarflat/items/28bf799f7e0335b68186
+[*15]:http://www.chartjs.org/docs/latest/
+[*16]:https://misc.0o0o.org/chartjs-doc-ja/axes/radial/linear.html

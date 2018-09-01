@@ -1,0 +1,18 @@
+extends ../includes/common/layout
+//- _layout.pugをベースに作成
+
+//- タイトルのブロック
+block title
+  //- 最初にこのページで使用する変数を読み込む
+  include ../includes/index/variables
+  title= title
+
+block main
+  .container
+    h1.center サンプルシナリオ
+    h2 目覚め
+    dl.collection
+      dt.collection-header 傾向
+      dd.collection-item サバイバル
+      dt.collection-item プレイヤー人数
+      dd.collection-item 一人

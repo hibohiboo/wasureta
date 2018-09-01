@@ -52,6 +52,13 @@ app.ports.initialize.subscribe(()=>{
   };
   const myRadarChart = new Chart(ctx, {
     type: 'radar',
-    data: data
+    data: data,
+    options: {
+      scale: {
+        ticks: {
+            suggestedMin: 0,
+        }
+    }
+    }
   });
 });
