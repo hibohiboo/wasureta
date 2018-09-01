@@ -58,6 +58,8 @@ https://wasureta-d6b34.firebaseapp.com/
 [vue.js webpack4][*5]  
 [設定ファイル不要のwebpack 4で、BabelやTypeScriptのゼロコンフィグのビルド環境を作ってみる][*7]  
 [FIREBASE AUTHを使ったメール認証・TWITTER認証のサンプル (REACT版)][*12]
+[webpackの使い方 chunk][*13]  
+[webpackの使い方][*14]  
 
 [*1]:https://syon.github.io/refills/rid/1481295/
 [*2]:https://qiita.com/toduq/items/2e0b08bb722736d7968c
@@ -71,3 +73,5 @@ https://wasureta-d6b34.firebaseapp.com/
 [*10]:http://pastelinc.hatenablog.com/entry/2018/08/04/114836
 [*11]:https://qiita.com/hibohiboo/items/88e0578121079e0671a3
 [*12]:https://pigbo.co/posts/363
+[*13]:https://qiita.com/soarflat/items/1b5aa7163c087a91877d
+[*14]:https://qiita.com/soarflat/items/28bf799f7e0335b68186

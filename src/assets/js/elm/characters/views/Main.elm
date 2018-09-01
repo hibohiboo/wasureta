@@ -78,14 +78,29 @@ view model =
             Just char ->
                div[class "container"][
                 div [class "row"][
-                   div[class "col l3"][
-                     text "名前"
-                   ],
-                    div[class "col l6"]
-                      [text char.name]
+                  div[class "col l12"][
+                    div[class "row"][
+                      div[class "col l6"][
+                        charaParameter char
+                      ],
+                                  div[class "col l6"][
+                        charImage "/assets/images/gon.jpg"
+                                    ]
+                      ]
                     ]
+                  ]
                ]
+charParameter : Character -> Html Msg
+charParameter char = 
+          div[class "row"][
+                       div[class "col l3"][text "名前"],
+                        div[class "col l3"][text char.name]
+          ]
 
+charImage : String -> Html Msg
+charImage url =
+
+              img[src url][]
 
 -- 更新
 

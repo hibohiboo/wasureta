@@ -111,6 +111,7 @@ module.exports = {
       },
     ]
   },
+  // cdnから読み込むものはここに
   externals: {
     jquery: 'jQuery',
     firebase: 'firebase',
@@ -124,6 +125,25 @@ module.exports = {
       {ignore: Object.keys(extensionConversions).map((ext) => `*.${ext}`)}
     )
   ],
+  // npmでインストールしてバンドルするものはここに. ただし、今は効いていないもよう。
+  // optimization: {
+  //   splitChunks: {
+  //     name: true,
+  //     chunks: 'initial',
+  //     cacheGroups: {
+  //       vendors: {
+  //         test: /[\\/]node_modules[\\/]/,
+  //         priority: -10
+  //       },
+  //       default: {
+  //         name: "commons",
+  //         minChunks: 2,
+  //         priority: -20,
+  //         reuseExistingChunk: true
+  //       }
+  //     }
+  //   }
+  // },
   serve: {
     content: opts.dest,
     // dockerのコンテナ上でサーバを動かすときは以下の設定で全ての接続を受け入れる

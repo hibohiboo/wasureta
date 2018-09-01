@@ -38,10 +38,13 @@ block main
       h3 レギュレーション
       .regulation
         +checkbox('基本', 'base-regulation', 'checked')
+        +checkbox('追加1', 'add1-regulation')
         +checkbox('サバイバル', 'survival-regulation')
       dl.collection
         dt 基本
         dd 本ゲームを遊ぶ上で、基本となるルール。 #[span.base-regulation 表示中]
+        dt 追加1
+        dd 拡張その１。 #[span.add1-regulation 表示中]
         dt サバイバル
         dd 極限状況で生き延びることに重点を置いたルール。 #[span.survival-regulation 表示中]
       //- キャラクター
