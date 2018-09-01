@@ -9,17 +9,25 @@ import Html.Events exposing (..)
 
 port logout : () -> Cmd msg
 
-
+type alias CharacterImage =
+    { src: String,
+      maker: String,
+      makerUrl: String
+    }
 type alias Character =
-    { name : String
+    { name : String,
+      image: Maybe String
     }
 
+-- imageDecoder : Decoder UserPhoto
+-- imageDecoder =
+--     Decode.map CharacterImage (Decode.nullable Decode.string)
 
 decoder : Decoder Character
 decoder =
     decode Character
         |> Json.Decode.Pipeline.required "name" Decode.string
-
+        |> Json.Decode.Pipeline.optional "image" (Decode.nullable Decode.string) Nothing
 
 
 decodeCharacterFromJson : Value -> Maybe Character
@@ -77,15 +85,18 @@ view model =
 
             Just char ->
                div[class "container"][
-                div [class "row"][
-                  div[class "col l12"][
+                div [class "card"][
+                  div[class "card-content"][
+                    span[class "card-title"][
+                      text char.name
+                    ],
                     div[class "row"][
-                      div[class "col l6"][
-                        charaParameter char
+                      div[class "col m7 push-m5 s12"][
+                        charImage char
                       ],
-                                  div[class "col l6"][
-                        charImage "/assets/images/gon.jpg"
-                                    ]
+                      div[class "col m5 pull-m7 s12"][
+                        charParameter char
+                      ]
                       ]
                     ]
                   ]
@@ -94,13 +105,22 @@ charParameter : Character -> Html Msg
 charParameter char = 
           div[class "row"][
                        div[class "col l3"][text "名前"],
-                        div[class "col l3"][text char.name]
+                       div[class "col l3"][text char.name]
           ]
 
-charImage : String -> Html Msg
-charImage url =
-
+charImage : Character -> Html Msg
+charImage char =
+      let 
+        image = char.image
+        url = 
+          case image of 
+          Nothing -> ""
+          Just image -> image
+      in
+         div[class "card-image"][
               img[src url][]
+         ]
+
 
 -- 更新
 
