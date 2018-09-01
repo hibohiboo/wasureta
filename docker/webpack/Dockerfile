@@ -107,3 +107,4 @@ RUN /app/replace_elm_make.sh
 RUN sed -i -e "s/this\.options/this\.query/g" /app/node_modules/elm-webpack-loader/index.js
 RUN yarn add firebaseui
 RUN yarn add vue
+RUN yarn add chart.js

@@ -7,7 +7,7 @@ import Json.Decode.Pipeline exposing (decode, required, optional)
 -- import Html.Events exposing (..)
 
 
-port logout : () -> Cmd msg
+port initialize : () -> Cmd msg
 
 type alias CharacterParameters = 
   {
@@ -84,7 +84,7 @@ type alias Model =
 
 init : Value -> ( Model, Cmd Msg )
 init val =
-    ( { char = decodeCharacterFromJson val }, Cmd.none )
+    ( { char = decodeCharacterFromJson val },  Cmd.batch [ initialize () ])
 
 
 
@@ -93,7 +93,6 @@ init val =
 
 type Msg
     = NoOp
-    | Logout
 
 
 
@@ -149,6 +148,9 @@ charParameter char =
           div[class "row"][
               div[class "col l4"][text "名前"],
               div[class "col l8"][text char.name]
+          ],
+          div[class "row"][
+            canvas[id "myChart"][]
           ],
           charParameters char.parameters,
           div[class "row"][
@@ -225,8 +227,6 @@ update msg model =
         NoOp ->
             ( model, Cmd.none )
 
-        Logout ->
-            ( { model | char = Nothing }, Cmd.batch [ logout () ] )
 
 
 

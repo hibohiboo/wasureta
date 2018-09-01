@@ -116,7 +116,8 @@ module.exports = {
     jquery: 'jQuery',
     firebase: 'firebase',
     firebaseui: 'firebaseui',
-    vue: 'Vue'
+    vue: 'Vue',
+    chartjs: "Chart"
   },
   plugins: [
     new ExtractTextPlugin('[name]'),
