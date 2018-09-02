@@ -7,12 +7,39 @@ block title
   include ../includes/index/variables
   title= title
 
+mixin dlitem(header, item)
+  dt.collection-item.col.s4.l2=header
+  dd.collection-item.col.s8.l10=item
 block main
   .container
     h1.center サンプルシナリオ
     h2 目覚め
-    dl.collection
-      dt.collection-header 傾向
-      dd.collection-item サバイバル
-      dt.collection-item プレイヤー人数
-      dd.collection-item 一人
+    dl.collection.row
+      +dlitem("傾向", "サバイバル")
+      +dlitem("プレイヤー人数", "一人")
+      +dlitem("目的", "3サイクルの生存")
+    h3 導入フェイズ
+    h4 オープニングイベント
+    h5 描写
+    p 君は目を開けると瓦礫の中に倒れていた。
+    p 空は夕焼け色。入道雲の向こうに崩れた城が浮いているように見える。
+    p 身を起こし、周りを見渡すと、灰色の砂漠が一面に広がっている。
+    h5 解説
+    p PCが目を覚ますシーン。シナリオの傾向と目的を伝えること。
+    h3 探索フェイズ
+    h4 エリア1
+    .col.s12.m6.l3
+      .card
+        .card-content
+          span.card-title.black-text エリア1 瓦礫の島
+          ul.collection.with-header
+            li.collection-header 描写
+            li.collection-item 砂漠の中、瓦礫が島のようになっている。
+            li.collection-header オブジェクト
+            li.collection-item
+              p オブジェクト一覧
+              dl.collection.row
+                +dlitem("灰色の砂漠", "灰色の砂漠")
+                +dlitem("瓦礫の山", "コンクリートの瓦礫の山")
+              p オブジェクト詳細
+              

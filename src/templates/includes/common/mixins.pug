@@ -12,6 +12,7 @@ mixin actionCard(name, image, param, text)
           ul.collection.with-header
             li.collection-header #[+param(param)]
             li.collection-item= text
+
 mixin checkbox(name, value, checked)
   label
     input(type="checkbox", value=value, checked=checked) 
