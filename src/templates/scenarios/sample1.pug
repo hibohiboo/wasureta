@@ -8,53 +8,75 @@ block title
   title= title
 
 mixin dlitem(header, item)
-  dt.collection-item.col.s6.m4.l2=header
-  dd.collection-item.col.s6.m8.l10=item
+  .row-flex.collection-item
+    dt.s6.m4.l2=header
+    dd.s6.m8.l10=item
 
 mixin divitem(key, value)
-  .collection-item.col.s6.m4.l2=key
-  .collection-item.col.s6.m8.l10=value
+  .row-flex.collection-item
+    .col.s6.l4=key
+    .col.s6.l8=value
 
 
-mixin card(title)
+mixin card
   .col.s12.m6.l3
     .card
-      .card-content
-        span.card-title.black-text=title 
+      block
+
+mixin card-area-event(type, title, scene, description)
+  +card
+    if type == 'イベント'
+      span.badge.left.purple.darken-4.white-text イベント
+    else
+      span.badge.left.green.darken-4.white-text エリア
+    .card-content
+      span.card-title.black-text=title 
+      .collection.with-header
+        .collection-header 描写
+        .collection-item
+          each item in scene
+            p=item
+        .collection-header 解説
+        .collection-item
+          p=description
         block
 
 mixin card-event(title, scene, description)
-  +card(title)
-    ul.collection.with-header
-      li.collection-header 描写
-      li.collection-item
-        each item in scene
-          p=item
-      li.collection-header 解説
-      li.collection-item
-        p=description
+  +card-area-event("イベント", title, scene, description)
+    block
+
+mixin card-area(title, scene, description)
+  +card-area-event("エリア", title, scene, description)
+    block
+
+mixin card-object(title)
+   +card
+    span.badge.left.orange.darken-4.white-text オブジェクト
+    .card-content
+      span.card-title.black-text= title 
       block
 
 block main
   .container
     h1.center サンプルシナリオ
     h2 目覚め
-    dl.collection.row
+    dl.collection.with-header
       +dlitem("傾向", "サバイバル")
       +dlitem("プレイヤー人数", "一人")
       +dlitem("目的", "3サイクルの生存")
     h3 導入フェイズ
-    +card-event("オープニング", ["君は目を開けると瓦礫の中に倒れていた。","空は夕焼け色。入道雲の向こうに崩れた城が浮いているように見える。", "身を起こし、周りを見渡すと、灰色の砂漠が一面に広がっている。" ], "PCが目を覚ますシーン。シナリオの傾向と目的を伝えること。")
+    +card-event("瓦礫の島", ["君は目を開けると瓦礫の中に倒れていた。","空は夕焼け色。入道雲の向こうに崩れた城が浮いているように見える。", "身を起こし、周りを見渡すと、灰色の砂漠が一面に広がっている。" ], "PCが目を覚ますシーン。シナリオの傾向と目的を伝えること。すぐに探索フェイズへと移行する。")
 
     h3 探索フェイズ
     h4 エリア1
     .col.s12.m6.l3
-      +card-event("エリア1 瓦礫の島", ["砂漠の中、瓦礫が島のようになっている。"], "目覚めの場所。瓦礫から、地下へと続く入り口を見つける。周りは砂ばかりで他に選択肢はない。")
-        li.collection-header オブジェクト
-        li.collection-item
+      +card-area("瓦礫の島", ["砂漠の中、瓦礫が島のようになっている。"], "目覚めの場所。瓦礫から、地下へと続く入り口を見つける。周りは砂ばかりで他に選択肢はない。")
+        .collection-header オブジェクト
+        .collection-item
           p オブジェクト一覧
-          .collection.row
-            +divitem("灰色の砂漠", "灰色の砂漠")
-            +divitem("瓦礫の山", "コンクリートの瓦礫の山")
+            .collection
+              +divitem("灰色の砂漠", "灰色の砂漠")
+              +divitem("瓦礫の山", "コンクリートの瓦礫の山")
           p オブジェクト詳細
+            +card-object("灰色の砂漠")
               
