@@ -1,41 +1,53 @@
 version: '3'
 services:
+#   # ビルドツール
+#   webpack:
+#     build: ./webpack
+#     volumes:
+#       - ./config/webpack/.babelrc:/app/.babelrc
+#       - ./config/webpack/tsconfig.json:/app/tsconfig.json
+#       - ./config/webpack/webpack.config.js:/app/webpack.config.js
+#       - ../src/:/app/src
+#       - ../app/public:/app/dist
+#       - elmcache1:/app/elm-stuff
+#       - elmcache2:/app/tests/elm-stuff
+#     environment:
+#       - NODE_ENV=develop
+#     command: [npm, run, dev-server]
+#     ports:
+#       -  8080:8080
+#   # htmlテンプレートエンジン
+#   pug:
+#     build: ./pug
+#     volumes:
+#       - ../src/templates:/app/src
+#       - ../app/public:/app/dist
+#     environment:
+#       - SHELL=/bin/bash
+#     command: [npm, run, watch]
+#   # デプロイツール
+#   firebase:
+#     build: ./firebase
+#     env_file: .env
+#     volumes:
+#       - ../app/public:/app/public
+#       - ../app/.firebaserc:/app/.firebaserc
+#       - ../app/firebase.json:/app/firebase.json
+#     ports:
+#       - 5000:5000
+#       - 9005:9005
+# volumes:
+#   elmcache1: # 名前付きボリューム名
+#   elmcache2:
+
   # ビルドツール
-  webpack:
-    build: ./webpack
+  elm:
+    build: ./elm
     volumes:
-      - ./config/webpack/.babelrc:/app/.babelrc
-      - ./config/webpack/tsconfig.json:/app/tsconfig.json
-      - ./config/webpack/webpack.config.js:/app/webpack.config.js
-      - ../src/:/app/src
+      - ./elm/test:/app/src/
       - ../app/public:/app/dist
-      - elmcache1:/app/elm-stuff
-      - elmcache2:/app/tests/elm-stuff
-    environment:
-      - NODE_ENV=develop
-    command: [npm, run, dev-server]
-    ports:
-      -  8080:8080
-  # htmlテンプレートエンジン
-  pug:
-    build: ./pug
-    volumes:
-      - ../src/templates:/app/src
-      - ../app/public:/app/dist
-    environment:
-      - SHELL=/bin/bash
-    command: [npm, run, watch]
-  # デプロイツール
-  firebase:
-    build: ./firebase
-    env_file: .env
-    volumes:
-      - ../app/public:/app/public
-      - ../app/.firebaserc:/app/.firebaserc
-      - ../app/firebase.json:/app/firebase.json
-    ports:
-      - 5000:5000
-      - 9005:9005
+      - elm019cache1:/app/elm-stuff
+
 volumes:
-  elmcache1: # 名前付きボリューム名
-  elmcache2:
+  elm019cache1: # 名前付きボリューム名
+
