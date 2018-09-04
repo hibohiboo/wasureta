@@ -37,6 +37,9 @@ https://wasureta-d6b34.firebaseapp.com/
 ### firebaseでの認証
 [firebase認証](https://github.com/hibohiboo/wasureta/tree/12ce941e9131378f81151114b10f26b55e9c15ac)  
 
+### elm 0.19
+[elm 0.19 試す](https://github.com/hibohiboo/wasureta/tree/9da6239d6721c299cfab336179d88444ba78b72e)  
+
 
 
 ## 利用したい技術
