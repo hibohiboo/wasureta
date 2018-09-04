@@ -108,3 +108,8 @@ RUN sed -i -e "s/this\.options/this\.query/g" /app/node_modules/elm-webpack-load
 RUN yarn add firebaseui
 RUN yarn add vue
 RUN yarn add chart.js
+
+# RUN yarn add elm@elm0.19.0 
+# RUN yarn add elm-format@elm0.19.0 
+# RUN yarn add elm-upgrade 
+

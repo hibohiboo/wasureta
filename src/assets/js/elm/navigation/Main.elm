@@ -1,13 +1,15 @@
-port module Main exposing (..)
+port module Main exposing (Model, Msg(..), User, decodeUserFromJson, decoder, init, loginView, logout, main, sidenav, subscriptions, update, view)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Json.Decode as Decode exposing (Value, Decoder, decodeString, field, string)
-import Json.Decode.Pipeline exposing (decode, required)
 import Html.Events exposing (..)
+import Json.Decode as Decode exposing (Decoder, Value, decodeString, field, string)
+import Json.Decode.Pipeline exposing (decode, required)
 
 
 port logout : () -> Cmd msg
+
+
 port sidenav : () -> Cmd msg
 
 
@@ -63,7 +65,7 @@ type Msg
 
 
 loginView : Model -> String -> Html Msg
-loginView model str_class=
+loginView model str_class =
     let
         user =
             model.user
@@ -71,36 +73,37 @@ loginView model str_class=
         -- _ =
         --     Debug.log "user" model
     in
-        case user of
-            Nothing ->
-               a [ href "./sign-in.html", class str_class ]
-                 [ text "ログイン" ]
+    case user of
+        Nothing ->
+            a [ href "./sign-in.html", class str_class ]
+                [ text "ログイン" ]
 
-            Just user ->
-               a [ onClick Logout, class str_class ]
-                 [ text "ログアウト" ]
+        Just user ->
+            a [ onClick Logout, class str_class ]
+                [ text "ログアウト" ]
 
 
-view: Model -> Html Msg
-view model = 
-  div[class "nav-wrapper container"][
-    a[id "logo-container", class "brand-logo", href "/"][
-      text "廃棄世界漂流"
-    ] ,
-    ul[class "right hide-on-med-and-down"][
-      li[][
-        loginView model "white-text"
-      ]
-    ],
-    ul[id "nav-mobile", class "sidenav"][
-      li[][
-        loginView model "black-text"
-      ]
-    ],
-    a[class "sidenav-trigger", href "#", attribute "data-target" "nav-mobile"][
-      i[class "material-icons"][text "menu"]
-    ]
-  ]
+view : Model -> Html Msg
+view model =
+    div [ class "nav-wrapper container" ]
+        [ a [ id "logo-container", class "brand-logo", href "/" ]
+            [ text "廃棄世界漂流"
+            ]
+        , ul [ class "right hide-on-med-and-down" ]
+            [ li []
+                [ loginView model "white-text"
+                ]
+            ]
+        , ul [ id "nav-mobile", class "sidenav" ]
+            [ li []
+                [ loginView model "black-text"
+                ]
+            ]
+        , a [ class "sidenav-trigger", href "#", attribute "data-target" "nav-mobile" ]
+            [ i [ class "material-icons" ] [ text "menu" ]
+            ]
+        ]
+
 
 
 -- 更新
