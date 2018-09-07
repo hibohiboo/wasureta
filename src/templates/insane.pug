@@ -14,6 +14,14 @@ block css
     .flex{
       display: flex;
     }
+    .f1{
+      flex: 1;
+    }
+    .insane-card{
+      display:flex;
+      flex-direction: row;
+      width:400px;
+    }
 
 
     .insane-wrapper{
@@ -38,24 +46,52 @@ block css
     </style>
 //- A4(794px * 1123px)
 
+mixin secret(shock)
+  .card.black.insane-wrapper(style="width: 190px; height: 300px")
+    .card-title.white-text(style="flex:1; text-align:center") Handout
+    .card.white(style="display:flex;width:180px;height:290px;flex-direction: column;justify-content: center;align-items: center;")
+      .card.black(style="width:170px;height:280px;margin-bottom:0.5rem;")
+        .white-text(style="font-size:10px;flex:1; text-align:center") 秘密
+        .insane-wrapper
+          .card.white(style="width:160px;height:180px;margin:1px")
+              .row(style="font-size:12px;border-bottom: 3px double #bbb;margin-bottom:3px;")
+                .col.s4(style="border-right: solid 1px #bbb;padding:0;x") ショック
+                .col.s8=shock
+              .card-content(style="font-size:10px;padding:0;margin:2px")
+                block
+        .white-text(style="font-size:10px;flex:1; text-align:center") この秘密を自分から
+        .white-text(style="font-size:10px;flex:1; text-align:center") 明らかにすることはできない
+
+mixin open(name)
+  .card.white.insane-wrapper(style="width: 190px; height: 300px")
+    .card-title(style="flex:1; text-align:center")=name
+    .card.black(style="display:flex;width:180px;height:290px;flex-direction: column;justify-content: center;align-items: center;")
+      .card.white(style="width:170px;height:280px;margin-bottom:0.5rem;;margin:1px")
+        .black-text(style="font-size:10px;flex:1; text-align:center") 使命
+        .insane-wrapper
+          .card.white(style="width:160px;height:220px;margin:1px")
+              .row(style="font-size:12px;border-bottom: 3px double #bbb;margin-bottom:3px;")
+                .col.s4(style="border-right: solid 1px #bbb;padding:0;x") ショック
+                .col.s8 なし
+              .card-content(style="font-size:10px;padding:0;margin:2px")
+                block
+
 block main
   .container
     h1.center 狂気カード
     .section.print
-          .card.black.insane-wrapper(style="width: 190px; height: 300px")
-            .card-title.white-text(style="flex:1; text-align:center") Handout
-            .card.white(style="display:flex;width:180px;height:290px;flex-direction: column;justify-content: center;align-items: center;")
-              .card.black(style="width:170px;height:280px;margin-bottom:0.5rem;")
-                .white-text(style="font-size:10px;flex:1; text-align:center") 秘密
-                .insane-wrapper
-                  .card.white(style="width:160px;height:180px;margin:1px")
-                      .row(style="font-size:12px;border-bottom: 3px double #bbb;margin-bottom:3px;")
-                        .col.s4(style="border-right: solid 1px #bbb;padding:0;x") ショック
-                        .col.s8 なし
-                      .card-content(style="font-size:10px;padding:0;margin:2px")
-                        | あなたは、かつて京都に住んでいたことがあり、その時８歳の弟を事故で亡くしている。
-                        | 当時、ふさぎ込むあなたを、夏葉は誠心誠意支えてくれた。
-                        | その後も、夏葉は何かとあなたの事を気にかけてくれており、あなたは夏葉のことを無くすことのできない親友だと思っている。
-                .white-text(style="font-size:10px;flex:1; text-align:center") この秘密を自分から
-                .white-text(style="font-size:10px;flex:1; text-align:center") 明らかにすることはできない
+       .insane-card.card
+         .f1
+           +open('PC1')
+              | あなたは、京都へと修学旅行に来た高校生だ。
+              | 仲のいい友人達との楽しい旅行だが、昔からのキミの友人である「杉森 夏葉」の表情が少し暗いように思う。
+              | 彼女にも修学旅行を楽しんでもらえるように、あなたは彼女の力になりたいと思っている。
+              | ※あなたは、最初から「杉森夏葉」に任意の感情を取得している。
+              | あなたの【使命】は、「杉森 夏葉」と共に修学旅行を終えることである。
+         .f1
+           +secret("なし")
+              | あなたは、かつて京都に住んでいたことがあり、その時８歳の弟を事故で亡くしている。
+              | 当時、ふさぎ込むあなたを、夏葉は誠心誠意支えてくれた。
+              | その後も、夏葉は何かとあなたの事を気にかけてくれており、あなたは夏葉のことを無くすことのできない親友だと思っている。
+
                 
