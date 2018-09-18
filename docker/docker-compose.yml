@@ -5,15 +5,14 @@ services:
     build: ./webpack
     volumes:
       - ./config/webpack/.babelrc:/app/.babelrc
+      - ./config/webpack/elm.json:/app/elm.json
       - ./config/webpack/tsconfig.json:/app/tsconfig.json
       - ./config/webpack/webpack.config.js:/app/webpack.config.js
       - ../src/:/app/src
       - ../app/public:/app/dist
-      - elmcache1:/app/elm-stuff
-      - elmcache2:/app/tests/elm-stuff
     environment:
       - NODE_ENV=develop
-    command: [npm, run, dev-server]
+    command: [yarn, start]
     ports:
       -  8080:8080
   # htmlテンプレートエンジン
@@ -36,8 +35,5 @@ services:
     ports:
       - 5000:5000
       - 9005:9005
-volumes:
-  elmcache1: # 名前付きボリューム名
-  elmcache2:
 
 

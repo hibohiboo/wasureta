@@ -1,10 +1,11 @@
 port module Main exposing (Model, Msg(..), User, decodeUserFromJson, decoder, init, loginView, logout, main, sidenav, subscriptions, update, view)
 
+import Browser
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
-import Json.Decode as Decode exposing (Decoder, Value, decodeString, field, string)
-import Json.Decode.Pipeline exposing (decode, required)
+import Json.Decode as Decode exposing (Decoder, Value, decodeString, field, string, succeed)
+import Json.Decode.Pipeline exposing (required, optional, hardcoded)
 
 
 port logout : () -> Cmd msg
@@ -21,7 +22,7 @@ type alias User =
 
 decoder : Decoder User
 decoder =
-    decode User
+    Decode.succeed User
         |> Json.Decode.Pipeline.required "uid" Decode.string
         |> Json.Decode.Pipeline.required "displayName" Decode.string
 
@@ -78,7 +79,7 @@ loginView model str_class =
             a [ href "./sign-in.html", class str_class ]
                 [ text "ログイン" ]
 
-        Just user ->
+        Just u ->
             a [ onClick Logout, class str_class ]
                 [ text "ログアウト" ]
 
@@ -131,10 +132,9 @@ subscriptions model =
 
 -- MAIN
 
-
 main : Program Value Model Msg
 main =
-    Html.programWithFlags
+    Browser.element
         { init = init
         , view = view
         , update = update

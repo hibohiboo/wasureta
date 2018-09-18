@@ -66,6 +66,7 @@ https://wasureta-d6b34.firebaseapp.com/
 [chart.js][*15]
 [chart.js radar][*16]
 [webpack][*17]
+[materializeの使いかた][*18]
 
 [*1]:https://syon.github.io/refills/rid/1481295/
 [*2]:https://qiita.com/toduq/items/2e0b08bb722736d7968c
@@ -84,3 +85,4 @@ https://wasureta-d6b34.firebaseapp.com/
 [*15]:http://www.chartjs.org/docs/latest/
 [*16]:https://misc.0o0o.org/chartjs-doc-ja/axes/radial/linear.html
 [*17]:https://github.com/romariolopezc/elm-webpack-4-starter
+[*18]:http://masayuki610930.github.io/materialize_sample/

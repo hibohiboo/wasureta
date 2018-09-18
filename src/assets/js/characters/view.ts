@@ -1,6 +1,6 @@
 import * as Chart from 'chart.js';
 
-const Elm = require('../elm/characters/views/Main.elm');
+const {Elm} = require('../elm/characters/views/Main.elm');
 const mountNode = document.getElementById('main');
 const char = {
     name: "ごん", 
@@ -21,7 +21,7 @@ const char = {
       freeName: "野生"
     }
   };
-const app = Elm.Main.embed(mountNode, JSON.stringify(char));
+const app = Elm.Main.init({node:mountNode, flags:JSON.stringify(char)});
 app.ports.initialize.subscribe(()=>{
   const canvas = <HTMLCanvasElement> document.getElementById("myChart");
   const ctx = canvas.getContext("2d");

@@ -1,7 +1,7 @@
 import * as firebase from 'firebase';
 import User from './models/User';
 
-const Elm = require('./elm/navigation/Main.elm');
+const {Elm} = require('./elm/navigation/Main.elm');
 const mountNode = document.getElementById('navigation');
 
 
@@ -20,7 +20,7 @@ auth.onAuthStateChanged((firebaseUser)=>{
   }
 
   const json = JSON.stringify( user);
-  const app = Elm.Main.embed(mountNode, json);
+  const app = Elm.Main.init({node: mountNode, flags:json});
   // elm -> js
   app.ports.logout.subscribe(()=> {
     auth.signOut().then(()=> {

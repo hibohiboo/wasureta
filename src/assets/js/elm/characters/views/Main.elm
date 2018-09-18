@@ -1,9 +1,10 @@
 port module Main exposing (Character, CharacterImage, CharacterParameters, Model, Msg(..), actionCard, charImage, charParameter, charParameters, charaParameter, decodeCharacterFromJson, decoder, imageDecoder, init, initialize, main, paramIcon, parametersDecoder, subscriptions, update, view)
 
+import Browser
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Json.Decode as Decode exposing (Decoder, Value, decodeString, field, string)
-import Json.Decode.Pipeline exposing (decode, optional, required)
+import Json.Decode as Decode exposing (Decoder, Value, succeed, decodeString, field, string)
+import Json.Decode.Pipeline exposing ( optional, required)
 
 
 
@@ -42,7 +43,7 @@ type alias Character =
 
 decoder : Decoder Character
 decoder =
-    decode Character
+    Decode.succeed Character
         |> Json.Decode.Pipeline.required "name" Decode.string
         |> Json.Decode.Pipeline.required "profile" Decode.string
         |> Json.Decode.Pipeline.required "parameters" parametersDecoder
@@ -51,7 +52,7 @@ decoder =
 
 imageDecoder : Decoder CharacterImage
 imageDecoder =
-    decode CharacterImage
+    Decode.succeed CharacterImage
         |> Json.Decode.Pipeline.required "src" Decode.string
         |> Json.Decode.Pipeline.optional "filename" Decode.string ""
         |> Json.Decode.Pipeline.optional "maker" Decode.string ""
@@ -60,7 +61,7 @@ imageDecoder =
 
 parametersDecoder : Decoder CharacterParameters
 parametersDecoder =
-    decode CharacterParameters
+    Decode.succeed CharacterParameters
         |> Json.Decode.Pipeline.required "str" Decode.int
         |> Json.Decode.Pipeline.required "dex" Decode.int
         |> Json.Decode.Pipeline.required "sense" Decode.int
@@ -110,13 +111,13 @@ type Msg
 view : Model -> Html Msg
 view model =
     let
-        char =
+        c =
             model.char
 
         -- _ =
         --     Debug.log "char" model
     in
-    case char of
+    case c of
         Nothing ->
             span []
                 [ text "なし"
@@ -169,8 +170,8 @@ charParameter char =
 
 
 charImage : Maybe CharacterImage -> Html Msg
-charImage image =
-    case image of
+charImage im =
+    case im of
         Nothing ->
             div [] []
 
@@ -205,7 +206,7 @@ charaParameter : String -> Int -> Html Msg
 charaParameter param value =
     div [ class "col l6 s12" ]
         [ paramIcon param
-        , span [ class "pc-param-number" ] [ text (toString value) ]
+        , span [ class "pc-param-number" ] [ text (String.fromInt value) ]
         ]
 
 
@@ -259,7 +260,7 @@ subscriptions model =
 
 main : Program Value Model Msg
 main =
-    Html.programWithFlags
+    Browser.element
         { init = init
         , view = view
         , update = update
