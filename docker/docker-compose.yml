@@ -10,17 +10,21 @@ services:
       - ./config/webpack/webpack.config.js:/app/webpack.config.js
       - ../src/:/app/src
       - ../app/public:/app/dist
+      - ../bkup:/bkup
+      - ../dist/html:/app/html
     environment:
       - NODE_ENV=develop
     command: [yarn, start]
     ports:
-      -  8080:8080
+      - 3000:3000
+      - 3002:3002
   # htmlテンプレートエンジン
   pug:
     build: ./pug
     volumes:
       - ../src/templates:/app/src
-      - ../app/public:/app/dist
+      # - ../app/public:/app/dist
+      - ../dist/html:/app/dist
     environment:
       - SHELL=/bin/bash
     command: [npm, run, watch]

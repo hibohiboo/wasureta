@@ -31,10 +31,10 @@ Object.keys(extensionConversions)
     globule
     .find([`assets/**/*.${from}`, `!assets/**/_*.${from}`, `!assets/**/*.elm`], {cwd: opts.src})
     .forEach(filename => {
-      const key = filename.replace(new RegExp(`.${from}$`, 'i'), `.${to}`)
+      //const key = filename.replace(new RegExp(`.${from}$`, 'i'), `.${to}`)
+      const key = filename.replace(new RegExp(`.${from}$`, 'i'), ``)
       const value = path.join(opts.src, filename)
       files[key] = value
-      console.log(key, value)
     })
 })
 
@@ -45,7 +45,61 @@ const postCssLoader = {
     plugins: (loader) => [require('autoprefixer')()]
   }
 };
-
+const htmlWebpackPlugins = [
+  {
+    name: "index",
+    chunks:[]
+  },
+  {
+    name: "about",
+    chunks:[]
+  },
+  {
+    name: "agreement",
+    chunks:[]
+  },
+  {
+    name: "privacy-policy",
+    chunks:[]
+  },
+  {
+    name: "rulebook",
+    chunks:[]
+  },
+  {
+    name: "rulebook",
+    chunks:[]
+  },
+  {
+    name: "sign-in",
+    chunks:[]
+  },
+  {
+    name: "characters/index",
+    chunks:[]
+  },
+  {
+    name: "characters/add",
+    chunks:['js/characters/edit']
+  },
+  {
+    name: "characters/view",
+    chunks:['js/characters/view']
+  },
+  {
+    name: "scenarios/sample1",
+    chunks:[]
+  }
+].map(obj=>{
+  obj.chunks.push('css/style');
+  const chunks = obj.chunks.map(s=>`assets/${s}`);
+  
+  return new HTMLWebpackPlugin({
+    filename: `${obj.name}.html`,
+    template: `/app/html/${obj.name}.html`,
+    chunks:chunks
+  })
+})
 var common = {
     mode: MODE,
     context: opts.src,
@@ -54,8 +108,7 @@ var common = {
         path: opts.dest,
         filename: filename
     },
-    plugins: [
-    ],
+    plugins: [...htmlWebpackPlugins],
     resolve: {
         modules: [path.join(__dirname, "src"), "node_modules"],
         extensions: [ ".ts",".js", ".elm", ".sass", ".png", ".json"]
@@ -110,7 +163,27 @@ var common = {
     firebase: 'firebase',
     firebaseui: 'firebaseui',
     vue: 'Vue',
-    chartjs: "Chart"
+    "chart.js": "chart.js"
+  },
+  // 共通部分をまとめる
+  optimization: {
+    splitChunks: {
+      // cacheGroups内にバンドルの設定を複数記述できる
+      cacheGroups: {
+        // 今回はvendorだが、任意の名前で問題ない
+        vendor: {
+          // node_modules配下のモジュールをバンドル対象とする
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendor',
+          chunks: 'initial',
+          enforce: true
+        },
+        characters: {
+          test: /[\\/]assets[\\/]js[\\/]characters[\\/]/,
+          name: 'assets/js/characters/characters',
+        }
+      }
+    }
   },
 };
 
@@ -181,6 +254,7 @@ if (MODE === "development") {
 if (MODE === "production") {
     console.log("Building for Production...");
     module.exports = merge(common, {
+
         plugins: [
             // Delete everything from output directory and report to user
             new CleanWebpackPlugin(["dist"], {
@@ -189,11 +263,10 @@ if (MODE === "production") {
                 verbose: true,
                 dry: false
             }),
-            new CopyWebpackPlugin([
-                {
-                    from: "src/assets"
-                }
-            ]),
+            new CopyWebpackPlugin(
+              [{from: {glob: 'assets/**/*', dot: true}}],
+              {ignore: Object.keys(extensionConversions).map((ext) => `*.${ext}`).concat([`*.sass`, `*.json`])}
+            ),
             new MiniCssExtractPlugin({
                 filename: "[name]-[hash].css"
             })
@@ -215,7 +288,7 @@ if (MODE === "production") {
             {
                 test: /\.sass$/,
                 exclude: [/elm-stuff/, /node_modules/],
-                loaders: [MiniCssExtractPlugin.loader, "css-loader",postCssLoader, "sass-loader"]
+                loaders: [MiniCssExtractPlugin.loader, "css-loader", postCssLoader, "sass-loader"]
             }
             ]
         }

@@ -40,7 +40,9 @@ https://wasureta-d6b34.firebaseapp.com/
 ### elm 0.19
 [elm 0.19 試す](https://github.com/hibohiboo/wasureta/tree/9da6239d6721c299cfab336179d88444ba78b72e)  
 
+## デプロイ
 
+まずは`./bin/pug.sh`で `dist/html`を作成。その後、`./bin/build.sh`で`dist/app/public`を作成
 
 ## 利用したい技術
 
