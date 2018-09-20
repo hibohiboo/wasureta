@@ -73,7 +73,7 @@ RUN yarn add --dev @types/materialize-css
 RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"prod\": \"webpack -p\"/g" /app/package.json
 RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"build\": \"webpack\",/g" /app/package.json
 RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"dev\": \"webpack-serve --port 3000\",/g" /app/package.json
-RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"start\": \"npm run dev\",/g" /app/package.json
+RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"start\": \"yarn run dev --host 0.0.0.0\",/g" /app/package.json
 RUN sed -i -e "/test/d"  /app/package.json
 RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"test\": \"elm-test\",/g" /app/package.json
 RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"tslint\": \"tslint -p 'tsconfig.json'\",/g" /app/package.json

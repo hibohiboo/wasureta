@@ -153,7 +153,12 @@ var common = {
             },
             {
                 test: /\.(jpe?g|png|gif|svg)$/i,
-                loader: "file-loader"
+                loader: "file-loader",
+                // options: {
+                //   name: '[name].[ext]',
+                //   outputPath: 'images/',
+                //   publicPath: '/assets/images/'
+                // }
             }
         ]
     },
@@ -215,7 +220,7 @@ if (MODE === "development") {
         serve: {
             inline: true,
             stats: "errors-only",
-            content: [path.join(__dirname, "src/assets")],
+            content: [path.join(__dirname, "src")],
             add: (app, middleware, options) => {
                 // routes /xyz -> /index.html
                 app.use(history());

@@ -35,14 +35,14 @@ h4 《アクション》の取得
   p キャラクターは以下の4つの《基本アクション》を取得している。
   p 《アクション》の成否を求める必要があるときは、各《アクション》に指定された【能力値】での判定を行う。
   .row
-    +actionCard('殴る', 'assets/images/break.png', param_str, 'たたく。 壊す。')
-    +actionCard('走る', 'assets/images/run.png', param_dex, '逃げる。急ぐ。')
-    +actionCard('調べる', 'assets/images/search.png', param_sense, '見つける。観察。')
-    +actionCard('考える', 'assets/images/think.png', param_mind, '閃く。本を調べる。')
+    +actionCard('殴る', '/assets/images/break.png', param_str, 'たたく。 壊す。')
+    +actionCard('走る', '/assets/images/run.png', param_dex, '逃げる。急ぐ。')
+    +actionCard('調べる', '/assets/images/search.png', param_sense, '見つける。観察。')
+    +actionCard('考える', '/assets/images/think.png', param_mind, '閃く。本を調べる。')
   .row.add1-regulation
     h5 《固有アクション》の取得
     p さらにキャラクターは１つの《固有アクション》を取得している。《固有アクション》には自由に名前をつけることができる。
     p 《固有アクション》はセッションに1度のみ、GMが認めた場合に使用できる。
     p 《アクション》の成否を求める必要があるときは、#[+param('cached 【？？？】')]での判定を行う。
   .row.add1-regulation
-    +actionCard('???', 'assets/images/puzzle.png', 'cached 【？？？】', '自由項目。セッションに一度だけ、使用できそうな状況でGMが許可すれば使用できる。名推理、ネゴシエーションなど。')
+    +actionCard('???', '/assets/images/puzzle.png', 'cached 【？？？】', '自由項目。セッションに一度だけ、使用できそうな状況でGMが許可すれば使用できる。名推理、ネゴシエーションなど。')

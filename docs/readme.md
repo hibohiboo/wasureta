@@ -42,7 +42,7 @@ https://wasureta-d6b34.firebaseapp.com/
 
 ## デプロイ
 
-まずは`./bin/pug.sh`で `dist/html`を作成。その後、`./bin/build.sh`で`dist/app/public`を作成
+まずは`./bin/pug.sh`で `dist/html`を作成。その後、`./bin/build.sh`で`dist/app/public`を作成。
 
 ## 利用したい技術
 
@@ -88,3 +88,4 @@ https://wasureta-d6b34.firebaseapp.com/
 [*16]:https://misc.0o0o.org/chartjs-doc-ja/axes/radial/linear.html
 [*17]:https://github.com/romariolopezc/elm-webpack-4-starter
 [*18]:http://masayuki610930.github.io/materialize_sample/
+[*19]:https://github.com/webpack-contrib/file-loader

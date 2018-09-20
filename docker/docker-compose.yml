@@ -14,7 +14,7 @@ services:
       - ../dist/html:/app/html
     environment:
       - NODE_ENV=develop
-    command: [yarn, start]
+    command: [yarn, start, --config, ./webpack.config.js]
     ports:
       - 3000:3000
       - 3002:3002
