@@ -92,7 +92,7 @@ const htmlWebpackPlugins = [
   }
 ].map(obj=>{
   obj.chunks.push('css/style');
-  obj.chunks.push('js/init');
+  obj.chunks.push('js/navigation');
   
   const chunks = obj.chunks.map(s=>`assets/${s}`);
   

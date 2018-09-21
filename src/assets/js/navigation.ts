@@ -1,9 +1,7 @@
 import * as firebase from 'firebase';
 import User from './models/User';
-
+import * as $ from 'jquery';
 const {Elm} = require('./elm/navigation/Main.elm');
-const mountNode = document.getElementById('navigation');
-
 
 if (!firebase.apps.length) {
   const config = require('./config'); // tslint:disable-line no-var-requires
@@ -18,7 +16,7 @@ auth.onAuthStateChanged((firebaseUser)=>{
     // .filter(function(userInfo:firebase.UserInfo){return userInfo.providerId === firebase.auth.TwitterAuthProvider.PROVIDER_ID;})
     // .map(function(userInfo:firebase.UserInfo){return userInfo.uid;})[0];
   }
-
+  const mountNode = document.getElementById('navigation');
   const json = JSON.stringify( user);
   const app = Elm.Main.init({node: mountNode, flags:json});
   // elm -> js
