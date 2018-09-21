@@ -92,12 +92,14 @@ const htmlWebpackPlugins = [
   }
 ].map(obj=>{
   obj.chunks.push('css/style');
+  obj.chunks.push('js/init');
+  
   const chunks = obj.chunks.map(s=>`assets/${s}`);
   
   return new HTMLWebpackPlugin({
     filename: `${obj.name}.html`,
     template: `/app/html/${obj.name}.html`,
-    chunks:chunks
+    chunks: chunks
   })
 })
 var common = {
@@ -115,11 +117,6 @@ var common = {
     },
     module: {
         rules: [
-
-            {
-              test: /\.ts$/,
-              use: 'ts-loader'
-            },
             {
               test: /\.js$/,
               exclude: /node_modules/,
@@ -127,7 +124,11 @@ var common = {
                   loader: "babel-loader"
               }
           },
-            {
+          {
+            test: /\.ts$/,
+            use: 'ts-loader'
+          },
+          {
                 test: /\.sass$/,
                 exclude: [/elm-stuff/, /node_modules/],
                 loaders: ["style-loader", "css-loader", postCssLoader, "sass-loader"]
@@ -168,27 +169,7 @@ var common = {
     firebase: 'firebase',
     firebaseui: 'firebaseui',
     vue: 'Vue',
-    "chart.js": "chart.js"
-  },
-  // 共通部分をまとめる
-  optimization: {
-    splitChunks: {
-      // cacheGroups内にバンドルの設定を複数記述できる
-      cacheGroups: {
-        // 今回はvendorだが、任意の名前で問題ない
-        vendor: {
-          // node_modules配下のモジュールをバンドル対象とする
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendor',
-          chunks: 'initial',
-          enforce: true
-        },
-        characters: {
-          test: /[\\/]assets[\\/]js[\\/]characters[\\/]/,
-          name: 'assets/js/characters/characters',
-        }
-      }
-    }
+    "chart.js": "Chart"
   },
 };
 
@@ -259,7 +240,26 @@ if (MODE === "development") {
 if (MODE === "production") {
     console.log("Building for Production...");
     module.exports = merge(common, {
-
+        // 共通部分をまとめる
+        optimization: {
+          splitChunks: {
+            // cacheGroups内にバンドルの設定を複数記述できる
+            cacheGroups: {
+              // 今回はvendorだが、任意の名前で問題ない
+              vendor: {
+                // node_modules配下のモジュールをバンドル対象とする
+                test: /[\\/]node_modules[\\/]/,
+                name: 'vendor',
+                chunks: 'initial',
+                enforce: true
+              },
+              characters: {
+                test: /[\\/]assets[\\/]js[\\/]characters[\\/]/,
+                name: 'assets/js/characters/characters',
+              }
+            }
+          }
+        },
         plugins: [
             // Delete everything from output directory and report to user
             new CleanWebpackPlugin(["dist"], {

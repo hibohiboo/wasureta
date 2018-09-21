@@ -1,3 +1,5 @@
+'use strict';
+
 import * as Chart from 'chart.js';
 
 const {Elm} = require('../elm/characters/views/Main.elm');
