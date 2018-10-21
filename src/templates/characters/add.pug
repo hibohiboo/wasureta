@@ -32,10 +32,10 @@ block main
           +status('感覚', 'sense')
           +status('精神', 'mind')
           .input-field.col.s2
-            input#luck.validate(placeholder='幸運', type='number', min="1", value="5", readonly)
+            input#luck(placeholder='幸運', type='number', min="1", value="5", readonly)
             label(for='luck') 幸運
           .input-field.col.s2
-            input#param_6.validate(type='number', min="1", value="10", readonly)
+            input#param_6(type='number', min="1", value="10", readonly)
             label(for='param_6') {{param_six}}
         .row
           .input-field.col.s6

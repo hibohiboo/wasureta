@@ -76,12 +76,21 @@ loginView model str_class =
     in
     case user of
         Nothing ->
-            a [ href "./sign-in.html", class str_class ]
+            a [ href "/sign-in.html", class str_class ]
                 [ text "ログイン" ]
 
         Just u ->
-            a [ onClick Logout, class str_class ]
+            logoutHtml u str_class
+
+logoutHtml : User -> String -> Html Msg
+logoutHtml user str_class = 
+            div[ style "display" "flex"][
+              span [][
+                text user.displayName
+              ],
+              a [ onClick Logout, class str_class ]
                 [ text "ログアウト" ]
+            ]
 
 
 view : Model -> Html Msg
