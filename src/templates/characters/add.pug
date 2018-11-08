@@ -14,7 +14,7 @@ block footjs
 
 mixin status(name, id)
   .input-field.col.s2
-    input(id=id).validate(placeholder=name, type='number', min="1", value="5")
+    input.validate(id=id, placeholder=name, type='number', min="1", value="5")
     label(for=id)=name
 
 block main
