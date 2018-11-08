@@ -1,4 +1,4 @@
-FROM node:10.12.0
+FROM node:11.1.0
 
 # コンテナ上の作業ディレクトリ作成
 WORKDIR /app
@@ -59,9 +59,9 @@ RUN yarn add --dev globule
 
 # dependencies
 RUN yarn add purecss
-RUN yarn add firebase
+#RUN yarn add firebase
+#RUN yarn add firebaseui
 RUN yarn add materialize-css@next
-RUN yarn add firebaseui
 RUN yarn add vue
 RUN yarn add chart.js
 

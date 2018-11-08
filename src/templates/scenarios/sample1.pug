@@ -56,6 +56,23 @@ mixin card-object(title)
       span.card-title.black-text= title 
       block
 
+mixin card-check-event(title, param, scene, description)
+  +card
+    span.badge.left.purple.darken-4.white-text 判定イベント
+    .card-content
+      span.card-title.black-text=title 
+      .collection.with-header
+        .collection-header 能力値
+        .collection-item
+          i.material-icons= param
+        .collection-header 描写
+        .collection-item
+          p=scene
+        .collection-header 解説
+        .collection-item
+          p=description
+        block
+
 block main
   .container
     h1.center サンプルシナリオ
@@ -63,7 +80,7 @@ block main
     dl.collection.with-header
       +dlitem("傾向", "サバイバル")
       +dlitem("プレイヤー人数", "一人")
-      +dlitem("目的", "3サイクルの生存")
+      +dlitem("目的", "4サイクルの生存")
     h3 導入フェイズ
     +card-event("瓦礫の島", ["君は目を開けると瓦礫の中に倒れていた。", "崩れた天井から除く空は夕焼け色。入道雲の向こうに崩れた城が浮いているように見える。", "身を起こし、周りを見渡すと、崩れた石造りの部屋のようだ。" ], "PCが目を覚ますシーン。シナリオの傾向と目的を伝えること。次にイベント「渇き」を処理する。")
         .collection-header 連動イベント
@@ -82,13 +99,33 @@ block main
         .collection-item
           p オブジェクト一覧
             .collection
-              +divitem("瓦礫に埋まった奥への道", "灰色の砂漠")
-              +divitem("登り階段", "コンクリートの瓦礫の山")
+              +divitem("瓦礫に埋まった奥への道", "水音がかすかに奥から聞こえる")
+              +divitem("登り階段", "乾いた風が吹き込んでくる")
           p オブジェクト詳細
-            +card-object("灰色の砂漠")
+            +card-object("瓦礫に埋まった奥への道")
+              .collection-header 描写
+              .collection-item
+                p 奥への続く道。湿ったにおい。耳をすませばかすかな水音。
+              .collection-header 選択肢
+              .collection-item
+                p 隙間を抜ける
+              .collection-item
+                p 瓦礫をどかす
+              .collection-header 有効アクション
+              .collection-item
+                p 調べる
+              .collection-header イベント詳細
+              .collection-item
+                p 
+                  +card-check-event("隙間を抜ける", param_sense,  "瓦礫の隙間をすり抜けていく", "ダメージの解説をすること。処理を終えたら探索フェイズに移行する")
+                    .collection-header 効果
+                    .collection-item
+                      p ダメージ1をPCに与える
+
+
     h4 エリア2
     .col.s12.m6.l3
-      +card-area("瓦礫の島", ["砂漠の中、瓦礫が島のようになっている。"], "目覚めの場所。瓦礫から、地下へと続く入り口を見つける。周りは砂ばかりだ。")
+      +card-area("瓦礫の島", ["砂漠の中、瓦礫が島のようになっている。"], "周りは砂ばかりだ。")
         .collection-header オブジェクト
         .collection-item
           p オブジェクト一覧
