@@ -1,10 +1,10 @@
-extends includes/common/layout
+extends _includes/common/layout
 //- _layout.pugをベースに作成
 
 //- タイトルのブロック
 block title
   //- 最初にこのページで使用する変数を読み込む
-  include includes/rulebook/variables
+  include _includes/rulebook/variables
   title= title
 
 block footjs
@@ -48,11 +48,11 @@ block main
         dt サバイバル
         dd 極限状況で生き延びることに重点を置いたルール。 #[span.survival-regulation 表示中]
       //- キャラクター
-      include includes/rulebook/character
+      include _includes/rulebook/character
       //- 判定
-      include includes/rulebook/check
+      include _includes/rulebook/check
       //- セッションの流れ
-      include includes/rulebook/cycle
+      include _includes/rulebook/cycle
       h2 ゲームマスターセクション
       p #[a(href="/scenarios/sample1.html") サンプルシナリオ：目覚め]を開きながら読み進めてほしい。
       h3 シナリオの流れ
