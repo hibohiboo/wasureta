@@ -238,64 +238,62 @@ if (MODE === "development") {
 }
 
 if (MODE === "production") {
-    console.log("Building for Production...");
-    module.exports = merge(common, {
-        // 共通部分をまとめる
-        optimization: {
-          splitChunks: {
-            // cacheGroups内にバンドルの設定を複数記述できる
-            cacheGroups: {
-              // 今回はvendorだが、任意の名前で問題ない
-              vendor: {
-                // node_modules配下のモジュールをバンドル対象とする
-                test: /[\\/]node_modules[\\/]/,
-                name: 'vendor',
-                chunks: 'initial',
-                enforce: true
-              },
-              characters: {
-                test: /[\\/]assets[\\/]js[\\/]characters[\\/]/,
-                name: 'assets/js/characters/characters',
-              }
-            }
+  console.log("Building for Production...");
+  module.exports = merge(common, {
+    // 共通部分をまとめる
+    optimization: {
+      splitChunks: {
+        // cacheGroups内にバンドルの設定を複数記述できる
+        cacheGroups: {
+          // 今回はvendorだが、任意の名前で問題ない
+          vendor: {
+            // node_modules配下のモジュールをバンドル対象とする
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendor',
+            chunks: 'initial',
+            enforce: true
+          },
+          characters: {
+            test: /[\\/]assets[\\/]js[\\/]characters[\\/]/,
+            name: 'assets/js/characters/characters',
           }
-        },
-        plugins: [
-            // Delete everything from output directory and report to user
-            new CleanWebpackPlugin(["dist"], {
-                root: __dirname,
-                exclude: [],
-                verbose: true,
-                dry: false
-            }),
-            new CopyWebpackPlugin(
-              [{from: {glob: 'assets/**/*', dot: true}}],
-              {ignore: Object.keys(extensionConversions).map((ext) => `*.${ext}`).concat([`*.sass`, `*.json`])}
-            ),
-            new MiniCssExtractPlugin({
-                filename: "[name]-[hash].css"
-            })
-        ],
-        module: {
-            rules: [
-                {
-                    test: /\.elm$/,
-                    exclude: [/elm-stuff/, /node_modules/],
-                    use: [
-                        { loader: "elm-webpack-loader", options:{optimize: true} }
-                    ]
-                },
-            {
-                test: /\.css$/,
-                exclude: [/elm-stuff/, /node_modules/],
-                loaders: [MiniCssExtractPlugin.loader, "css-loader"]
-            },
-            {
-                test: /\.sass$/,
-                exclude: [/elm-stuff/, /node_modules/],
-                loaders: [MiniCssExtractPlugin.loader, "css-loader", postCssLoader, "sass-loader"]
-            }
-            ]
         }
-    });
+      }
+    },
+    plugins: [
+      // Delete everything from output directory and report to user
+      new CleanWebpackPlugin(["dist"], {
+        root: __dirname,
+        exclude: [],
+        verbose: true,
+        dry: false
+      }),
+      new CopyWebpackPlugin(
+        [{from: {glob: 'assets/**/*', dot: true}}],
+        {ignore: Object.keys(extensionConversions).map((ext) => `*.${ext}`).concat([`*.sass`, `*.json`])}
+      ),
+      new MiniCssExtractPlugin({
+          filename: "[name]-[hash].css"
+      })
+    ],
+    module: {
+      rules: [
+        {
+          test: /\.elm$/,
+          exclude: [/elm-stuff/, /node_modules/],
+          use: [{ loader: "elm-webpack-loader", options:{optimize: true} } ]
+        },
+        {
+          test: /\.css$/,
+          exclude: [/elm-stuff/, /node_modules/],
+          loaders: [MiniCssExtractPlugin.loader, "css-loader"]
+        },
+        {
+          test: /\.sass$/,
+          exclude: [/elm-stuff/, /node_modules/],
+          loaders: [MiniCssExtractPlugin.loader, "css-loader", postCssLoader, "sass-loader"]
+        }
+      ]
+    }
+  });
 }
