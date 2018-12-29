@@ -25,7 +25,7 @@ const char = {
   };
 const app = Elm.Main.init({node:mountNode, flags:JSON.stringify(char)});
 app.ports.initialize.subscribe(()=>{
-  const canvas = <HTMLCanvasElement> document.getElementById("myChart");
+  const canvas = <HTMLCanvasElement> document.querySelector(".my-chart");
   const ctx = canvas.getContext("2d");
 
   const {str, dex, sense, mind, luck, free} = char.parameters;

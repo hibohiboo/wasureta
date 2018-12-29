@@ -159,7 +159,7 @@ charParameter char =
             , div [ class "col l8" ] [ text char.name ]
             ]
         , div [ class "row" ]
-            [ canvas [ id "myChart" ] []
+            [ canvas [ class "my-chart" ] []
             ]
         , charParameters char.parameters
         , div [ class "row" ]

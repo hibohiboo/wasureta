@@ -54,7 +54,7 @@
 }
 
 // レーダーチャート
-#myChart {
+.my-chart {
   height: 300px;
   width: 300px;
 }
@@ -65,7 +65,7 @@
   padding-left: 10px;
 }
 
-$num_cols: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12;
+$num-cols: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12;
 
 // スマートフォン向け
 @media (max-width: 599px) {
@@ -73,7 +73,7 @@ $num_cols: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12;
     display: flex;
   }
 
-  @each $num in $num_cols {
+  @each $num in $num-cols {
     .s#{$num} {
       flex: #{$num};
     }
@@ -85,7 +85,7 @@ $num_cols: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12;
 @media (min-width: 600px) and (max-width: 799px) {
   .row-flex {
     display: flex;
-    @each $num in $num_cols {
+    @each $num in $num-cols {
       .s#{$num} {
         flex: #{$num};
       }
@@ -101,7 +101,7 @@ $num_cols: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12;
 @media (min-width: 800px) {
   .row-flex {
     display: flex;
-    @each $num in $num_cols {
+    @each $num in $num-cols {
       .s#{$num},
       .m#{$num},
       .l#{$num} {
