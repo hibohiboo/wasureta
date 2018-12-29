@@ -1,23 +1,17 @@
 {
-    "compilerOptions": {
-        "target": "es5",
-        "outDir": "./dist",
-        "module": "es2015",
-        "moduleResolution": "node",
-        "lib": [
-            "dom", 
-            "es2017"
-        ],
-        "jsx": "preserve",
-        "noImplicitAny": false,
-        "strictNullChecks": true,
-        "sourceMap": false,
-        "allowJs":true
-    },
-    "include":[
-        "./src/**/*" 
-    ],
-    "exclude": [
-        "node_modules"
-    ]
+  "compilerOptions": {
+    "target": "es6",
+    "outDir": "./dist/assets/js",
+    "strictNullChecks": true,
+    "sourceMap": false,
+    "allowJs":false,
+    "declaration": false,
+    "composite": false
+  },
+  "include":[
+      "./src/**/*" 
+  ],
+  "exclude": [
+      "node_modules"
+  ]
 }

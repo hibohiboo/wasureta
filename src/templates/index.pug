@@ -1,0 +1,70 @@
+doctype html
+html(lang='ja')
+  head
+    title= 我楽多実験場
+    meta(http-equiv='Content-Type', content='text/html; charset=UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1.0')
+
+    //- 従来型のメタデータ
+    meta(name='description', content=description)
+    //- 記事のキーワードをカンマで区切る
+    meta(name='keywords', content=keywords)
+    meta(name='robots', content=robots)
+    //- SNSでページが共有された時に表示する用のメタデータ。
+    //- サイト名
+    meta(name='og:sitename', content="廃棄世界TRPG") 
+    //- 言語の種類
+    meta(name='og:locale', content="ja_JP") 
+    //- タイトル
+    meta(name='og:title', content=title) 
+    //- 概要
+    meta(name='og:description', content=description)
+    //- 記事のURL
+    meta(name='og:url', content="https://wasureta-d1775.firebaseapp.com/wasureta/") 
+    //- twitter
+    meta(name="twitter:site" content="@hibohiboo")
+    //- twittercard（申請必要
+    meta(name="twitter:card" content="summary_large_image")
+    meta(name="twitter:creator" content="@hibohiboo")
+    meta(name="twitter:title" content=title)
+    meta(name="twitter:description" content=description)
+    //-  meta(name="twitter:image" content="https://wasureta-d1775.firebaseapp.com/assets/images/losttop.png")
+
+      meta(name='og:type', content="game") 
+    block css
+    script(defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js")
+    .
+      <!-- Google Tag Manager -->
+      <script>
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-KSBF5JP');</script>
+      <!-- End Google Tag Manager -->
+  body
+    #index-banner.section.no-pad-bot
+      .container
+        h1.header.center.orange-text=sitename
+        .row.center
+          h5.header.col.s12.light まだ何もないです!
+    .container
+      .section
+        // Icon Section
+        .row
+          .col.s12.m4
+            .icon-block
+              h2.center.light-blue-text
+                i.material-icons local_library
+              h5.center てすと
+          .col.s12.m4
+            .icon-block
+              h2.center.light-blue-text
+                i.material-icons group
+              h5.center てす
+          .col.s12.m4
+            .icon-block
+              h2.center.light-blue-text
+                i.material-icons settings
+              h5.center てすと
+
