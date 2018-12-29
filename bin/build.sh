@@ -4,7 +4,8 @@
 bin_dir=$(cd $(dirname $0) && pwd)
 
 bash $bin_dir/pug/build.sh
-
+bash $bin_dir/scss/build.sh
+bash $bin_dir/postcss/build.sh
 # container_name=${1:-webpack}
 
 # # $container_nameの有無をgrepで調べる
