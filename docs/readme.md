@@ -69,6 +69,8 @@ https://wasureta-d6b34.firebaseapp.com/
 [chart.js radar][*16]
 [webpack][*17]
 [materializeの使いかた][*18]
+[TypeScript の型定義ファイルと仲良くなろう][*20]  
+[TypeScript で型定義ファイル( d.ts )がないときの対処法][*21]
 
 [*1]:https://syon.github.io/refills/rid/1481295/
 [*2]:https://qiita.com/toduq/items/2e0b08bb722736d7968c
@@ -89,3 +91,5 @@ https://wasureta-d6b34.firebaseapp.com/
 [*17]:https://github.com/romariolopezc/elm-webpack-4-starter
 [*18]:http://masayuki610930.github.io/materialize_sample/
 [*19]:https://github.com/webpack-contrib/file-loader
+[*20]:http://developer.hatenastaff.com/entry/2016/06/27/140931
+[*21]:https://qiita.com/Nossa/items/726cc3e67527e896ed1e

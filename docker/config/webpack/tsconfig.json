@@ -4,7 +4,7 @@
     "outDir": "./dist/assets/js",
     "strictNullChecks": true,
     "sourceMap": false,
-    "allowJs":false,
+    "allowJs":true,
     "declaration": false,
     "composite": false
   },

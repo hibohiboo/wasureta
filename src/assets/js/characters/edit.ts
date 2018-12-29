@@ -1,4 +1,4 @@
-import  vue from 'vue';
+import {Vue} from 'vue';
 
   // フォームデータリアルタイム反映
 let app = new Vue({
@@ -7,4 +7,4 @@ let app = new Vue({
       param_six: '???',
     },
   });
-
+
