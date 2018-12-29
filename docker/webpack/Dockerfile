@@ -88,3 +88,4 @@ RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"build-pug\": \"pug \/app\/src -o \
 RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"watch\": \"chokidar '\/app\/**\/*.pug' -p -c 'npm run build-pug' \",/g" /app/package.json
 
 RUN yarn add --dev cssnano
+RUN yarn run elm install NoRedInk/elm-json-decode-pipeline
