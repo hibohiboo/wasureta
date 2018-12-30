@@ -1,4 +1,4 @@
-# NuxtでSPA作成
+# NuxtでSPA作成 2章
 
 ## プロジェクト作成
 
@@ -135,8 +135,6 @@ githubのソースが、テキストと異なっていた。 `Bearer `が追加�
 * サンプルはこの段階のものがgithubに上がっている
 
 [この時点のソース](https://github.com/hibohiboo/wasureta/tree/2764ab309b031bf1778b2d8cf76aa796413b0305/spa)
-
-
 
 ## 参考
 

@@ -50,6 +50,11 @@ module.exports = {
       }
     }
   },
+  router: {
+    middleware: [
+      'auth'
+    ]
+  },
   watchers: {
     webpack: {
       aggregateTimeout: 300,
