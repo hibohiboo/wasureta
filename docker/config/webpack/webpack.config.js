@@ -8,7 +8,7 @@ const HTMLWebpackPlugin = require('html-webpack-plugin');
 
 const MODE = process.env.NODE_ENV === 'production' ? 'production' : 'development';
 let filename = '[name].js';
-if (MODE == 'production') {
+if (MODE === 'production') {
   filename = '[name]-[hash].js';
 }
 
@@ -19,10 +19,10 @@ const opts = {
 };
 const files = {};
 globule
-  .find(['assets/**/*.js', '!assets/**/_*.js', '!assets/**/elm'], { cwd: opts.src })
-  .forEach((filename) => {
-    const key = filename.replace(new RegExp('.js$', 'i'), '');
-    const value = path.join(opts.src, filename);
+  .find(['assets/**/*.js', '!assets/**/_*.js', '!assets/**/elm/*'], { cwd: opts.src })
+  .forEach((findFileName) => {
+    const key = findFileName.replace(new RegExp('.js$', 'i'), '');
+    const value = path.join(opts.src, findFileName);
     files[key] = value;
   });
 

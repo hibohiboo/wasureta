@@ -1,7 +1,7 @@
 /**
  * Elmの引数
  */
-interface ElmInitArgs {
+interface IElmInitArgs {
   node: HTMLElement;
   flags?: any;
 }
@@ -15,7 +15,7 @@ declare namespace Main.Elm {
      *
      * @param args
      */
-    public static init(args: ElmInitArgs): any;
+    public static init(args: IElmInitArgs): any;
   }
 }
 export = Main;
