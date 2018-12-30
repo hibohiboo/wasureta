@@ -2,8 +2,3 @@
 declare module 'firebase';
 declare module 'firebaseui';
 declare module 'vue';
-
-// JQueryのインタフェースの拡張を行う
-interface JQuery {
-  sidenav(): JQuery;
-}
