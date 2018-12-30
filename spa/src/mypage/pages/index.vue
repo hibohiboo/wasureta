@@ -22,16 +22,18 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
-  // サーバサイドレンダリングをdata関数を拡張したasyncDataで行う。nuxt.jsの独自実装。
-  async asyncData({ app }) {
-    // コンポーネントの初期化前に行われる = thisへのアクセスができない
-    const items= await app.$axios.$get('https://qiita.com/api/v2/items?query=tag:nuxt.js&page=1&per_page=1')
-    return {
-      items
+  async asyncData({ store }) {
+    if (store.getters['items'].length) {
+      return;
     }
+    await store.dispatch('fetchItems');
   },
-}
+  computed: {
+    ...mapGetters(['items'])
+  }
+};
 </script>
 
 <style>
