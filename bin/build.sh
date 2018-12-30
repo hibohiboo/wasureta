@@ -4,9 +4,17 @@
 bin_dir=$(cd $(dirname $0) && pwd)
 
 bash $bin_dir/pug/build.sh
+
+# scss -> postcss の順番で依存関係があるので、順番を入れ替えてはならない
 bash $bin_dir/scss/build.sh
 bash $bin_dir/postcss/build.sh
+
+# elm -> ts -> js の順番で、依存関係
 bash $bin_dir/elm/build.sh
+bash $bin_dir/ts/build.sh
+bash $bin_dir/js/build.sh
+
+
 # container_name=${1:-webpack}
 
 # # $container_nameの有無をgrepで調べる

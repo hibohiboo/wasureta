@@ -1,10 +1,9 @@
 import * as firebase from 'firebase';
-import * as $ from 'jquery';
 import User from './models/User';
-const { Elm } = require('./elm/navigation/Main.elm');
+import { Elm } from './elm/navigation/Main';
 
 if (!firebase.apps.length) {
-  const config = require('./config'); // tslint:disable-line no-var-requires
+  const config = require('./_config'); // tslint:disable-line no-var-requires
   firebase.initializeApp(config);
 }
 const auth = firebase.auth();
@@ -16,7 +15,7 @@ auth.onAuthStateChanged((firebaseUser) => {
     // .filter(function(userInfo:firebase.UserInfo){return userInfo.providerId === firebase.auth.TwitterAuthProvider.PROVIDER_ID;})
     // .map(function(userInfo:firebase.UserInfo){return userInfo.uid;})[0];
   }
-  const mountNode = document.getElementById('navigation');
+  const mountNode = document.getElementById('navigation')!; // !(non-null-assertion-operator)を付与するとtypescriptのnullチェックによるコンパイルエラーを回避できる
   const json = JSON.stringify(user);
   const app = Elm.Main.init({ node: mountNode, flags:json });
   // elm -> js
@@ -29,5 +28,4 @@ auth.onAuthStateChanged((firebaseUser) => {
   app.ports.sidenav.subscribe(() => {
     $('.sidenav').sidenav();
   });
-
 });

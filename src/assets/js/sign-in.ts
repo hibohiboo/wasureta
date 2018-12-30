@@ -1,7 +1,7 @@
 import * as firebase from 'firebase';
 import * as firebaseui from 'firebaseui';
 
-const config = require('./config'); // tslint:disable-line no-var-requires
+const config = require('./_config'); // tslint:disable-line no-var-requires
 firebase.initializeApp(config);
 
 let uiConfig = {

@@ -13,7 +13,7 @@ const presets = [
 
 // sourceType: scriptにしないと、babelが グローバルの this を void 0 に変えてしまう
 const overrides = [{
-  test: "./src/assets/elm/ElmTest.js",
+  test: /elm\/.*\.js$/,
   sourceType: "script",
 }];
 module.exports = { presets, overrides };

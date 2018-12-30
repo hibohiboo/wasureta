@@ -1,8 +1,11 @@
 const path = require("path");
+const globule = require('globule');
 const merge = require("webpack-merge");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HTMLWebpackPlugin = require("html-webpack-plugin");
+
 const MODE = process.env.NODE_ENV === "production" ? "production" : "development";
 let filename = "[name].js";
 if (MODE == "production" ) {
@@ -14,26 +17,80 @@ const opts = {
   src: path.join(__dirname, 'src'),
   dest: path.join(__dirname, 'dist')
 }
+const files = {};
+globule
+.find([`assets/**/*.js`, `!assets/**/_*.js`,  `!assets/**/elm`], {cwd: opts.src})
+.forEach(filename => {
+  const key = filename.replace(new RegExp(`.js$`, 'i'), ``)
+  const value = path.join(opts.src, filename)
+  files[key] = value
+});
 
-
-// entry
-const files = {
-  index: 'assets/js/index.js'
-}
-
-const cssLoader = { 
-  loader: 'css-loader',
-  options: {
-    url: false   // url()を変換しない
+const htmlWebpackPlugins = [
+  {
+    name: "index",
+    chunks:[]
+  },
+  {
+    name: "about",
+    chunks:[]
+  },
+  {
+    name: "agreement",
+    chunks:[]
+  },
+  {
+    name: "privacy-policy",
+    chunks:[]
+  },
+  {
+    name: "rulebook",
+    chunks:[]
+  },
+  {
+    name: "rulebook",
+    chunks:[]
+  },
+  {
+    name: "sign-in",
+    chunks:[]
+  },
+  {
+    name: "characters/index",
+    chunks:[]
+  },
+  {
+    name: "characters/add",
+    chunks:['js/characters/edit']
+  },
+  {
+    name: "characters/view",
+    chunks:['js/characters/view', ]
+  },
+  {
+    name: "scenarios/sample1",
+    chunks:[]
   }
-};
+].map(obj=>{
+  obj.chunks.push('css/style');
+  obj.chunks.push('js/navigation');
+  
+  const chunks = obj.chunks.map(s=>`assets/${s}`);
+  
+  return new HTMLWebpackPlugin({
+    filename: `go-waste/${obj.name}.html`,
+    template: `/app/src/html/go-waste/${obj.name}.html`,
+    chunks: chunks
+  })
+})
+
 let common = {
-  mode: MODE,
+  mode: 'development',
   context: opts.src,
   entry: files,
   output: {
       path: opts.dest ,
-      filename: 'assets/js/' + filename
+      filename:  filename
   },
   resolve: {
       modules: [opts.src, "node_modules"],
@@ -48,48 +105,17 @@ let common = {
       }
     ]
   },
-  plugins: [
-    new CopyWebpackPlugin(
-      [{from: {glob: 'assets/**/*', dot: true}}],
-      {ignore: ["*.js"]}
-    ),
-    new CopyWebpackPlugin(
-      [{ from: '', to: './', }, ],
-      { context: 'html' }
-    ),
-  ]
+  plugins: [...htmlWebpackPlugins ],
+  // cdnから読み込むものはここに
+  externals: {
+    jquery: 'jQuery',
+    firebase: 'firebase',
+    firebaseui: 'firebaseui',
+    vue: 'Vue',
+    "chart.js": "Chart",
+    Chart: false
+  },
 };
-
-
-if (MODE === "development") {
-  console.log("Building for dev...");
-  module.exports = merge(common, {
-    module: {
-      rules: [
-        {
-          test: /\.css$/,
-          exclude: [/elm-stuff/, /node_modules/],
-          use: [
-            { loader:"style-loader"}, 
-            cssLoader
-          ]
-        }
-      ]
-    },
-    // 開発サーバの設定
-    devServer: {
-      inline: true,
-      port: 8080,
-      host:"0.0.0.0",
-      hot: true,
-      clientLogLevel: "info",
-    },
-    watchOptions: {
-      aggregateTimeout: 300,
-      poll: 5000
-    }
-  });
-}
 
 if (MODE === "production") {
   console.log("Building for Production...");
@@ -107,6 +133,10 @@ if (MODE === "production") {
         verbose: true,
         dry: false
       }),
+      new CopyWebpackPlugin(
+        [{ from: '', to: './', }, ],
+        { context: 'html' }
+      ),
       new MiniCssExtractPlugin({
         filename: '/assets/css/[name].css',
         chunkFilename: '/assets/css/[id].css'

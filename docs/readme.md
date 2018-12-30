@@ -71,6 +71,8 @@ https://wasureta-d6b34.firebaseapp.com/
 [materializeの使いかた][*18]
 [TypeScript の型定義ファイルと仲良くなろう][*20]  
 [TypeScript で型定義ファイル( d.ts )がないときの対処法][*21]
+[Stack Over Flow : typescript document.getElementByIDで HTMLElement | null の型のせいでエラー][*23]
+[typescriptでjqueryを拡張][*24]
 
 [*1]:https://syon.github.io/refills/rid/1481295/
 [*2]:https://qiita.com/toduq/items/2e0b08bb722736d7968c
@@ -93,3 +95,6 @@ https://wasureta-d6b34.firebaseapp.com/
 [*19]:https://github.com/webpack-contrib/file-loader
 [*20]:http://developer.hatenastaff.com/entry/2016/06/27/140931
 [*21]:https://qiita.com/Nossa/items/726cc3e67527e896ed1e
+[*22]:https://stackoverflow.com/questions/43218680/document-getelementbyidid-may-be-null
+[*23]:https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-0.html#non-null-assertion-operator
+[*24]:https://stackoverrun.com/ja/q/11272722
