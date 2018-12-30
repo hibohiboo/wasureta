@@ -26,6 +26,6 @@ auth.onAuthStateChanged((firebaseUser) => {
   });
   // elmのdom構築が終わった後にjsのイベントを発火させる
   app.ports.sidenav.subscribe(() => {
-    $('.sidenav').sidenav();
+    $('.sidenav').sidenav(); // materialize-css によるｊQuery拡張
   });
 });

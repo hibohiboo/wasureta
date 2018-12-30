@@ -9,7 +9,7 @@ const HTMLWebpackPlugin = require("html-webpack-plugin");
 const MODE = process.env.NODE_ENV === "production" ? "production" : "development";
 let filename = "[name].js";
 if (MODE == "production" ) {
-  // filename = "[name]-[hash].js";
+  filename = "[name]-[hash].js";
 }
 
 // ソース・出力先の設定
@@ -85,7 +85,7 @@ const htmlWebpackPlugins = [
 })
 
 let common = {
-  mode: 'development',
+  mode: MODE,
   context: opts.src,
   entry: files,
   output: {
@@ -112,8 +112,7 @@ let common = {
     firebase: 'firebase',
     firebaseui: 'firebaseui',
     vue: 'Vue',
-    "chart.js": "Chart",
-    Chart: false
+    "chart.js": "Chart"
   },
 };
 

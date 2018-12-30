@@ -40,9 +40,30 @@ https://wasureta-d6b34.firebaseapp.com/
 ### elm 0.19
 [elm 0.19 試す](https://github.com/hibohiboo/wasureta/tree/9da6239d6721c299cfab336179d88444ba78b72e)  
 
+## jQueryの拡張
+
+* type.d.tsファイルを作って、以下のように記述してやれば、好きな拡張を適用できる。
+* もちろん、そのjsライブラリが.d.tsファイルを提供しているならばそちらを使ったほうがよいが、もしない場合のためメモ。
+
+```ts
+
+// JQueryのインタフェースの拡張を行う
+interface JQuery {
+  sidenav(): JQuery;
+}
+
+```
+
 ## デプロイ
 
 まずは`./bin/pug.sh`で `dist/html`を作成。その後、`./bin/build.sh`で`dist/app/public`を作成。
+
+## ソース大幅変更
+
+* webpackだとelm-compilerが使えなくなるので、elmでコンパイルした後に、webpackでまとめるだけ。
+
+[変更前](https://github.com/hibohiboo/wasureta/tree/00de494e04baedf6c9f07d7a04348a446705be4f)
+
 
 ## 利用したい技術
 
