@@ -65,6 +65,15 @@ services:
       - ./config/webpack/postcss.config.js:/app/postcss.config.js
     command: [yarn, run, postcss, /app/src/assets/css/*.css, --no-map, --dir, /app/dist/assets/css/, --watch]
 
+  # コンパイルせずにファイルのコピーのみ行う
+  files:
+    build: ./webpack
+    volumes:
+      - ../src:/app/src
+      - ../app/public:/app/dist
+      # 設定ファイル
+      - ./config/webpack/webpack.config.copy.js:/app/webpack.config.js
+
   webpack:
     build: ./webpack
     volumes:
