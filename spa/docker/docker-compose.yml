@@ -1,0 +1,11 @@
+version: '3'
+services:
+  # htmlテンプレートエンジン
+  nuxt:
+    build: ./nuxt
+    volumes:
+      - ../src:/app/src
+    #   - ../dist/html:/app/dist
+    # environment:
+    #   - SHELL=/bin/bash
+    # command: [npm, run, watch]
