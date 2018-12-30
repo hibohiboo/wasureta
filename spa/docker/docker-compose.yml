@@ -16,8 +16,15 @@ services:
       - ../src/mypage/.eslintrc.js:/app/src/mypage/.eslintrc.js
       - ../src/mypage/nuxt.config.js:/app/src/mypage/nuxt.config.js
       - ../src/mypage/package.json:/app/src/mypage/package.json
-      
+      - ../src/mypage/yarn.lock:/app/src/mypage/yarn.lock
+      - cacheNodeModules:/app/src/mypage/node_modules
     #   - ../dist/html:/app/dist
     # environment:
     #   - SHELL=/bin/bash
-    # command: [npm, run, watch]
+    # working_dir: "/app/src/mypage"
+    # command: [yarn, dev]
+volumes:
+  # yarnでインストールした結果を保存する
+  cacheNodeModules: 
+  cacheDotElm:
+
