@@ -18,11 +18,13 @@ services:
       - ../src/mypage/package.json:/app/src/mypage/package.json
       - ../src/mypage/yarn.lock:/app/src/mypage/yarn.lock
       - cacheNodeModules:/app/src/mypage/node_modules
-    #   - ../dist/html:/app/dist
-    # environment:
-    #   - SHELL=/bin/bash
-    # working_dir: "/app/src/mypage"
-    # command: [yarn, dev]
+    environment:
+      - HOST=0.0.0.0
+    working_dir: "/app/src/mypage"
+    command: [yarn, dev]
+    ports:
+      - 3000:3000
+
 volumes:
   # yarnでインストールした結果を保存する
   cacheNodeModules: 
