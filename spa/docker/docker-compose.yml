@@ -1,6 +1,5 @@
 version: '3'
 services:
-  # htmlテンプレートエンジン
   nuxt:
     build: ./nuxt
     volumes:
@@ -18,6 +17,7 @@ services:
       - ../src/mypage/package.json:/app/src/mypage/package.json
       - ../src/mypage/yarn.lock:/app/src/mypage/yarn.lock
       - cacheNodeModules:/app/src/mypage/node_modules
+    env_file: .envrc
     environment:
       - HOST=0.0.0.0
     working_dir: "/app/src/mypage"

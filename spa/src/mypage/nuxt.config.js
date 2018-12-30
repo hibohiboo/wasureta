@@ -23,6 +23,14 @@ module.exports = {
   axios: {
 
   },
+  plugins:[
+    '~/plugins/axios.js'
+  ],
+  // セキュリティ上、マシンの環境変数をアプリケーションに渡すことはない。
+  // 渡したい場合、以下のように、明示的に渡す必要がある。
+  env: {
+    QIITA_TOKEN: process.env.QIITA_TOKEN
+  },
   /*
   ** Build configuration
   */

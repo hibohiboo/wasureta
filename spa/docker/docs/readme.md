@@ -83,7 +83,37 @@ module.exports = {
 bin/work/add-axios.sh
 ```
 
+* 通信は成功するが、consoleに表示されなかった。
 
+[この時点のソース](https://github.com/hibohiboo/wasureta/tree/ff1182404565a8ec83bf61e2760e26b3e034c086/spa)
+
+## 環境変数導入
+
+テキストではenvrcを追加したが、自分はdocker-composeを使っているので、`env_file`を追加する。
+
+docker-compose.ymlと同じ階層に、.envrcファイルを作ってトークンを記述。
+.gitignoreで.envrcファイルは管理外とする。
+
+### .envrc
+
+```
+QIITA_TOKEN=取得したトークン
+```
+
+### docker-compose.yml
+```
+    env_file: .envrc
+    environment:
+      - HOST=0.0.0.0
+```
+
+### axos.js
+
+githubのソースが、テキストと異なっていた。 `Bearer `が追加されている。
+
+```
+      config.headers.common['Authorization'] = `Bearer ${process.env.QIITA_TOKEN}`
+```
 
 ## 参考
 
