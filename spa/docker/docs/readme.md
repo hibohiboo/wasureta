@@ -127,7 +127,16 @@ githubのソースが、テキストと異なっていた。 `Bearer `が追加�
 ./bin/up.sh
 ```
 
-[この時点のソース](2fe3036a8ffc04d5b5a17ae8872a7ca43787be5f)
+[この時点のソース](https://github.com/hibohiboo/wasureta/tree/2fe3036a8ffc04d5b5a17ae8872a7ca43787be5f/spa)
+
+
+## Vuexへの移譲
+
+* サンプルはこの段階のものがgithubに上がっている
+
+[この時点のソース](https://github.com/hibohiboo/wasureta/tree/2764ab309b031bf1778b2d8cf76aa796413b0305/spa)
+
+
 
 ## 参考
 
