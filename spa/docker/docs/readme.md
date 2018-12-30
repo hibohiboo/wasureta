@@ -77,6 +77,13 @@ module.exports = {
 
 [この時点のソース](https://github.com/hibohiboo/wasureta/tree/bca6c48747ced157e61e0d5e90a6421a7e2a6365/spa)
 
+## axios導入
+
+```
+bin/work/add-axios.sh
+```
+
+
 
 ## 参考
 
