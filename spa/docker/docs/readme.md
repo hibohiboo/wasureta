@@ -115,6 +115,10 @@ githubのソースが、テキストと異なっていた。 `Bearer `が追加�
       config.headers.common['Authorization'] = `Bearer ${process.env.QIITA_TOKEN}`
 ```
 
+[この時点のソース](https://github.com/hibohiboo/wasureta/tree/7412652e9d83a012187430517dee52e59fc9b368/spa)
+
+
+
 ## 参考
 
 [Nuxt.js ビギナーズガイド][*0]
