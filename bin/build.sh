@@ -9,9 +9,11 @@ rm -rf $bin_dir/../dist/assets
 rm -rf $bin_dir/../dist/html
 rm -rf $bin_dir/../pre-dist/assets
 
-
 # html作成
 bash $bin_dir/pug/build.sh
+
+# 静的ファイルコピー
+bash $bin_dir/files/build.sh
 
 # scss -> postcss の順番で依存関係があるので、順番を入れ替えてはならない
 bash $bin_dir/scss/build.sh
@@ -23,6 +25,7 @@ bash $bin_dir/ts/build.sh
 bash $bin_dir/js/build.sh
 
 bash $bin_dir/webpack/build.sh
+
 
 # container_name=${1:-webpack}
 

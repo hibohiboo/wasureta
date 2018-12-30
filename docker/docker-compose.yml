@@ -70,7 +70,9 @@ services:
     build: ./webpack
     volumes:
       - ../src:/app/src
-      - ../app/public:/app/dist
+      - ../dist:/app/dist
+      - ../pre-dist:/app/pre-dist
+      - ../app/public:/app/public
       # 設定ファイル
       - ./config/webpack/webpack.config.copy.js:/app/webpack.config.js
 
