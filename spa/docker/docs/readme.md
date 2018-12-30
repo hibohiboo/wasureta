@@ -55,11 +55,37 @@ bin/up.sh
 
 [この時点のソース](https://github.com/hibohiboo/wasureta/tree/414e354f1c23489dc66b5a81f4524cc2d89ef713/spa)
 
+## ホットリロードの確認
+
+* windows + virtual box + dockerでは、ポーリングしてやらないとホットリロードが有効にならないので、設定を修正
+
+### src/mypage/nuxt.config.js編集
+
+```js
+module.exports = {
+  head: {/* 省略 */},
+  loading: { color: '#3B8070' },
+  build: {/*省略*/},
+  watchers: {
+    webpack: {
+      aggregateTimeout: 300,
+      poll: 1000
+    }
+  }
+}
+
+```
 
 ## 参考
 
+[Nuxt.js ビギナーズガイド][*0]
 [docker ip][*1]
 [webpack-dev-server host][*2]
+[wabpack-dev-server watch][*3]
 
+[*0]:https://nuxt-beginners-guide.elevenback.jp/examples/
 [*1]:http://docs.docker.jp/v1.11/engine/userguide/networking/default_network/binding.html
 [*2]:https://github.com/vuejs/vue-cli/issues/144
+[*3]:https://ja.nuxtjs.org/api/configuration-watchers/
+
+
