@@ -1,4 +1,4 @@
-const Vue = require('vue');
+import Vue from 'vue';
 
   // フォームデータリアルタイム反映
 let app = new Vue({
