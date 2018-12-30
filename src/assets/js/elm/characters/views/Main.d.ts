@@ -10,12 +10,12 @@ declare namespace Main.Elm {
   /**
    * メイン
    */
-  class Main{
+  class Main {
     /**
-     * 
-     * @param args 
+     *
+     * @param args
      */
-    public static init(args:ElmInitArgs): any;
+    public static init(args: ElmInitArgs): any;
   }
 }
 export = Main;

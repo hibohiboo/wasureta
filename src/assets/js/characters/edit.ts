@@ -1,10 +1,10 @@
-import Vue from 'vue';
+import vue from 'vue';
 
   // フォームデータリアルタイム反映
-let app = new Vue({
-    el: '#editform',
-    data: {
+const app = new Vue({
+  el: '#editform',
+  data: {
       param_six: '???',
     },
-  });
-
+});
+

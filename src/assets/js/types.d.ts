@@ -8,4 +8,3 @@ declare module 'vue';
 interface JQuery {
   sidenav(): JQuery;
 }
-

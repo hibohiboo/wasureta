@@ -94,6 +94,3 @@ RUN yarn add --dev html-webpack-plugin
 RUN yarn add --dev @types/jquery
 RUN yarn add --dev @types/materialize-css
 RUN yarn add --dev @types/chart.js
-RUN yarn add --dev vue
-
-RUN yarn global add @vue/cli

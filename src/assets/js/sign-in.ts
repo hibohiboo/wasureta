@@ -4,7 +4,7 @@ import * as firebaseui from 'firebaseui';
 const config = require('./_config'); // tslint:disable-line no-var-requires
 firebase.initializeApp(config);
 
-let uiConfig = {
+const uiConfig = {
   signInSuccessUrl: '/',
   signInOptions: [
     firebase.auth.TwitterAuthProvider.PROVIDER_ID,
@@ -32,7 +32,7 @@ let uiConfig = {
 };
 
 // Initialize the FirebaseUI Widget using Firebase.
-let ui = new firebaseui.auth.AuthUI(firebase.auth());
+const ui = new firebaseui.auth.AuthUI(firebase.auth());
 // The start method will wait until the DOM is loaded.
 ui.start('#firebaseui-auth-container', uiConfig);
 console.log(ui);

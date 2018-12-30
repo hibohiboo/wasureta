@@ -1,6 +1,6 @@
 import * as firebase from 'firebase';
-import User from './models/User';
 import { Elm } from './elm/navigation/Main';
+import User from './models/User';
 
 if (!firebase.apps.length) {
   const config = require('./_config'); // tslint:disable-line no-var-requires

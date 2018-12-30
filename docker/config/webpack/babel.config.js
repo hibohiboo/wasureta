@@ -1,19 +1,19 @@
 const presets = [
   [
-    "@babel/env",
+    '@babel/env',
     {
       targets: {
-        chrome: "70"
+        chrome: '70',
       },
-      useBuiltIns: "entry"
+      useBuiltIns: 'entry',
     },
-    
+
   ],
 ];
 
 // sourceType: scriptにしないと、babelが グローバルの this を void 0 に変えてしまう
 const overrides = [{
   test: /elm\/.*\.js$/,
-  sourceType: "script",
+  sourceType: 'script',
 }];
 module.exports = { presets, overrides };

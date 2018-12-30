@@ -44,6 +44,7 @@ services:
       - ./config/webpack/babel.config.js:/app/babel.config.js
       - ./config/webpack/.eslintrc:/app/.eslintrc
       - ./config/webpack/.esdoc.json:/app/.esdoc.json
+      - ./config:/app/config
     environment:
       - CHOKIDAR_USEPOLLING=true
     command: [yarn, run, babel, src, --out-dir, /app/dist, --watch]
