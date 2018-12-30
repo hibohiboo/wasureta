@@ -64,6 +64,8 @@ interface JQuery {
 
 [変更前](https://github.com/hibohiboo/wasureta/tree/00de494e04baedf6c9f07d7a04348a446705be4f)
 
+[変更後](https://github.com/hibohiboo/wasureta/tree/1236ea1e669d346f84508869d532d1f181fa175a)
+
 
 ## 利用したい技術
 
