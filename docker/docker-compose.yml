@@ -10,7 +10,6 @@ services:
       - SHELL=/bin/bash
     command: [npm, run, watch]
 
-
   ts:
     build: ./webpack
     volumes:
@@ -75,6 +74,7 @@ services:
       - ../app/public:/app/public
       # 設定ファイル
       - ./config/webpack/webpack.config.copy.js:/app/webpack.config.js
+    command: [yarn, run, cpx, "/app/src/**/*.{png,jpg}", /app/dist,  --watch]
 
   webpack:
     build: ./webpack

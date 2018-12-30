@@ -5,6 +5,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
 const MODE = process.env.NODE_ENV === 'production' ? 'production' : 'development';
 let filename = '[name].js';
@@ -125,7 +126,6 @@ if (MODE === 'production') {
       minimize: true,
     },
     plugins: [
-      // Delete everything from output directory and report to user
       new CleanWebpackPlugin(['dist'], {
         root: __dirname,
         exclude: [],
@@ -160,6 +160,48 @@ if (MODE === 'production') {
           ],
         },
       ],
+    },
+  });
+}
+
+
+if (MODE === 'development') {
+  console.log('Building for dev...');
+  module.exports = merge(common, {
+    plugins: [
+      new webpack.NamedModulesPlugin(),
+      new webpack.NoEmitOnErrorsPlugin(),
+    ],
+    module: {
+      rules: [
+        {
+          test: /\.css$/,
+          exclude: [/node_modules/],
+          loaders: ['style-loader', 'css-loader'],
+        }],
+    },
+    // 開発サーバの設定
+    devServer: {
+    // // public/index.htmlをデフォルトのホームとする
+      contentBase: './dist',
+      // // バンドルしたファイルを/assets/js/フォルダに出力したものとする。
+      // publicPath: "/assets/",
+      // インラインモード
+      inline: true,
+      // 8080番ポートで起動
+      port: 8080,
+      // dockerのコンテナ上でサーバを動かすときは以下の設定で全ての接続を受け入れる
+      host: '0.0.0.0',
+      // hot loadを有効にする
+      hot: true,
+      // ログレベルをinfoに
+      clientLogLevel: 'info',
+    },
+    // vagrantの仕様でポーリングしないとファイルの変更を感知できない
+    watchOptions: {
+      aggregateTimeout: 300,
+      // ５秒毎にポーリング
+      poll: 5000,
     },
   });
 }
