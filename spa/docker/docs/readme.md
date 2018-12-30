@@ -53,4 +53,13 @@ bin/up.sh
 
 ポート3000でアクセスして、表示確認。
 
+[この時点のソース](https://github.com/hibohiboo/wasureta/tree/414e354f1c23489dc66b5a81f4524cc2d89ef713/spa)
 
+
+## 参考
+
+[docker ip][*1]
+[webpack-dev-server host][*2]
+
+[*1]:http://docs.docker.jp/v1.11/engine/userguide/networking/default_network/binding.html
+[*2]:https://github.com/vuejs/vue-cli/issues/144
