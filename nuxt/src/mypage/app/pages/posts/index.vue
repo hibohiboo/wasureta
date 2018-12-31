@@ -10,10 +10,19 @@
         :data="showPosts"
         style="width: 100%"
         class="table"
+        @row-click="handleClick"
       >
         <el-table-column
           prop="title"
-          label="タイトル" />
+          label="タイトル">
+          <div slot-scope="scope">
+            <span>{{ scope.row.title }}&nbsp;</span>
+            <span>
+              <i class="el-icon-star-on" />
+              <span>{{ scope.row.likes.length }}</span>
+            </span>
+          </div>
+        </el-table-column>
         <el-table-column
           prop="user.id"
           label="投稿者"
@@ -37,7 +46,6 @@ export default {
   computed: {
     showPosts() {
       return this.posts.map(post => {
-        console.log(post)
         post.created_at = moment(post.created_at).format('YYYY/MM/DD HH:mm:ss')
         return post
       })

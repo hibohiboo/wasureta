@@ -156,6 +156,13 @@ Stopping docker_nuxt_1 ... done
 
 ![](./images/delete-forget.png)
 
+## 投稿一覧
+
+* 投稿日時が登録されていなかったので、posts.jsで投稿日時を登録するように更新の手順を増やした。
+
+
+[この時点のソース](https://github.com/hibohiboo/wasureta/tree/83d0fede4748c3f2c9a6fd8a206147255fc21b99/nuxt)
+
 ## 参考
 
 [Nuxt.js ビギナーズガイド][*0]
