@@ -120,6 +120,15 @@ Stopping docker_nuxt_1 ... done
 
 ### グローバルナビゲーションでのログイン確認
 
+[この時点のソース](https://github.com/hibohiboo/wasureta/tree/c072e1231f40ae20cb37df8f5022a0232f4aa6a1j /nuxt)
+
+## 投稿機能の実装
+
+* 試しに投稿したときのデータベースの様子は以下。
+
+![](./images/postsdb.png)
+
+[この時点のソース](https://github.com/hibohiboo/wasureta/tree/c072e1231f40ae20cb37df8f5022a0232f4aa6a1j /nuxt)
 
 ## 参考
 
