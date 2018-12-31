@@ -120,7 +120,7 @@ Stopping docker_nuxt_1 ... done
 
 ### グローバルナビゲーションでのログイン確認
 
-[この時点のソース](https://github.com/hibohiboo/wasureta/tree/c072e1231f40ae20cb37df8f5022a0232f4aa6a1j /nuxt)
+[この時点のソース](https://github.com/hibohiboo/wasureta/tree/c072e1231f40ae20cb37df8f5022a0232f4aa6a1j/nuxt)
 
 ## 投稿機能の実装
 
@@ -128,7 +128,33 @@ Stopping docker_nuxt_1 ... done
 
 ![](./images/postsdb.png)
 
-[この時点のソース](https://github.com/hibohiboo/wasureta/tree/7e342b74df691e6b9ebeaa6d4b7b625dcf6a57e8 /nuxt)
+[この時点のソース](https://github.com/hibohiboo/wasureta/tree/628bda0623780eacc186c0a735b11a9edd88503b/nuxt)
+
+### 注意点
+
+```js
+  async publishPost({ commit }, { payload }) {
+    const user = await this.$axios.$get(
+      `/mypages/users/${payload.user.id}.json`
+    )
+    // firebaseが割り宛てたランダムな英字の投稿データIDを取得する
+    const post_id = (await this.$axios.$post('/mypages/posts.json', payload))
+      .name
+    const created_at = moment().format()
+    const post = { id: post_id, ...payload, created_at }
+    const putData = { id: post_id, ...payload, created_at }
+    // 以下のdeleteを忘れると、userの下の投稿の下にさらにuserができることとなる。
+    delete putData.user
+    await this.$axios.$put(`/mypages/users/${user.id}/posts.json`, [
+      ...(user.posts || []),
+      putData
+    ])
+    commit('addPost', { post })
+```
+
+* deleteを忘れた場合、以下のようなDBとなる。
+
+![](./images/delete-forget.png)
 
 ## 参考
 
