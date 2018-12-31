@@ -13,9 +13,7 @@ module.exports = {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: pkg.description }
     ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
 
   /*
@@ -26,16 +24,12 @@ module.exports = {
   /*
   ** Global CSS
   */
-  css: [
-    'element-ui/lib/theme-chalk/index.css'
-  ],
+  css: ['element-ui/lib/theme-chalk/index.css'],
 
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: [
-    '@/plugins/element-ui'
-  ],
+  plugins: ['@/plugins/element-ui'],
 
   /*
   ** Nuxt.js modules
@@ -49,6 +43,7 @@ module.exports = {
   */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
+    baseURL: process.env.DATABASE_URL
   },
 
   /*
@@ -70,6 +65,9 @@ module.exports = {
       }
     }
   },
+  // env: {
+  //   QIITA_TOKEN: process.env.QIITA_TOKEN
+  // },
   // windows + virtualbox + docker用にポーリング設定
   watchers: {
     webpack: {

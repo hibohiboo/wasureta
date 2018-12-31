@@ -101,12 +101,13 @@ nuxt_1  | ℹ Listening on: http://172.18.0.2:3000                              
 ╚Gracefully stopping... (press Ctrl+C again to force)
 Stopping docker_nuxt_1 ... done
 ```
-[この時点のソース](https://github.com/hibohiboo/wasureta/tree/dfd16f5ca97101e14a0da9072fda9026a2001442/nuxt)
+[この時点のソース](https://github.com/hibohiboo/wasureta/tree/e01765b2d79a145c5aeacd3668ac5e617fee6933/nuxt)
 
 
 ## 参考
 
 [Nuxt.js ビギナーズガイド][*0]
-
+[スタイルガイド][*1]
 
 [*0]:https://nuxt-beginners-guide.elevenback.jp/examples/
+[*1]:https://jp.vuejs.org/v2/style-guide/
