@@ -109,7 +109,9 @@ Stopping docker_nuxt_1 ... done
 
 [この時点のソース](https://github.com/hibohiboo/wasureta/tree/e2d78ad2c26a5aea00ccdbad499cdb3079ae7651/nuxt)
 
+### 簡易的なログイン作成
 
+[この時点のソース](b4512f91816934dbcddd2c0a8cd7b73b9f9177fa)
 
 ## 参考
 
