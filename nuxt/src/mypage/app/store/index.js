@@ -1,3 +1,5 @@
+import moment from '~/plugins/moment'
+
 export const state = () => ({
   isLoggedIn: false,
   user: null
@@ -10,15 +12,24 @@ export const getters = {
 
 export const mutations = {
   setUser(state, { user }) {
+    if (user.id.match(/_|@|\./)) {
+      throw new TypeError('invalid username')
+    }
     state.user = user
     state.isLoggedIn = true
+  },
+  updateUser(state, { user }) {
+    state.user = user
   }
 }
 
 export const actions = {
   async login({ commit }, { id }) {
+    if (id.match(/_|@|\./)) {
+      throw new TypeError('invalid username')
+    }
     const user = await this.$axios.$get(`/mypages/users/${id}.json`)
-    console.log(user)
+
     if (!user.id) throw new Error('Invalid user')
     commit('setUser', { user })
   },

@@ -175,6 +175,12 @@ Stopping docker_nuxt_1 ... done
 [この時点のソース](https://github.com/hibohiboo/wasureta/tree/f73579caa91a1a7c8b25840a95ed769d551dc57d/nuxt)
 
 
+## いいね機能の追加
+
+[この時点のソース](https://github.com/hibohiboo/wasureta/tree/7fcb611e659a53412b84c8464a2117982ec04aa3/nuxt)
+
+
+
 ## 参考
 
 [Nuxt.js ビギナーズガイド][*0]
