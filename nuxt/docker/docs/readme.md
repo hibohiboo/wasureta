@@ -163,6 +163,16 @@ Stopping docker_nuxt_1 ... done
 
 [この時点のソース](https://github.com/hibohiboo/wasureta/tree/83d0fede4748c3f2c9a6fd8a206147255fc21b99/nuxt)
 
+
+## 詳細ページを表示
+
+* lint的には computedよりfiltersのほうが上にあるほうがよいということなので、順番だけ変更
+
+[この時点のソース](https://github.com/hibohiboo/wasureta/tree/8b0b5d446f3faf890b9527861dec3247ceede4b0/nuxt)
+
+
+
+
 ## 参考
 
 [Nuxt.js ビギナーズガイド][*0]
