@@ -43,13 +43,11 @@ export const actions = {
     const user = await this.$axios.$get(
       `/mypages/users/${payload.user.id}.json`
     )
-
-    const created_at = moment().format()
-    const post = { ...payload, created_at }
-
     // firebaseが割り宛てたランダムな英字の投稿データIDを取得する
-    const post_id = (await this.$axios.$post('/mypages/posts.json', post))
+    const post_id = (await this.$axios.$post('/mypages/posts.json', payload))
       .name
+    const created_at = moment().format()
+    const post = { id: post_id, ...payload, created_at }
     const putData = { id: post_id, ...payload, created_at }
     // 以下のdeleteを忘れると、userの下の投稿の下にさらにuserができることとなる。
     delete putData.user
@@ -57,6 +55,8 @@ export const actions = {
       ...(user.posts || []),
       putData
     ])
+    // idとcreated_atを持たせたデータで再度更新
+    await this.$axios.$put(`/mypages/posts/${post.id}.json`, post)
     commit('addPost', { post })
   },
   async addLikeToPost({ commit }, { user, post }) {
