@@ -21,28 +21,11 @@ export const mutations = {
 }
 
 export const actions = {
-  async fetchPost({ commit }, { id }) {
-    const post = await this.$axios.$get(`/mypages/posts/${id}.json`)
-    commit('addPost', { post: { ...post, id } })
-  },
-  async fetchPosts({ commit }) {
-    const posts = await this.$axios.$get(`/mypages/posts.json`)
-    commit('clearPosts')
-    Object.entries(posts)
-      .reverse()
-      .forEach(([id, content]) =>
-        commit('addPost', {
-          post: {
-            id,
-            ...content
-          }
-        })
-      )
-  },
   async publishPost({ commit }, { payload }) {
     const user = await this.$axios.$get(
       `/mypages/users/${payload.user.id}.json`
     )
+    // firebaseが割り宛てたランダムな英字の投稿データIDを取得する
     const post_id = (await this.$axios.$post('/mypages/posts.json', payload))
       .name
     const created_at = moment().format()
@@ -55,24 +38,5 @@ export const actions = {
     ])
     commit('addPost', { post })
   },
-  async addLikeToPost({ commit }, { user, post }) {
-    post.likes.push({
-      created_at: moment().format(),
-      user_id: user.id,
-      post_id: post.id
-    })
-    const newPost = await this.$axios.$put(
-      `/mypages/posts/${post.id}.json`,
-      post
-    )
-    commit('updatePost', { post: newPost })
-  },
-  async removeLikeToPost({ commit }, { user, post }) {
-    post.likes = post.likes.filter(like => like.user_id !== user.id) || []
-    const newPost = await this.$axios.$put(
-      `/mypages/posts/${post.id}.json`,
-      post
-    )
-    commit('updatePost', { post: newPost })
-  }
+
 }

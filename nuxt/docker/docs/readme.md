@@ -128,7 +128,7 @@ Stopping docker_nuxt_1 ... done
 
 ![](./images/postsdb.png)
 
-[この時点のソース](https://github.com/hibohiboo/wasureta/tree/c072e1231f40ae20cb37df8f5022a0232f4aa6a1j /nuxt)
+[この時点のソース](https://github.com/hibohiboo/wasureta/tree/7e342b74df691e6b9ebeaa6d4b7b625dcf6a57e8 /nuxt)
 
 ## 参考
 
