@@ -111,7 +111,15 @@ Stopping docker_nuxt_1 ... done
 
 ### 簡易的なログイン作成
 
-[この時点のソース](b4512f91816934dbcddd2c0a8cd7b73b9f9177fa)
+[この時点のソース](https://github.com/hibohiboo/wasureta/tree/b4512f91816934dbcddd2c0a8cd7b73b9f9177fa/nuxt)
+
+
+### cookieによる永続化
+
+[この時点のソース](https://github.com/hibohiboo/wasureta/tree/b27eb2a1084931663857050a221432fd5491064c/nuxt)
+
+### グローバルナビゲーションでのログイン確認
+
 
 ## 参考
 

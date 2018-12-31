@@ -15,6 +15,14 @@
 
     <no-ssr>
       <el-menu-item 
+        v-if="user" 
+        :route="{ path: `/users/${user.id}` }" 
+        index="4" 
+        style="float: right;">
+        <span>{{ user.id }}</span>
+      </el-menu-item>
+      <el-menu-item 
+        v-else 
         :route="{ path: '/' }" 
         index="4" 
         style="float: right;">
@@ -29,3 +37,12 @@
     </el-menu-item>
   </el-menu>
 </template>
+
+<script>
+import { mapGetters } from 'vuex'
+export default {
+  computed: {
+    ...mapGetters(['user'])
+  }
+}
+</script>
