@@ -8,6 +8,8 @@
 
 ## スキャフォールディング
 
+### プロジェクトの作成
+
 * 91Pの手順に従ってインストール
 * yarn までやってくれたので、案の定エラー。
 
@@ -52,7 +54,27 @@ info Visit https://yarnpkg.com/en/docs/cli/install for documentation about this 
     yarn start
 ```
 
+### yarnのやりなおし
 
+* docker-composeを書き換えて、やりなおし。
+
+```
+vagrant@vagrant[master]:/vagrant/project/wasureta/nuxt$ ./bin/blogs/first-install-package.sh
+yarn install v1.12.3
+info No lockfile found.
+[1/4] Resolving packages...
+warning eslint > file-entry-cache > flat-cache > circular-json@0.3.3: CircularJSON is in maintenance only, flatted is its successor.
+[2/4] Fetching packages...
+info fsevents@1.2.4: The platform "linux" is incompatible with this module.
+info "fsevents@1.2.4" is an optional dependency and failed compatibility check. Excluding it from installation.
+[3/4] Linking dependencies...
+warning " > element-ui@2.4.11" has unmet peer dependency "vue@^2.5.2".
+warning " > eslint-loader@2.1.1" has unmet peer dependency "webpack@>=2.0.0 <5.0.0".
+warning " > eslint-plugin-vue@4.7.1" has incorrect peer dependency "eslint@^3.18.0 || ^4.0.0".
+[4/4] Building fresh packages...
+success Saved lockfile.
+Done in 29.41s.
+```
 
 ## 参考
 
