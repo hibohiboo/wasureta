@@ -2,7 +2,7 @@ const pkg = require('./package')
 
 module.exports = {
   mode: 'universal',
-
+  srcDir: 'app',
   /*
   ** Headers of the page
   */
@@ -68,6 +68,13 @@ module.exports = {
           exclude: /(node_modules)/
         })
       }
+    }
+  },
+  // windows + virtualbox + docker用にポーリング設定
+  watchers: {
+    webpack: {
+      aggregateTimeout: 300,
+      poll: 1000
     }
   }
 }

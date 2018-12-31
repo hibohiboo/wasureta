@@ -76,6 +76,34 @@ success Saved lockfile.
 Done in 29.41s.
 ```
 
+[この時点のソース](https://github.com/hibohiboo/wasureta/tree/dfd16f5ca97101e14a0da9072fda9026a2001442/nuxt)
+
+## 起動
+
+* docker用のポーリング設定をnuxt.config.jsに行って起動
+
+```
+vagrant@vagrant[master]:/vagrant/project/wasureta/nuxt$ ./bin/up.sh
+Starting docker_nuxt_1 ... done
+Attaching to docker_nuxt_1
+nuxt_1  | yarn run v1.12.3
+nuxt_1  | $ nuxt
+nuxt_1  | ℹ Preparing project for development                                   01:04:52
+nuxt_1  | ℹ Initial build may take a while                                      01:04:52
+nuxt_1  | ✔ Builder initialized                                                 01:04:52
+nuxt_1  | ✔ Nuxt files generated                                                01:04:52
+nuxt_1  | ℹ Compiling Client                                         webpackbar 01:04:53
+nuxt_1  | ℹ Compiling Server                                         webpackbar 01:04:53
+nuxt_1  | ✔ Server: Compiled successfully in 8.11s                   webpackbar 01:05:01
+nuxt_1  | ✔ Client: Compiled successfully in 9.60s                   webpackbar 01:05:02
+nuxt_1  | ℹ Waiting for file changes                                            01:05:02
+nuxt_1  | ℹ Listening on: http://172.18.0.2:3000                                01:05:02
+╚Gracefully stopping... (press Ctrl+C again to force)
+Stopping docker_nuxt_1 ... done
+```
+[この時点のソース](https://github.com/hibohiboo/wasureta/tree/dfd16f5ca97101e14a0da9072fda9026a2001442/nuxt)
+
+
 ## 参考
 
 [Nuxt.js ビギナーズガイド][*0]
