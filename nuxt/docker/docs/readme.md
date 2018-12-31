@@ -103,6 +103,13 @@ Stopping docker_nuxt_1 ... done
 ```
 [この時点のソース](https://github.com/hibohiboo/wasureta/tree/e01765b2d79a145c5aeacd3668ac5e617fee6933/nuxt)
 
+## ログインページの作成
+
+### モック作成
+
+[この時点のソース](https://github.com/hibohiboo/wasureta/tree/e2d78ad2c26a5aea00ccdbad499cdb3079ae7651/nuxt)
+
+
 
 ## 参考
 
