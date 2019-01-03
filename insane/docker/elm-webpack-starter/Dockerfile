@@ -26,9 +26,7 @@ RUN yarn add --dev @babel/cli
 # RUN yarn add --dev tslint tslint-config-airbnb
 # RUN yarn add --dev typedoc 
 
-# ## for css
-# ### sass
-# RUN yarn add --dev node-sass
+
 
 # ### postcss
 # RUN yarn add --dev postcss postcss-cli
@@ -42,7 +40,6 @@ RUN yarn add --dev @babel/cli
 # RUN yarn add --dev stylelint-config-sass-guidelines
 
 ## elm
-
 RUN yarn add --dev elm
 RUN yarn add --dev elm-format
 RUN yarn add --dev elm-minify
@@ -79,6 +76,13 @@ RUN yarn add --dev resolve-url-loader
 RUN yarn add --dev resolve-url-loader
 RUN yarn add --dev sass-loader
 RUN yarn add --dev url-loader
+
+## for css
+### sass
+RUN yarn add --dev node-sass
+
+### purecss
+RUN yarn add purecss
 
 # ## pug
 # RUN yarn add --dev pug
