@@ -10,6 +10,8 @@ container_name=${1:-elm}
 composeFile=${1:-"docker-compose.yml"}
 
 # js-fix
-cd $docker_dir && docker-compose -f $composeFile run $container_name  yarn -s eslint --fix --ext .js  src
+cd $docker_dir && docker-compose -f $composeFile run $container_name yarn -s eslint --ignore-path .eslintignore  --fix --ext .js  .
 # css 
-cd $docker_dir && docker-compose -f $composeFile run $container_name  yarn stylelint **/*.scss --fix
+cd $docker_dir && docker-compose -f $composeFile run $container_name yarn stylelint **/*.scss --fix
+# ts
+cd $docker_dir && docker-compose -f $composeFile run $container_name yarn run -s tslint -c tslint.json src/**/*.ts --fix

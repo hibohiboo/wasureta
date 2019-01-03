@@ -11,7 +11,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const MODE = process.env.npm_lifecycle_event === 'prod' ? 'production' : 'development';
-const filename = MODE == 'production' ? '[name]-[hash].js' : 'index.js';
+const filename = MODE === 'production' ? '[name]-[hash].js' : 'index.js';
 
 const common = {
   mode: MODE,
