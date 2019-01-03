@@ -1,0 +1,66 @@
+@charset "UTF-8";
+
+body {
+  font-family: "メイリオ", "Hiragino kaku Gothic Pro", sans-serif;
+  margin: 0;
+}
+
+.page {
+  //***** 基本 *****
+  * {
+    margin: 0;
+  }
+
+  &-head {
+    img {
+      vertical-align: bottom; // 余計な余白が入るのを防ぐ
+      width: 80px;
+    }
+  }
+}
+
+.page {
+  // ***** グリッド *****
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto; // ヘッダフッタは画面の横幅に合わせて可変。高さの調整には2つ目の行トラックを使う。
+  min-height: 100vh; // 最低限確保する高さをブラウザ画面の高さに
+  &-nav,
+  &-btn-close {
+    display: none;
+  }
+
+  // ヘッダ
+  &-head {
+    grid-column: 1;
+    grid-row: 1;
+
+    img {
+      vertical-align: bottom; // 余計な余白が入るのを防ぐ
+      width: 80px;
+    }
+  }
+
+  // メインコンテンツ
+  &-main {
+    background-color: #ffe4b5;
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  // ナビゲーション
+  &-nav {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  // ボタン
+  &-btn,
+  &-btn-close {
+    align-self: center;
+    // ヘッダボタンと閉じるボタンはヘッダの左端
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: start;
+  }
+}
