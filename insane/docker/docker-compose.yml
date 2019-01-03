@@ -12,6 +12,8 @@ services:
       - ./config/.babelrc:/app/.babelrc
       - ./config/.eslintrc:/app/.eslintrc
       - ./config/.eslintignore:/app/.eslintignore
+      - ./config/.stylelintrc:/app/.stylelintrc
+      
       # packageのキャッシュ
       - cacheElmStuffStarter:/app/elm-stuff
       - cacheDotElmStarter:/root/.elm
