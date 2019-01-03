@@ -27,10 +27,6 @@ body {
   grid-template-columns: 1fr;
   grid-template-rows: auto 1fr auto; // ヘッダフッタは画面の横幅に合わせて可変。高さの調整には2つ目の行トラックを使う。
   min-height: 100vh; // 最低限確保する高さをブラウザ画面の高さに
-  &-nav,
-  &-btn-close {
-    display: none;
-  }
 
   // ヘッダ
   &-head {
@@ -62,6 +58,13 @@ body {
     grid-column: 1;
     grid-row: 1;
     justify-self: start;
+    align-self: center;
+    padding: 20px;
+    border: none;
+    background-color: transparent;
+    color: $palette-trueWhite;
+    font-size: 28px;
+    cursor: pointer;
   }
 
   // フッタ
@@ -70,5 +73,8 @@ body {
     grid-row: 3;
     padding: 20px 0;
     background-color: $color-globalFooter-background;
+    color: $color-globalFooter;
+    text-align: center;
+    font-size: 14px;
   }
 }

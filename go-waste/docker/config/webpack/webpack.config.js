@@ -31,47 +31,7 @@ const htmlWebpackPlugins = [
   {
     name: 'index',
     chunks: [],
-  },
-  {
-    name: 'about',
-    chunks: [],
-  },
-  {
-    name: 'agreement',
-    chunks: [],
-  },
-  {
-    name: 'privacy-policy',
-    chunks: [],
-  },
-  {
-    name: 'rulebook',
-    chunks: [],
-  },
-  {
-    name: 'rulebook',
-    chunks: [],
-  },
-  {
-    name: 'sign-in',
-    chunks: [],
-  },
-  {
-    name: 'characters/index',
-    chunks: [],
-  },
-  {
-    name: 'characters/add',
-    chunks: ['js/characters/edit'],
-  },
-  {
-    name: 'characters/view',
-    chunks: ['js/characters/view'],
-  },
-  {
-    name: 'scenarios/sample1',
-    chunks: [],
-  },
+  }
 ].map((obj) => {
   obj.chunks.push('css/style');
   obj.chunks.push('js/navigation');
@@ -80,7 +40,7 @@ const htmlWebpackPlugins = [
 
   return new HTMLWebpackPlugin({
     filename: `go-waste/${obj.name}.html`,
-    template: `/app/src/html/go-waste/${obj.name}.html`,
+    template: `/app/src/html/${obj.name}.html`,
     chunks,
   });
 });
