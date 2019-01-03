@@ -1,15 +1,18 @@
-'use strict';
 
-require("./styles.scss");
 
-const {Elm} = require('./Main');
-var app = Elm.Main.init({flags: 6});
+require('./styles.scss');
 
-app.ports.toJs.subscribe(data => {
-    console.log(data);
-})
+const { Elm } = require('./Main'); //  eslint-disable-line import/no-unresolved
+
+const app = Elm.Main.init({ flags: 6 });
+
+app.ports.toJs.subscribe((data) => {
+  console.log(data);
+});
+
 // Use ES2015 syntax and let Babel compile it for you
-var testFn = (inp) => {
-    let a = inp + 1;
-    return a;
-}
+// eslint-disable-next-line no-unused-vars
+const testFn = (inp) => {
+  const a = inp + 1;
+  return a;
+};

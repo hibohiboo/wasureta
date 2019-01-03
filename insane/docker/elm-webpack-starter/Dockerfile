@@ -12,32 +12,6 @@ RUN yarn add --dev @babel/core \
                   @babel/preset-env
 
 RUN yarn add --dev @babel/cli
-# ### lint
-# RUN yarn add --dev eslint \
-#                    eslint-plugin-import \
-#                    eslint-config-airbnb-base \
-#                    eslint-plugin-jasmine
-
-# ### esdoc
-# RUN yarn add --dev esdoc esdoc-standard-plugin
-
-# ## for ts
-# RUN yarn add --dev typescript
-# RUN yarn add --dev tslint tslint-config-airbnb
-# RUN yarn add --dev typedoc 
-
-
-
-# ### postcss
-# RUN yarn add --dev postcss postcss-cli
-# RUN yarn add --dev autoprefixer
-# RUN yarn add --dev cssnano
-
-# ### lint
-# RUN yarn add --dev stylelint 
-# RUN yarn add --dev stylelint-scss
-# RUN yarn add --dev stylelint-order
-# RUN yarn add --dev stylelint-config-sass-guidelines
 
 ## elm
 RUN yarn add --dev elm
@@ -83,6 +57,32 @@ RUN yarn add --dev node-sass
 
 ### purecss
 RUN yarn add purecss
+
+
+### lint
+RUN yarn add --dev eslint \
+                   eslint-plugin-import \
+                   eslint-config-airbnb-base \
+                   eslint-plugin-jasmine
+
+### esdoc
+RUN yarn add --dev esdoc esdoc-standard-plugin
+
+## for ts
+RUN yarn add --dev typescript
+RUN yarn add --dev tslint tslint-config-airbnb
+RUN yarn add --dev typedoc 
+
+### postcss
+RUN yarn add --dev postcss postcss-cli
+RUN yarn add --dev autoprefixer
+RUN yarn add --dev cssnano
+
+### lint
+RUN yarn add --dev stylelint 
+RUN yarn add --dev stylelint-scss
+RUN yarn add --dev stylelint-order
+RUN yarn add --dev stylelint-config-sass-guidelines
 
 # ## pug
 # RUN yarn add --dev pug
