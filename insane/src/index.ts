@@ -12,7 +12,7 @@ app.ports.toJs.subscribe((data) => {
 
 // Use ES2015 syntax and let Babel compile it for you
 // eslint-disable-next-line no-unused-vars
-const testFn = (inp) => {
+const testFn = (inp:number) => {
   const a = inp + 1;
   return a;
 };

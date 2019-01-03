@@ -15,7 +15,7 @@ const filename = MODE == 'production' ? '[name]-[hash].js' : 'index.js';
 
 const common = {
   mode: MODE,
-  entry: './src/index.js',
+  entry: './src/index.ts',
   output: {
     path: path.join(__dirname, 'dist'),
     publicPath: '/',
@@ -32,7 +32,7 @@ const common = {
   ],
   resolve: {
     modules: [path.join(__dirname, 'src'), 'node_modules'],
-    extensions: ['.js', '.elm', '.scss', '.png'],
+    extensions: ['.js', '.elm', '.scss', '.png', '.ts'],
   },
   module: {
     rules: [
@@ -42,6 +42,19 @@ const common = {
         use: {
           loader: 'babel-loader',
         },
+      },
+      {
+        test: /\.ts$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'babel-loader',
+          },
+          {
+            loader: 'ts-loader',
+          },
+        ],
+
       },
       {
         test: /\.scss$/,

@@ -84,6 +84,8 @@ RUN yarn add --dev stylelint-scss
 RUN yarn add --dev stylelint-order
 RUN yarn add --dev stylelint-config-sass-guidelines
 
+RUN yarn add --dev ts-loader
+
 # ## pug
 # RUN yarn add --dev pug
 # RUN yarn add --dev pug-cli#master
