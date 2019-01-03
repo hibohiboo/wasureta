@@ -2,5 +2,6 @@
 
 # このシェルスクリプトのディレクトリの絶対パスを取得。
 bin_dir=$(cd $(dirname $0) && pwd)
-
-cd $bin_dir/../docker && docker-compose build
+parent_dir=$bin_dir/..
+docker_dir=$parent_dir/docker
+cd $docker_dir && docker-compose build
