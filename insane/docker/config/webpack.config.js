@@ -25,17 +25,23 @@ const common = {
   plugins: [
     new HTMLWebpackPlugin({
       // Use this template to get basic responsive meta tags
-      template: 'src/index.html',
+      template: 'src/index.pug',
       // inject details of output file at end of body
       inject: 'body',
     }),
   ],
   resolve: {
     modules: [path.join(__dirname, 'src'), 'node_modules'],
-    extensions: ['.js', '.elm', '.scss', '.png', '.ts'],
+    extensions: ['.js', '.elm', '.scss', '.png', '.ts', '.pug'],
   },
   module: {
     rules: [
+      { 
+        test: /\.pug$/,
+        use: [{
+          loader: 'pug-loader',
+        },]
+      },
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -54,7 +60,6 @@ const common = {
             loader: 'ts-loader',
           },
         ],
-
       },
       {
         test: /\.scss$/,

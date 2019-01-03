@@ -86,10 +86,11 @@ RUN yarn add --dev stylelint-config-sass-guidelines
 
 RUN yarn add --dev ts-loader
 
-# ## pug
-# RUN yarn add --dev pug
-# RUN yarn add --dev pug-cli#master
-# RUN yarn add --dev https://github.com/pugjs/pug-cli.git
+## pug
+RUN yarn add --dev pug
+RUN yarn add --dev pug-cli#master
+RUN yarn add --dev https://github.com/pugjs/pug-cli.git
+RUN yarn add --dev pug-loader
 
 # ## watch
 # RUN yarn add --dev chokidar
