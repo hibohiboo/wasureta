@@ -1,5 +1,7 @@
 @charset "UTF-8";
 
+@import "color";
+
 body {
   font-family: "メイリオ", "Hiragino kaku Gothic Pro", sans-serif;
   margin: 0;
@@ -34,16 +36,14 @@ body {
   &-head {
     grid-column: 1;
     grid-row: 1;
-
-    img {
-      vertical-align: bottom; // 余計な余白が入るのを防ぐ
-      width: 80px;
-    }
+    padding: 15px 0; // 上下の余白を確保
+    background-color:$color-globalHeader-background;
+    text-align: center;
   }
 
   // メインコンテンツ
   &-main {
-    background-color: #ffe4b5;
+    background-color: $color-globalMain-background;
     grid-column: 1;
     grid-row: 2;
   }
@@ -62,5 +62,13 @@ body {
     grid-column: 1;
     grid-row: 1;
     justify-self: start;
+  }
+
+  // フッタ
+  &-foot {
+    grid-column: 1;
+    grid-row: 3;
+    padding: 20px 0;
+    background-color: $color-globalFooter-background;
   }
 }

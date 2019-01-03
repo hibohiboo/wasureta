@@ -19,4 +19,4 @@ bash $bin_dir/pug/build.sh
 bash $bin_dir/scss/build.sh
 # bash $bin_dir/postcss/build.sh
 
-cp -rf $parent_dir/pre-dist/assets $parent_dir/dist/html/assets 
+cp -rf $parent_dir/pre-dist/assets $parent_dir/dist/html/

@@ -19,10 +19,10 @@ body {
     display: none; }
   .page-head {
     grid-column: 1;
-    grid-row: 1; }
-    .page-head img {
-      vertical-align: bottom;
-      width: 80px; }
+    grid-row: 1;
+    padding: 15px 0;
+    background-color: #222;
+    text-align: center; }
   .page-main {
     background-color: #ffe4b5;
     grid-column: 1;
@@ -35,3 +35,8 @@ body {
     grid-column: 1;
     grid-row: 1;
     justify-self: start; }
+  .page-foot {
+    grid-column: 1;
+    grid-row: 3;
+    padding: 20px 0;
+    background-color: #222; }
