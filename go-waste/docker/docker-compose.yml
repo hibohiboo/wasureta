@@ -1,0 +1,97 @@
+version: '3'
+services:
+  # htmlテンプレートエンジン
+  pug:
+    build: ./webpack
+    volumes:
+      - ../src/templates:/app/src
+      - ../dist/html:/app/dist
+    environment:
+      - SHELL=/bin/bash
+    command: [npm, run, watch]
+
+  ts:
+    build: ./webpack
+    volumes:
+      - ../src:/app/src
+      - ../docs:/app/docs
+      - ../pre-dist:/app/dist
+      # 設定ファイル
+      - ./config/webpack/tsconfig.json:/app/tsconfig.json
+      - ./config/webpack/tslint.json:/app/tslint.json
+    command: [yarn, run, tsc, --watch]
+
+  elm:
+    build: ./webpack
+    volumes:
+      - ../src:/app/src
+      - ../pre-dist/assets:/app/dist
+      - ./config/webpack/elm.json:/app/elm.json
+      # packageのキャッシュ
+      - cacheElmStuff:/app/elm-stuff
+      - cacheDotElm:/root/.elm
+    environment:
+      - SHELL=/bin/bash
+    command: [yarn, run, elm-watch]
+
+  js:
+    build: ./webpack
+    volumes:
+      - ../pre-dist:/app/src
+      - ../dist:/app/dist
+      # 設定ファイル
+      - ./config/webpack/babel.config.js:/app/babel.config.js
+      - ./config/webpack/.eslintrc:/app/.eslintrc
+      - ./config/webpack/.esdoc.json:/app/.esdoc.json
+      - ./config:/app/config
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    command: [yarn, run, babel, src, --out-dir, /app/dist, --watch]
+
+  scss:
+    build: ./webpack
+    volumes:
+      - ../src:/app/src
+      - ../pre-dist:/app/dist
+      - ./config/webpack/.stylelintrc:/app/.stylelintrc
+    command: [yarn, run, node-sass, -r, /app/src/assets/css, -o, /app/dist/assets/css, --watch]
+
+  postcss:
+    build: ./webpack
+    volumes:
+      - ../pre-dist:/app/src
+      - ../dist:/app/dist
+      - ./config/webpack/postcss.config.js:/app/postcss.config.js
+    command: [yarn, run, postcss, /app/src/assets/css/*.css, --no-map, --dir, /app/dist/assets/css/, --watch]
+
+  # コンパイルせずにファイルのコピーのみ行う
+  files:
+    build: ./webpack
+    volumes:
+      - ../src:/app/src
+      - ../dist:/app/dist
+      - ../pre-dist:/app/pre-dist
+      - ../app/public:/app/public
+      # 設定ファイル
+      - ./config/webpack/webpack.config.copy.js:/app/webpack.config.js
+    command: [yarn, run, cpx, "/app/src/**/*.{png,jpg}", /app/dist,  --watch]
+
+  webpack:
+    build: ./webpack
+    volumes:
+      - ../dist:/app/src
+      - ../app/public:/app/dist
+      # 設定ファイル
+      - ./config/webpack/babel.config.js:/app/babel.config.js
+      - ./config/webpack/webpack.config.js:/app/webpack.config.js
+    environment:
+      - NODE_ENV=develop
+    ports:
+      - 8080:8080
+    command: [yarn, run, webpack-dev-server, --hot]
+
+volumes:
+  cacheElmStuff: 
+  cacheDotElm:
+
+
