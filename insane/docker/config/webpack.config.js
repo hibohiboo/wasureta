@@ -10,6 +10,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 // to extract the css as a separate file
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+// process.env.npm_lifecycle_event : webpackコマンドを実行したnpm script名が格納されている。
 const MODE = process.env.npm_lifecycle_event === 'prod' ? 'production' : 'development';
 const filename = MODE === 'production' ? '[name]-[hash].js' : 'index.js';
 

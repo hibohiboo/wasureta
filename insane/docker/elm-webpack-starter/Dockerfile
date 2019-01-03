@@ -92,15 +92,12 @@ RUN yarn add --dev pug-cli#master
 RUN yarn add --dev https://github.com/pugjs/pug-cli.git
 RUN yarn add --dev pug-loader
 
-# ## watch
-# RUN yarn add --dev chokidar
-# RUN yarn add --dev chokidar-cli
-# RUN yarn add --dev globule
+RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"prod\": \"webpack -p\",/g" /app/package.json
+
 
 # ## script
 # ### elm
 # RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"build-elm\": \"yarn run elm make \/app\/src\/assets\/elm\/ElmTest.elm --output=\/app\/dist\/elm\/ElmTest.js\",/g" /app/package.json
-# RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"elm-watch\": \"yarn run chokidar '\/app\/**\/*.elm' -p -c 'yarn run build-elm' \",/g" /app/package.json
 
 # ### pug
 # RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"pug\": \"pug -o \/app\/dist -P \",/g" /app/package.json
