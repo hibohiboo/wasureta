@@ -18,6 +18,11 @@ services:
       # packageのキャッシュ
       - cacheElmStuffStarter:/app/elm-stuff
       - cacheDotElmStarter:/root/.elm
+      # 分割して出力してみる
+      - ../separate/pre-pre-dist:/app/separate/pre-pre-dist
+      - ../separate/pre-dist:/app/separate/pre-dist
+      - ../separate/dist:/app/separate/dist
+      
     environment:
       - SHELL=/bin/bash
     ports:
