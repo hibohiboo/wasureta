@@ -22,10 +22,6 @@ RUN yarn add --dev elm-hot-webpack-loader
 RUN yarn add --dev elm-test
 RUN yarn add --dev elm-verify-examples
 
-# ### elm minify
-# RUN yarn add --dev uglify-js
-# RUN yarn add global uglify-js
-
 ## webpackインストール
 RUN yarn add --dev webpack
 RUN yarn add --dev webpack-cli
@@ -94,6 +90,9 @@ RUN yarn add --dev pug-loader
 
 RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"prod\": \"webpack -p\",/g" /app/package.json
 
+### elm minify
+RUN yarn add --dev uglify-js
+RUN yarn global add uglify-js
 
 # ## script
 # ### elm
