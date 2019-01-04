@@ -12,7 +12,7 @@ module.exports = {
   entry: './separate/pre-dist/index.js',
   output: {
     path: path.join(__dirname, 'separate/dist'),
-    publicPath: '/',
+    publicPath: '',
     filename,
   },
   plugins: [
