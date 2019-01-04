@@ -23,6 +23,7 @@ services:
       - ../separate/pre-dist:/app/separate/pre-dist
       - ../separate/dist:/app/separate/dist
       - ./config/postcss.config.js:/app/postcss.config.js
+      - ./config/babel.config.js:/app/babel.config.js
     environment:
       - SHELL=/bin/bash
     ports:

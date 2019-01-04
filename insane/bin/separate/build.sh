@@ -22,8 +22,8 @@ bash $bin_dir/postcss/build.sh
 
 # elm -> ts -> js の順番で、依存関係
 bash $bin_dir/elm/build.sh
-# bash $bin_dir/ts/build.sh
-# bash $bin_dir/js/build.sh
+bash $bin_dir/ts/build.sh
+bash $bin_dir/js/build.sh
 
 # bash $bin_dir/webpack/build.sh
 
