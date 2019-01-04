@@ -54,6 +54,7 @@ RUN yarn add --dev node-sass
 ### purecss
 RUN yarn add purecss
 
+## 以下、追加
 
 ### lint
 RUN yarn add --dev eslint \
@@ -93,6 +94,9 @@ RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"prod\": \"webpack -p\",/g" /app/pa
 ### elm minify
 RUN yarn add --dev uglify-js
 RUN yarn global add uglify-js
+
+## file copy
+RUN yarn add --dev cpx
 
 # ## script
 # ### elm
