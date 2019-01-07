@@ -1,4 +1,4 @@
-## 
+## starterを素直に動かす。
 
 [初期設定時点](https://github.com/hibohiboo/wasureta/tree/167566e4820be1ec3a04eae4de282842d9b07e89)  
 
