@@ -98,15 +98,6 @@ RUN yarn global add uglify-js
 ## file copy
 RUN yarn add --dev cpx
 
-# ## script
-# ### elm
-# RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"build-elm\": \"yarn run elm make \/app\/src\/assets\/elm\/ElmTest.elm --output=\/app\/dist\/elm\/ElmTest.js\",/g" /app/package.json
-
-# ### pug
-# RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"pug\": \"pug -o \/app\/dist -P \",/g" /app/package.json
-# RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"build-pug\": \"pug \/app\/src -o \/app\/dist \",/g" /app/package.json
-# RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"watch\": \"chokidar '\/app\/**\/*.pug' -p -c 'npm run build-pug' \",/g" /app/package.json
-
-# RUN yarn add --dev @types/jquery
-# RUN yarn add --dev @types/materialize-css
-# RUN yarn add --dev @types/chart.js
+RUN yarn add --dev @types/jquery
+RUN yarn add --dev @types/materialize-css
+RUN yarn add --dev @types/chart.js

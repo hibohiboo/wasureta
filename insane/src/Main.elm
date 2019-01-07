@@ -15,7 +15,7 @@ import Json.Decode as Decode
 -- ---------------------------
 
 
-port toJs : String -> Cmd msg
+port toJs : Int -> Cmd msg
 
 
 
@@ -52,10 +52,10 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update message model =
     case message of
         Inc ->
-            ( add1 model, toJs "Hello Js" )
+            ( add1 model, toJs model.counter )
 
         Set m ->
-            ( { model | counter = m }, toJs "Hello Js" )
+            ( { model | counter = m }, toJs model.counter )
 
         TestServer ->
             let
