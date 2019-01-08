@@ -1,0 +1,137 @@
+extends ../_includes/common/layout
+//- _layout.pugをベースに作成
+
+//- タイトルのブロック
+block title
+  //- 最初にこのページで使用する変数を読み込む
+  include ../_includes/index/variables
+  title= title
+
+mixin dlitem(header, item)
+  .row-flex.collection-item
+    dt.s6.m4.l2=header
+    dd.s6.m8.l10=item
+
+mixin divitem(key, value)
+  .row-flex.collection-item
+    .col.s6.l4=key
+    .col.s6.l8=value
+
+
+mixin card
+  .col.s12.m6.l3
+    .card
+      block
+
+mixin card-area-event(type, title, scene, description)
+  +card
+    if type == 'イベント'
+      span.badge.left.purple.darken-4.white-text イベント
+    else
+      span.badge.left.green.darken-4.white-text エリア
+    .card-content
+      span.card-title.black-text=title 
+      .collection.with-header
+        .collection-header 描写
+        .collection-item
+          each item in scene
+            p=item
+        .collection-header 解説
+        .collection-item
+          p=description
+        block
+
+mixin card-event(title, scene, description)
+  +card-area-event("イベント", title, scene, description)
+    block
+
+mixin card-area(title, scene, description)
+  +card-area-event("エリア", title, scene, description)
+    block
+
+mixin card-object(title)
+   +card
+    span.badge.left.orange.darken-4.white-text オブジェクト
+    .card-content
+      span.card-title.black-text= title 
+      block
+
+mixin card-check-event(title, param, scene, description)
+  +card
+    span.badge.left.purple.darken-4.white-text 判定イベント
+    .card-content
+      span.card-title.black-text=title 
+      .collection.with-header
+        .collection-header 能力値
+        .collection-item
+          i.material-icons= param
+        .collection-header 描写
+        .collection-item
+          p=scene
+        .collection-header 解説
+        .collection-item
+          p=description
+        block
+
+block main
+  .container
+    h1.center サンプルシナリオ
+    h2 目覚め
+    dl.collection.with-header
+      +dlitem("傾向", "サバイバル")
+      +dlitem("プレイヤー人数", "一人")
+      +dlitem("目的", "4サイクルの生存")
+    h3 導入フェイズ
+    +card-event("瓦礫の島", ["君は目を開けると瓦礫の中に倒れていた。", "崩れた天井から除く空は夕焼け色。入道雲の向こうに崩れた城が浮いているように見える。", "身を起こし、周りを見渡すと、崩れた石造りの部屋のようだ。" ], "PCが目を覚ますシーン。シナリオの傾向と目的を伝えること。次にイベント「渇き」を処理する。")
+        .collection-header 連動イベント
+        .collection-item
+          p 渇き
+    +card-event("渇き", ["どれほど気を失っていたのだろう。喉がカラカラだ。体の調子もあまりよくない。" ], "ダメージの解説をすること。処理を終えたら探索フェイズに移行する")
+        .collection-header 効果
+        .collection-item
+          p ダメージ1をPCに与える
+
+    h3 探索フェイズ
+    h4 エリア1
+    .col.s12.m6.l3
+      +card-area("崩れた部屋", ["石造りの部屋、崩れた瓦礫以外に目を引くものはない"], "目覚めの場所。大きな瓦礫がいくつも落ちている。")
+        .collection-header オブジェクト
+        .collection-item
+          p オブジェクト一覧
+            .collection
+              +divitem("瓦礫に埋まった奥への道", "水音がかすかに奥から聞こえる")
+              +divitem("登り階段", "乾いた風が吹き込んでくる")
+          p オブジェクト詳細
+            +card-object("瓦礫に埋まった奥への道")
+              .collection-header 描写
+              .collection-item
+                p 奥への続く道。湿ったにおい。耳をすませばかすかな水音。
+              .collection-header 選択肢
+              .collection-item
+                p 隙間を抜ける
+              .collection-item
+                p 瓦礫をどかす
+              .collection-header 有効アクション
+              .collection-item
+                p 調べる
+              .collection-header イベント詳細
+              .collection-item
+                p 
+                  +card-check-event("隙間を抜ける", param_sense,  "瓦礫の隙間をすり抜けていく", "ダメージの解説をすること。処理を終えたら探索フェイズに移行する")
+                    .collection-header 効果
+                    .collection-item
+                      p ダメージ1をPCに与える
+
+
+    h4 エリア2
+    .col.s12.m6.l3
+      +card-area("瓦礫の島", ["砂漠の中、瓦礫が島のようになっている。"], "周りは砂ばかりだ。")
+        .collection-header オブジェクト
+        .collection-item
+          p オブジェクト一覧
+            .collection
+              +divitem("灰色の砂漠", "灰色の砂漠")
+              +divitem("瓦礫の山", "コンクリートの瓦礫の山")
+          p オブジェクト詳細
+            +card-object("灰色の砂漠")
+

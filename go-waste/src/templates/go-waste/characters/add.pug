@@ -1,0 +1,50 @@
+extends ../_includes/common/layout
+
+
+//- タイトルのブロック
+block title
+  //- 最初にこのページで使用する変数を読み込む
+  include ../_includes/index/variables
+  title= title
+
+block footjs
+  script(src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js")
+
+//- block mainで使うスニペット
+
+mixin status(name, id)
+  .input-field.col.s2
+    input.validate(id=id, placeholder=name, type='number', min="1", value="5")
+    label(for=id)=name
+
+block main
+  .container#editform
+    h1.center 新規作成
+    .row
+      form.col.s12
+        .row
+          .input-field.col.s6
+            input#first_name.validate(placeholder='入力してください', type='text')
+            label(for='first_name') 名前
+        .row
+          +status('肉体', 'strength')
+          +status('敏捷', 'dexterity')
+          +status('感覚', 'sense')
+          +status('精神', 'mind')
+          .input-field.col.s2
+            input#luck(placeholder='幸運', type='number', min="1", value="5", readonly)
+            label(for='luck') 幸運
+          .input-field.col.s2
+            input#param_6(type='number', min="1", value="10", readonly)
+            label(for='param_6') {{param_six}}
+        .row
+          .input-field.col.s6
+
+            input.validate(v-model="param_six", type="text")
+            label 任意能力
+        .row
+          .input-field.col.s12
+            input#password.validate(type='password')
+            label(for='password') Password
+            span.helper-text(data-error='wrong', data-success='right') パスワードを設定しなかった場合は誰でも編集できます。
+
