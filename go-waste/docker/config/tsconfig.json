@@ -9,10 +9,9 @@
     "composite": false
   },
   "include":[
-      "src/**/*" 
+      "./src/**/*" 
   ],
   "exclude": [
-      "node_modules",
-      "elm-stuff"
+      "node_modules"
   ]
 }

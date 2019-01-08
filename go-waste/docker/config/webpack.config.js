@@ -1,209 +1,207 @@
 const path = require('path');
-const webpack = require('webpack');
+const globule = require('globule');
 const merge = require('webpack-merge');
-const elmMinify = require('elm-minify');
-
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const HTMLWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-
-// to extract the css as a separate file
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HTMLWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
-// process.env.npm_lifecycle_event : webpackコマンドを実行したnpm script名が格納されている。
-const MODE = process.env.npm_lifecycle_event === 'prod' ? 'production' : 'development';
-const filename = MODE === 'production' ? '[name]-[hash].js' : 'index.js';
+const MODE = process.env.NODE_ENV === 'production' ? 'production' : 'development';
+let filename = '[name].js';
+if (MODE === 'production') {
+  filename = '[name]-[hash].js';
+}
+
+// ソース・出力先の設定
+const opts = {
+  src: path.join(__dirname, 'src'),
+  dest: path.join(__dirname, 'dist'),
+};
+const files = {};
+globule
+  .find(['assets/**/*.js', '!assets/**/_*.js', '!assets/**/elm/*'], { cwd: opts.src })
+  .forEach((findFileName) => {
+    const key = findFileName.replace(new RegExp('.js$', 'i'), '');
+    const value = path.join(opts.src, findFileName);
+    files[key] = value;
+  });
+
+const htmlWebpackPlugins = [
+  {
+    name: 'index',
+    chunks: [],
+  },
+  {
+    name: 'about',
+    chunks: [],
+  },
+  {
+    name: 'agreement',
+    chunks: [],
+  },
+  {
+    name: 'privacy-policy',
+    chunks: [],
+  },
+  {
+    name: 'rulebook',
+    chunks: [],
+  },
+  {
+    name: 'rulebook',
+    chunks: [],
+  },
+  {
+    name: 'sign-in',
+    chunks: [],
+  },
+  {
+    name: 'characters/index',
+    chunks: [],
+  },
+  {
+    name: 'characters/add',
+    chunks: ['js/characters/edit'],
+  },
+  {
+    name: 'characters/view',
+    chunks: ['js/characters/view'],
+  },
+  {
+    name: 'scenarios/sample1',
+    chunks: [],
+  },
+].map((obj) => {
+  obj.chunks.push('css/style');
+  obj.chunks.push('js/navigation');
+
+  const chunks = obj.chunks.map(s => `assets/${s}`);
+
+  return new HTMLWebpackPlugin({
+    filename: `go-waste/${obj.name}.html`,
+    template: `/app/src/html/go-waste/${obj.name}.html`,
+    chunks,
+  });
+});
 
 const common = {
   mode: MODE,
-  entry: './src/index.ts',
+  context: opts.src,
+  entry: files,
   output: {
-    path: path.join(__dirname, 'dist'),
-    publicPath: '/',
-    // webpack -p automatically adds hash when building for production
+    path: opts.dest,
     filename,
   },
-  plugins: [
-    new HTMLWebpackPlugin({
-      // Use this template to get basic responsive meta tags
-      template: 'src/index.pug',
-      // inject details of output file at end of body
-      inject: 'body',
-    }),
-  ],
   resolve: {
-    modules: [path.join(__dirname, 'src'), 'node_modules'],
-    extensions: ['.js', '.elm', '.scss', '.png', '.ts', '.pug'],
+    modules: [opts.src, 'node_modules'],
+    extensions: ['.js'],
   },
   module: {
     rules: [
       {
-        test: /\.pug$/,
-        use: [{
-          loader: 'pug-loader',
-        }],
-      },
-      {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-        },
-      },
-      {
-        test: /\.ts$/,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: 'babel-loader',
-          },
-          {
-            loader: 'ts-loader',
-          },
-        ],
-      },
-      {
-        test: /\.scss$/,
-        exclude: [/elm-stuff/, /node_modules/],
-        // see https://github.com/webpack-contrib/css-loader#url
-        loaders: ['style-loader', 'css-loader?url=false', 'sass-loader'],
-      },
-      {
-        test: /\.css$/,
-        exclude: [/elm-stuff/, /node_modules/],
-        loaders: ['style-loader', 'css-loader?url=false'],
-      },
-      {
-        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        exclude: [/elm-stuff/, /node_modules/],
-        loader: 'url-loader',
-        options: {
-          limit: 10000,
-          mimetype: 'application/font-woff',
-        },
-      },
-      {
-        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        exclude: [/elm-stuff/, /node_modules/],
-        loader: 'file-loader',
-      },
-      {
-        test: /\.(jpe?g|png|gif|svg)$/i,
-        exclude: [/elm-stuff/, /node_modules/],
-        loader: 'file-loader',
+        use: { loader: 'babel-loader' },
       },
     ],
   },
+  plugins: [...htmlWebpackPlugins],
   // cdnから読み込むものはここに
   externals: {
     jquery: 'jQuery',
+    firebase: 'firebase',
+    firebaseui: 'firebaseui',
+    vue: 'Vue',
     'chart.js': 'Chart',
   },
 };
 
-if (MODE === 'development') {
-  console.log('Building for dev...');
-  module.exports = merge(common, {
-    plugins: [
-      // Suggested for hot-loading
-      new webpack.NamedModulesPlugin(),
-      // Prevents compilation errors causing the hot loader to lose state
-      new webpack.NoEmitOnErrorsPlugin(),
-    ],
-    module: {
-      rules: [
-        {
-          test: /\.elm$/,
-          exclude: [/elm-stuff/, /node_modules/],
-          use: [
-            { loader: 'elm-hot-webpack-loader' },
-            {
-              loader: 'elm-webpack-loader',
-              options: {
-                // add Elm's debug overlay to output
-                debug: true,
-                forceWatch: true,
-              },
-            },
-          ],
-        },
-      ],
-    },
-    devServer: {
-      inline: true,
-      stats: 'errors-only',
-      contentBase: path.join(__dirname, 'src/assets'),
-      historyApiFallback: true,
-      // feel free to delete this section if you don't need anything like this
-      before(app) {
-        // on port 3000
-        app.get('/test', (req, res) => {
-          res.json({ result: 'OK' });
-        });
-      },
-    },
-    watch: true,
-    watchOptions: {
-      aggregateTimeout: 300,
-      poll: 1000,
-    },
-  });
-}
 if (MODE === 'production') {
   console.log('Building for Production...');
+
+  // commonとマージ
   module.exports = merge(common, {
+    optimization: {
+      minimize: true,
+    },
     plugins: [
-      // Minify elm code
-      new elmMinify.WebpackPlugin(),
-      // Delete everything from /dist directory and report to user
       new CleanWebpackPlugin(['dist'], {
         root: __dirname,
         exclude: [],
         verbose: true,
         dry: false,
       }),
-      // Copy static assets
-      new CopyWebpackPlugin([
-        {
-          from: 'src/assets',
-        },
-      ]),
+      new CopyWebpackPlugin(
+        [{ from: '', to: './' }],
+        { context: 'html' },
+      ),
       new MiniCssExtractPlugin({
-        // Options similar to the same options in webpackOptions.output
-        // both options are optional
-        filename: '[name]-[hash].css',
+        filename: '/assets/css/[name].css',
+        chunkFilename: '/assets/css/[id].css',
       }),
     ],
     module: {
       rules: [
         {
-          test: /\.elm$/,
-          exclude: [/elm-stuff/, /node_modules/],
-          use: {
-            loader: 'elm-webpack-loader',
-            options: {
-              optimize: true,
-            },
-          },
-        },
-        {
           test: /\.css$/,
           exclude: [/elm-stuff/, /node_modules/],
-          loaders: [
-            MiniCssExtractPlugin.loader,
-            'css-loader?url=false',
-          ],
-        },
-        {
-          test: /\.scss$/,
-          exclude: [/elm-stuff/, /node_modules/],
-          loaders: [
-            MiniCssExtractPlugin.loader,
-            'css-loader?url=false',
-            'sass-loader',
+          use: [
+            {
+              loader: MiniCssExtractPlugin.loader,
+            },
+            {
+              loader: 'css-loader',
+              options: {
+                url: false,
+                minimize: true,
+              },
+            },
           ],
         },
       ],
+    },
+  });
+}
+
+
+if (MODE === 'development') {
+  console.log('Building for dev...');
+  module.exports = merge(common, {
+    plugins: [
+      new webpack.NamedModulesPlugin(),
+      new webpack.NoEmitOnErrorsPlugin(),
+    ],
+    module: {
+      rules: [
+        {
+          test: /\.css$/,
+          exclude: [/node_modules/],
+          loaders: ['style-loader', 'css-loader'],
+        }],
+    },
+    // 開発サーバの設定
+    devServer: {
+    // // public/index.htmlをデフォルトのホームとする
+      contentBase: './dist',
+      // // バンドルしたファイルを/assets/js/フォルダに出力したものとする。
+      // publicPath: "/assets/",
+      // インラインモード
+      inline: true,
+      // 8080番ポートで起動
+      port: 8080,
+      // dockerのコンテナ上でサーバを動かすときは以下の設定で全ての接続を受け入れる
+      host: '0.0.0.0',
+      // hot loadを有効にする
+      hot: true,
+      // ログレベルをinfoに
+      clientLogLevel: 'info',
+    },
+    // vagrantの仕様でポーリングしないとファイルの変更を感知できない
+    watchOptions: {
+      aggregateTimeout: 300,
+      // ５秒毎にポーリング
+      poll: 5000,
     },
   });
 }
