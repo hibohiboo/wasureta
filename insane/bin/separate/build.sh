@@ -3,12 +3,11 @@
 bin_dir=$(cd $(dirname $0) && pwd)
 parent_dir=$bin_dir/../..
 docker_dir=$parent_dir/docker
+separate_dir=$parent_dir/separate
 
-# cp -r $bin_dir/../app/public $bin_dir/../bkup/public-` date +"%Y%m%d%I%M%S"`
-# rm -rf $bin_dir/../app/public
-# rm -rf $bin_dir/../dist/assets
-# rm -rf $bin_dir/../dist/html
-# rm -rf $bin_dir/../pre-dist/assets
+rm -rf $separate_dir/dist
+rm -rf $separate_dir/pre-dist
+rm -rf $separate_dir/pre-pre-dist
 
 # html作成
 bash $bin_dir/pug/build.sh
