@@ -1,8 +1,7 @@
 version: '3'
 services:
-
   elm:
-    build: ./elm-webpack-starter
+    build: ./webpack
     volumes:
       - ../src:/app/src
       - ../tests:/app/tests
@@ -16,8 +15,8 @@ services:
       - ./config/tsconfig.json:/app/tsconfig.json
       - ./config/tslint.json:/app/tslint.json
       # packageのキャッシュ
-      - cacheElmStuffStarter:/app/elm-stuff
-      - cacheDotElmStarter:/root/.elm
+      - cacheElmStuffGoWaste:/app/elm-stuff
+      - cacheDotElmGoWaste:/root/.elm
       # 分割して出力してみる
       - ../separate/pre-pre-dist:/app/separate/pre-pre-dist
       - ../separate/pre-dist:/app/separate/pre-dist
@@ -38,7 +37,7 @@ services:
 
 volumes:
   # elmのpackageを毎回ダウンロードしなくてもよいように、キャッシュを行う。2か所のキャッシュが必要。
-  cacheElmStuffStarter: 
-  cacheDotElmStarter:
+  cacheElmStuffGoWaste: 
+  cacheDotElmGoWaste:
 
 

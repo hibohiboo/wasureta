@@ -1,4 +1,5 @@
 const path = require('path');
+const globule = require('globule');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
@@ -13,19 +14,84 @@ const opts = {
   dest: path.join(__dirname, 'separate/dist'),
 };
 
+const files = {};
+globule
+  .find(['assets/**/*.js', '!assets/**/_*.js', '!assets/**/elm/*'], { cwd: opts.src })
+  .forEach((findFileName) => {
+    const key = findFileName.replace(new RegExp('.js$', 'i'), '');
+    const value = path.join(opts.src, findFileName);
+    files[key] = value;
+  });
+
+const htmlWebpackPlugins = [
+  {
+    name: 'index',
+    chunks: [],
+  },
+  {
+    name: 'about',
+    chunks: [],
+  },
+  {
+    name: 'agreement',
+    chunks: [],
+  },
+  {
+    name: 'privacy-policy',
+    chunks: [],
+  },
+  {
+    name: 'rulebook',
+    chunks: [],
+  },
+  {
+    name: 'rulebook',
+    chunks: [],
+  },
+  {
+    name: 'sign-in',
+    chunks: [],
+  },
+  {
+    name: 'characters/index',
+    chunks: [],
+  },
+  {
+    name: 'characters/add',
+    chunks: ['js/characters/edit'],
+  },
+  {
+    name: 'characters/view',
+    chunks: ['js/characters/view'],
+  },
+  {
+    name: 'scenarios/sample1',
+    chunks: [],
+  },
+].map((obj) => {
+  obj.chunks.push('css/style');
+  obj.chunks.push('js/navigation');
+
+  const chunks = obj.chunks.map(s => `assets/${s}`);
+
+  return new HTMLWebpackPlugin({
+    filename: `${obj.name}.html`,
+    template: path.join(opts.src, `templates/${obj.name}.html`),
+    chunks,
+  });
+});
+
 module.exports = {
   mode: MODE,
-  entry: path.join(opts.src, 'index.js'),
+  context: opts.src,
+  entry: files,
   output: {
     path: opts.dest,
     publicPath: '',
     filename,
   },
   plugins: [
-    new HTMLWebpackPlugin({
-      template: path.join(opts.src, 'index.html'),
-      inject: 'body',
-    }),
+    ...htmlWebpackPlugins,
     new CleanWebpackPlugin([opts.dest], {
       root: __dirname,
       exclude: [],
@@ -38,7 +104,8 @@ module.exports = {
       },
     ]),
     new MiniCssExtractPlugin({
-      filename: '[name]-[hash].css',
+      filename: 'assets/css/[name]-[hash].css',
+      chunkFilename: 'assets/css/[id].css',
     }),
   ],
   resolve: {
@@ -92,6 +159,9 @@ module.exports = {
     // cdnから読み込むものはここに
     externals: {
       jquery: 'jQuery',
+      firebase: 'firebase',
+      firebaseui: 'firebaseui',
+      vue: 'Vue',
       'chart.js': 'Chart',
     },
 };
