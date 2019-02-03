@@ -15,10 +15,14 @@ const opts = {
 };
 
 const files = {};
+// cssをhtml-webpack-pluginのchunks機能を使って埋め込み
+const regJs = new RegExp('.js$', 'i');
+const regCss = new RegExp('.css$', 'i');
 globule
-  .find(['assets/**/*.js', '!assets/**/_*.js', '!assets/js/elm/**/*'], { cwd: opts.src })
+  .find(['assets/**/*.css', 'assets/**/*.js', '!assets/**/_*.js', '!assets/js/elm/**/*'], { cwd: opts.src })
   .forEach((findFileName) => {
-    const key = findFileName.replace(new RegExp('.js$', 'i'), '');
+    const key = findFileName.replace(regJs, '')
+                            .replace(regCss, '');
     const value = path.join(opts.src, findFileName);
     files[key] = value;
   });
@@ -81,6 +85,7 @@ const htmlWebpackPlugins = [
   const chunks = obj.chunks.map(s => `${assetsPath}/${s}`);
 
   return new HTMLWebpackPlugin({
+//    css: [`${assetsPath}/css/style.css`],
     filename: `${obj.name}.html`,
     template: path.join(opts.src, `templates/${obj.name}.html`),
     chunks,
@@ -111,9 +116,9 @@ module.exports = {
       }
     ],
     { context: `${opts.src}/assets/images` }),
+    // htmlに出力しようとする場合、html-webpack-pluginを先に読み込む必要がある
     new MiniCssExtractPlugin({
       filename: '[name]-[hash].css',
-      chunkFilename: 'assets/css/[id].css',
     }),
   ],
   resolve: {
@@ -129,20 +134,20 @@ module.exports = {
           loader: 'babel-loader',
         },
       },
-      // {
-      //   test: /\.css$/,
-      //   exclude: [/elm-stuff/, /node_modules/],
-      //   loaders: [
-      //     MiniCssExtractPlugin.loader,
-      //     {
-      //       loader: 'css-loader',
-      //       options: {
-      //         sourceMap: false,
-      //         url: false,
-      //       },
-      //     },
-      //   ],
-      // },
+      {
+        test: /\.css$/,
+        exclude: [/elm-stuff/, /node_modules/],
+        loaders: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: false,
+              url: false,
+            },
+          },
+        ],
+      },
       {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         exclude: [/elm-stuff/, /node_modules/],
