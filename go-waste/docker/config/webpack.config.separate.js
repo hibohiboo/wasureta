@@ -74,8 +74,10 @@ const htmlWebpackPlugins = [
   obj.chunks.push('js/navigation');
 
   // assetsの相対パスを作成...できない。characters/などのディレクトリの下のものはバンドルされない
-  const depth = obj.name.split(/\//g).length - 1;
-  const assetsPath =  '../'.repeat(depth) + 'assets';
+  //const depth = obj.name.split(/\//g).length - 1;
+  //const assetsPath =  '../'.repeat(depth) + 'assets';
+
+  const assetsPath =  'assets';
   const chunks = obj.chunks.map(s => `${assetsPath}/${s}`);
 
   return new HTMLWebpackPlugin({
