@@ -104,11 +104,13 @@ module.exports = {
       verbose: true,
       dry: false,
     }),
-    // new CopyWebpackPlugin([
-    //   {
-    //     from: path.join(opts.src, 'assets'),
-    //   },
-    // ]),
+    new CopyWebpackPlugin([
+      {
+        from: '',
+        to: 'assets/images/',
+      }
+    ],
+    { context: `${opts.src}/assets/images` }),
     new MiniCssExtractPlugin({
       filename: '[name]-[hash].css',
       chunkFilename: 'assets/css/[id].css',
