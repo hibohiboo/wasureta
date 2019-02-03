@@ -16,7 +16,7 @@ const opts = {
 
 const files = {};
 globule
-  .find(['assets/**/*.js', '!assets/**/_*.js', '!assets/**/elm/*'], { cwd: opts.src })
+  .find(['assets/**/*.js', '!assets/**/_*.js', '!assets/js/elm/**/*'], { cwd: opts.src })
   .forEach((findFileName) => {
     const key = findFileName.replace(new RegExp('.js$', 'i'), '');
     const value = path.join(opts.src, findFileName);
@@ -69,10 +69,14 @@ const htmlWebpackPlugins = [
     chunks: [],
   },
 ].map((obj) => {
+  // 共通で読み込むjsファイルを作成
   obj.chunks.push('css/style');
   obj.chunks.push('js/navigation');
 
-  const chunks = obj.chunks.map(s => `assets/${s}`);
+  // assetsの相対パスを作成...できない。characters/などのディレクトリの下のものはバンドルされない
+  const depth = obj.name.split(/\//g).length - 1;
+  const assetsPath =  '../'.repeat(depth) + 'assets';
+  const chunks = obj.chunks.map(s => `${assetsPath}/${s}`);
 
   return new HTMLWebpackPlugin({
     filename: `${obj.name}.html`,
@@ -98,13 +102,13 @@ module.exports = {
       verbose: true,
       dry: false,
     }),
-    new CopyWebpackPlugin([
-      {
-        from: path.join(opts.src, 'assets'),
-      },
-    ]),
+    // new CopyWebpackPlugin([
+    //   {
+    //     from: path.join(opts.src, 'assets'),
+    //   },
+    // ]),
     new MiniCssExtractPlugin({
-      filename: 'assets/css/[name]-[hash].css',
+      filename: '[name]-[hash].css',
       chunkFilename: 'assets/css/[id].css',
     }),
   ],
@@ -121,20 +125,20 @@ module.exports = {
           loader: 'babel-loader',
         },
       },
-      {
-        test: /\.css$/,
-        exclude: [/elm-stuff/, /node_modules/],
-        loaders: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader',
-            options: {
-              sourceMap: false,
-              url: false,
-            },
-          },
-        ],
-      },
+      // {
+      //   test: /\.css$/,
+      //   exclude: [/elm-stuff/, /node_modules/],
+      //   loaders: [
+      //     MiniCssExtractPlugin.loader,
+      //     {
+      //       loader: 'css-loader',
+      //       options: {
+      //         sourceMap: false,
+      //         url: false,
+      //       },
+      //     },
+      //   ],
+      // },
       {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         exclude: [/elm-stuff/, /node_modules/],
@@ -156,12 +160,12 @@ module.exports = {
       },
     ],
   },
-    // cdnから読み込むものはここに
-    externals: {
-      jquery: 'jQuery',
-      firebase: 'firebase',
-      firebaseui: 'firebaseui',
-      vue: 'Vue',
-      'chart.js': 'Chart',
-    },
+  // cdnから読み込むものはここに
+  externals: {
+    jquery: 'jQuery',
+    firebase: 'firebase',
+    firebaseui: 'firebaseui',
+    vue: 'Vue',
+    'chart.js': 'Chart',
+  },
 };
