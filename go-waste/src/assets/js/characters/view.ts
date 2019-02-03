@@ -7,7 +7,7 @@ const mountNode: HTMLElement = document.getElementById('main')!;
 const char = {
   name: 'ごん',
   image: {
-    src: '/assets/images/gon.jpg',
+    src: '../assets/images/gon.jpg',
     filename: 'ごんぎつね',
     maker: 'kyasaba',
     makerUrl: 'https://www44.atwiki.jp/kyasaba/',

@@ -140,11 +140,11 @@ view model =
                             ]
                         , div [ class "row" ] [ text "アクション" ]
                         , div [ class "row" ]
-                            [ actionCard "/assets/images/break.png" "殴る" "favorite 【肉体】" "たたく。 壊す。" "http://pictogram2.com/" "ピクトグラム2.0"
-                            , actionCard "/assets/images/run.png" "走る" "directions_run 【敏捷】" "逃げる。急ぐ。" "http://pictogram2.com/" "ピクトグラム2.0"
-                            , actionCard "/assets/images/search.png" "調べる" "visibility 【知覚】" "見つける。観察。" "http://pictogram2.com/" "ピクトグラム2.0"
-                            , actionCard "/assets/images/think.png" "考える" "search 【精神】" "閃く。本を調べる。" "http://pictogram2.com/" "ピクトグラム2.0"
-                            , actionCard "/assets/images/animal_ookami_tooboe.png" "野生の勘" "cached 【野生】" "野生の勘で閃きを得る" "https://www.irasutoya.com/" "いらすとや"
+                            [ actionCard "../assets/images/break.png" "殴る" "favorite 【肉体】" "たたく。 壊す。" "http://pictogram2.com/" "ピクトグラム2.0"
+                            , actionCard "../assets/images/run.png" "走る" "directions_run 【敏捷】" "逃げる。急ぐ。" "http://pictogram2.com/" "ピクトグラム2.0"
+                            , actionCard "../assets/images/search.png" "調べる" "visibility 【知覚】" "見つける。観察。" "http://pictogram2.com/" "ピクトグラム2.0"
+                            , actionCard "../assets/images/think.png" "考える" "search 【精神】" "閃く。本を調べる。" "http://pictogram2.com/" "ピクトグラム2.0"
+                            , actionCard "../assets/images/animal_ookami_tooboe.png" "野生の勘" "cached 【野生】" "野生の勘で閃きを得る" "https://www.irasutoya.com/" "いらすとや"
                             ]
                         ]
                     ]

@@ -104,7 +104,7 @@ module.exports = {
   plugins: [
     ...htmlWebpackPlugins,
     new CleanWebpackPlugin([opts.dest], {
-      root: __dirname,
+      //root: __dirname,
       exclude: [],
       verbose: true,
       dry: false,
