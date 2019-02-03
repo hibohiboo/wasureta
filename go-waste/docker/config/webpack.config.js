@@ -7,7 +7,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 
-const MODE = process.env.NODE_ENV === 'production' ? 'production' : 'development';
+const MODE = 'development'; //process.env.NODE_ENV === 'production' ? 'production' : 'development';
 let filename = '[name].js';
 if (MODE === 'production') {
   filename = '[name]-[hash].js';
@@ -20,12 +20,16 @@ const opts = {
 };
 const files = {};
 globule
-  .find(['assets/**/*.js', '!assets/**/_*.js', '!assets/**/elm/*'], { cwd: opts.src })
+  .find(['assets/**/*.scss', 'assets/**/*.ts', '!assets/**/_*', '!assets/**/elm/*'], { cwd: opts.src })
   .forEach((findFileName) => {
-    const key = findFileName.replace(new RegExp('.js$', 'i'), '');
+    const key = findFileName.replace(new RegExp('.ts$', 'i'), '');
     const value = path.join(opts.src, findFileName);
     files[key] = value;
   });
+console.log(opts.src)
+// cssをhtml-webpack-pluginのchunks機能を使って埋め込み
+const regJs = new RegExp('.js$', 'i');
+const regCss = new RegExp('.css$', 'i');
 
 const htmlWebpackPlugins = [
   {
@@ -75,12 +79,12 @@ const htmlWebpackPlugins = [
 ].map((obj) => {
   obj.chunks.push('css/style');
   obj.chunks.push('js/navigation');
-
-  const chunks = obj.chunks.map(s => `assets/${s}`);
+  const assetsPath =  'assets';
+  const chunks = obj.chunks.map(s => `${assetsPath}/${s}`);
 
   return new HTMLWebpackPlugin({
     filename: `go-waste/${obj.name}.html`,
-    template: `/app/src/html/go-waste/${obj.name}.html`,
+    template: path.join(opts.src, `templates/${obj.name}.pug`),
     chunks,
   });
 });
@@ -100,10 +104,48 @@ const common = {
   module: {
     rules: [
       {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: { loader: 'babel-loader' },
+        test: /\.ts$/,
+        use:  ['ts-loader']
       },
+      {
+        test: /\.pug$/,
+        use:  ['html-loader?attrs=false','pug-html-loader?pretty&exports=false']
+      },
+      {
+        test: /\.scss$/,
+        exclude: [/elm-stuff/, /node_modules/],
+        use: [
+          { loader: 'style-loader' },
+          { loader: 'css-loader',
+            options: {
+              url: false,
+              modules: true
+            }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              plugins: (loader) => [require('autoprefixer')()]
+            }
+          },
+          { loader: 'sass-loader',
+            options: {
+              sourceMap: true
+            }
+          }
+        ]
+      }, 
+      {
+        test: /\.elm$/,
+        exclude: [/elm-stuff/, /node_modules/],
+        use: [
+          { loader: 'elm-hot-webpack-loader' },
+          { loader: "elm-webpack-loader",
+            options: { debug: true, forceWatch: true }
+          }
+        ]
+      }
     ],
   },
   plugins: [...htmlWebpackPlugins],
@@ -117,54 +159,6 @@ const common = {
   },
 };
 
-if (MODE === 'production') {
-  console.log('Building for Production...');
-
-  // commonとマージ
-  module.exports = merge(common, {
-    optimization: {
-      minimize: true,
-    },
-    plugins: [
-      new CleanWebpackPlugin(['dist'], {
-        root: __dirname,
-        exclude: [],
-        verbose: true,
-        dry: false,
-      }),
-      new CopyWebpackPlugin(
-        [{ from: '', to: './' }],
-        { context: 'html' },
-      ),
-      new MiniCssExtractPlugin({
-        filename: '/assets/css/[name].css',
-        chunkFilename: '/assets/css/[id].css',
-      }),
-    ],
-    module: {
-      rules: [
-        {
-          test: /\.css$/,
-          exclude: [/elm-stuff/, /node_modules/],
-          use: [
-            {
-              loader: MiniCssExtractPlugin.loader,
-            },
-            {
-              loader: 'css-loader',
-              options: {
-                url: false,
-                minimize: true,
-              },
-            },
-          ],
-        },
-      ],
-    },
-  });
-}
-
-
 if (MODE === 'development') {
   console.log('Building for dev...');
   module.exports = merge(common, {
@@ -172,14 +166,6 @@ if (MODE === 'development') {
       new webpack.NamedModulesPlugin(),
       new webpack.NoEmitOnErrorsPlugin(),
     ],
-    module: {
-      rules: [
-        {
-          test: /\.css$/,
-          exclude: [/node_modules/],
-          loaders: ['style-loader', 'css-loader'],
-        }],
-    },
     // 開発サーバの設定
     devServer: {
     // // public/index.htmlをデフォルトのホームとする
