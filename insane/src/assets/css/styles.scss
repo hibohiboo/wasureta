@@ -39,48 +39,65 @@ button {
 }
 
 .handout{
-  font-size: 16px;
+  display: grid;
+  font-size: 14px;
+  // font-family: 游ゴシック体, 'Yu Gothic', YuGothic, 'ヒラギノ角ゴシック Pro', 'Hiragino Kaku Gothic Pro', メイリオ, Meiryo, Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
+  font-family: "游明朝", "YuMincho", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "HG明朝E", "ＭＳ Ｐ明朝", "ＭＳ 明朝", serif; 
+  grid-template-columns: repeat(2, 1fr);
+  background-color: #fff;
 }
 
-.mission-card {
+// グリッドレイアウトの開始：ハンドアウト（中）
+.handout-card {
+  height: 300px;
+  width: 200px;
+  border: solid 1px #000;
+  padding:4px 8px;
+}
+
+.mission-card{
+  grid-column: 1;
+}
+
+.mission-card-head,
+.secret-card-head  {
+  font-size: 1.2em;
+  font-weight: bold;
+  align-self: center; // 縦方向中央揃え
+  text-align: center; // 横方向中央揃え
+}
+
+// グリッドレイアウトの開始：ハンドアウト（左:中）
+.mission-card-inner {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(12, 1fr);
   column-gap: 0;
   row-gap: 0;
-  height: 400px;
-  width: 200px;
-  border: #000 1px solid;
+  // 多重の枠線（内側←黒、白、黒（太線）→外側）
+  box-shadow: 0 0 0 1px #000,
+              0 0 0 2px #fff,
+              0 0 0 4px #000;
 }
 
 
-.mission-card-head{
+// ハンドアウトの名前の下の罫線
+.mission-card-inner::before {
   grid-column: 1/-1;
   grid-row: 1;
-  font-size: 1em;
-  font-weight: bold;
-  align-self: center; // 縦方向中央揃え
-  text-align: center; // 横方向中央揃え
-
-}
-// ハンドアウトの名前の上下の罫線
-.mission-card::before {
-  grid-column: 1/-1;
-  grid-row: 2;
   content: '';
-  border-top:  solid 1px #000 ;
-  border-bottom: solid 1px #000 ;
+  border-bottom: solid 2px #000 ;
 }
 // ハンドアウトの名前の右の罫線
-.mission-card::after {
+.mission-card-inner::after {
   grid-column: 1;
-  grid-row: 2;
+  grid-row: 1;
   content: '';
   border-right:  solid 1px #000 ;
 }
 .mission-title-label {
   grid-column: 1;
-  grid-row: 2;
+  grid-row: 1;
   font-size: 1em;
   font-weight: bold;
   text-align: center;
@@ -88,7 +105,7 @@ button {
 }
 .mission-title {
   grid-column: 2/-1;
-  grid-row: 2;
+  grid-row: 1;
   font-size: 0.8em;
   font-weight: bold;
   align-self: center;
@@ -96,7 +113,7 @@ button {
 }
 .mission-label {
   grid-column: 1/-1;
-  grid-row:3;
+  grid-row:2;
   align-self: center;
   text-align: center;
   font-size: 0.8em;
@@ -104,11 +121,92 @@ button {
 }
 .mission{
   grid-column: 1/-1;
-  grid-row: 4/-1;
+  grid-row: 3/-1;
   font-size: 0.8em;
-  // 改行を反映
-  white-space: pre-wrap;
+  white-space: pre-wrap; // 改行を反映
   border-top:  solid 1px #000 ;
   padding: 5px;
   margin-top:  -10px; // 使命の行を狭くする
+}
+
+.secret-card {
+  grid-column: 2;
+  background-color: #000;
+  color: #fff;
+}
+
+// ハンドアウトのショックの右の罫線
+.secret-card-inner::after {
+  grid-column: 3;
+  grid-row: 2;
+  content: '';
+  border-right:  solid 1px #000 ;
+  margin-top: -8px;   // 縦の長さを調節
+  margin-bottom: 8px; // これをしないとはみ出す
+}
+
+// グリッドレイアウトの開始：ハンドアウト（左:中）
+.secret-card-inner {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(12, 1fr);
+  column-gap: 0;
+  row-gap: 0;
+  background-color: #fff;
+  color: #000;
+  // 多重の枠線（内側←黒、白、黒（太線）→外側）
+  box-shadow: 0 0 0 1px #000,
+              0 0 0 2px #fff,
+              0 0 0 4px #000;
+  height: 270px;
+}
+.secret-label {
+  grid-column: 1/-1;
+  grid-row: 1;
+  align-self: center;
+  text-align: center;
+  background-color: #000;
+  color: #fff;
+  font-size: 0.8em;
+  margin-top: -6px;
+}
+.shock-label {
+  grid-column: 1/3;
+  grid-row: 2;
+  font-size: 0.7em;
+  font-weight: bold;
+  text-align: center;
+  align-self: center;
+  white-space: nowrap;
+  padding: 0;
+  margin-top: -12px;
+}
+.shock {
+  grid-column: 4/-1;
+  grid-row: 2;
+  font-size: 0.8em;
+  align-self: center;
+  padding-left: 5px;
+  margin-top: -12px;
+}
+.secret{
+  grid-column: 1/-1;
+  grid-row: 3/10;
+  font-size: 0.8em;
+  white-space: pre-wrap; // 改行を反映
+  border-top:  double 3px #000 ;
+  padding: 5px;
+  background-color: #fff;
+  color: #000;
+  margin-top: -8px;
+}
+.secret-caution {
+  grid-column: 1/-1;
+  grid-row: 12/12;
+  align-self: center;
+  text-align: center;
+  background-color: #000;
+  color: #fff;
+  font-size: 0.6em;
+  white-space: pre-wrap;
 }
