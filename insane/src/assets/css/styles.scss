@@ -38,13 +38,28 @@ button {
   width: 60px;
 }
 
-.handout{
+.handout {
   display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr;
+  column-gap: 5px;
   font-size: 14px;
   // font-family: 游ゴシック体, 'Yu Gothic', YuGothic, 'ヒラギノ角ゴシック Pro', 'Hiragino Kaku Gothic Pro', メイリオ, Meiryo, Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
   font-family: "游明朝", "YuMincho", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "HG明朝E", "ＭＳ Ｐ明朝", "ＭＳ 明朝", serif; 
-  grid-template-columns: repeat(2, 1fr);
   background-color: #fff;
+  width: 410px;
+  border: solid 1px #000;
+  box-sizing: border-box;
+}
+
+// ハンドアウト間の破線
+.handout::before {
+  grid-column: 1;
+  grid-row: 1;
+  content: '';
+  border-right: dashed 1px #000 ;
+  margin-right: -2px;
+  z-index: 10;
 }
 
 // グリッドレイアウトの開始：ハンドアウト（中）
@@ -53,10 +68,13 @@ button {
   width: 200px;
   border: solid 1px #000;
   padding:4px 8px;
+  box-sizing: border-box;
+  height: 270px;
 }
 
 .mission-card{
   grid-column: 1;
+  grid-row: 1;
 }
 
 .mission-card-head,
@@ -67,19 +85,30 @@ button {
   text-align: center; // 横方向中央揃え
 }
 
-// グリッドレイアウトの開始：ハンドアウト（左:中）
-.mission-card-inner {
+.handout-card-inner{
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(12, 1fr);
   column-gap: 0;
   row-gap: 0;
+  height: 230px;
+  box-sizing: border-box;
   // 多重の枠線（内側←黒、白、黒（太線）→外側）
   box-shadow: 0 0 0 1px #000,
               0 0 0 2px #fff,
               0 0 0 4px #000;
 }
 
+// 使命・秘密の本文
+.handout-card-inner p {
+  line-height: 1.4;
+  font-size: 0.8em;
+  white-space: pre-wrap; // 改行を反映
+}
+
+// グリッドレイアウトの開始：ハンドアウト（左:中）
+.mission-card-inner {
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(12, 1fr);
+}
 
 // ハンドアウトの名前の下の罫線
 .mission-card-inner::before {
@@ -117,16 +146,14 @@ button {
   align-self: center;
   text-align: center;
   font-size: 0.8em;
-  margin-top: -8px; // 使命の行を狭くする
+  margin-top: -6px; // 使命の行を狭くする
 }
 .mission{
   grid-column: 1/-1;
   grid-row: 3/-1;
-  font-size: 0.8em;
-  white-space: pre-wrap; // 改行を反映
   border-top:  solid 1px #000 ;
   padding: 5px;
-  margin-top:  -10px; // 使命の行を狭くする
+  margin-top:  -6px; // 使命の行を狭くする
 }
 
 .secret-card {
@@ -147,18 +174,10 @@ button {
 
 // グリッドレイアウトの開始：ハンドアウト（左:中）
 .secret-card-inner {
-  display: grid;
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: repeat(12, 1fr);
-  column-gap: 0;
-  row-gap: 0;
   background-color: #fff;
   color: #000;
-  // 多重の枠線（内側←黒、白、黒（太線）→外側）
-  box-shadow: 0 0 0 1px #000,
-              0 0 0 2px #fff,
-              0 0 0 4px #000;
-  height: 270px;
 }
 .secret-label {
   grid-column: 1/-1;
@@ -168,7 +187,7 @@ button {
   background-color: #000;
   color: #fff;
   font-size: 0.8em;
-  margin-top: -6px;
+  margin-top: -2px;
 }
 .shock-label {
   grid-column: 1/3;
@@ -179,7 +198,7 @@ button {
   align-self: center;
   white-space: nowrap;
   padding: 0;
-  margin-top: -12px;
+  margin-top: -6px;
 }
 .shock {
   grid-column: 4/-1;
@@ -187,18 +206,16 @@ button {
   font-size: 0.8em;
   align-self: center;
   padding-left: 5px;
-  margin-top: -12px;
+  margin-top: -6px;
 }
 .secret{
   grid-column: 1/-1;
   grid-row: 3/10;
-  font-size: 0.8em;
-  white-space: pre-wrap; // 改行を反映
   border-top:  double 3px #000 ;
   padding: 5px;
   background-color: #fff;
   color: #000;
-  margin-top: -8px;
+  margin-top: -6px;
 }
 .secret-caution {
   grid-column: 1/-1;
