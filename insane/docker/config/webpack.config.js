@@ -16,7 +16,9 @@ const filename = MODE === 'production' ? '[name]-[hash].js' : 'index.js';
 
 const common = {
   mode: MODE,
-  entry: './src/assets/js/index.ts',
+  entry: {
+    index: './src/assets/js/index.ts',
+  },
   output: {
     path: path.join(__dirname, 'dist'),
     publicPath: '/',
@@ -65,9 +67,30 @@ const common = {
       {
         test: /\.scss$/,
         exclude: [/elm-stuff/, /node_modules/],
-        // see https://github.com/webpack-contrib/css-loader#url
         loaders: ['style-loader', 'css-loader?url=false', 'sass-loader'],
-      },
+        // see https://github.com/webpack-contrib/css-loader#url
+        // use: [
+        //   { loader: 'style-loader' },
+        //   { loader: 'css-loader',
+        //     options: {
+        //       url: false,
+        //       modules: true
+        //     }
+        //   },
+          // {
+          //   loader: 'postcss-loader',
+          //   options: {
+          //     ident: 'postcss',
+          //     plugins: (loader) => [require('autoprefixer')()]
+          //   }
+          // },
+          // { loader: 'sass-loader',
+          //   options: {
+          //     sourceMap: true
+          //   }
+          // }
+        // ]
+      }, 
       {
         test: /\.css$/,
         exclude: [/elm-stuff/, /node_modules/],

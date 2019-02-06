@@ -31,6 +31,59 @@ button {
   height: 60px;
   width: 60px;
 }
-#main{
-  background: #fff;
+
+.handout{
+  font-size: 16px;
+}
+
+.mission-card {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(12, 1fr);
+  column-gap: 0;
+  row-gap: 0;
+  height: 400px;
+  width: 200px;
+  border: #000 1px solid;
+}
+
+.mission-card * {
+  margin: 0;
+  padding: 0;
+}
+
+.mission-card-head{
+  grid-column: 1/-1;
+  grid-row: 1;
+  font-size: 1em;
+  font-weight: bold;
+  align-self: center; // 縦方向中央揃え
+  text-align: center; // 横方向中央揃え
+
+}
+.mission-title-label {
+  grid-column: 1;
+  grid-row: 2;
+  font-size: 1em;
+  font-weight: bold;
+  text-align: center;
+  align-self: center;
+}
+.mission-title {
+  grid-column: 2/-1;
+  grid-row: 2;
+  font-size: 0.8em;
+  font-weight: bold;
+  align-self: center;
+}
+.mission-label {
+  grid-column: 1/-1;
+  grid-row:3;
+}
+.mission{
+  grid-column: 1/-1;
+  grid-row: 4/-1;
+  font-size: 0.8em;
+  // 改行を反映
+  white-space: pre-wrap;
 }

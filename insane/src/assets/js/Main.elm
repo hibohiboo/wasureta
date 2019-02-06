@@ -9,13 +9,14 @@ import Http exposing (Error(..))
 import Json.Decode as Decode
 
 
-
 -- ---------------------------
 -- PORTS
 -- ---------------------------
 
 
 port toJs : Int -> Cmd msg
+
+
 port initialize : () -> Cmd msg
 
 
@@ -33,7 +34,7 @@ type alias Model =
 
 init : Int -> ( Model, Cmd Msg )
 init flags =
-    ( { counter = flags, serverMessage = "" }, Cmd.batch [ initialize () ]  )
+    ( { counter = flags, serverMessage = "" }, Cmd.batch [ initialize () ] )
 
 
 
@@ -63,9 +64,9 @@ update message model =
                 expect =
                     Http.expectJson OnServerResponse (Decode.field "result" Decode.string)
             in
-            ( model
-            , Http.get { url = "/test", expect = expect }
-            )
+                ( model
+                , Http.get { url = "/test", expect = expect }
+                )
 
         OnServerResponse res ->
             case res of
@@ -117,34 +118,30 @@ view model =
         [ header []
             [ -- img [ src "/images/logo.png" ] []
               span [ class "logo" ] []
-            , h1 [] [ text "Elm 0.19 Webpack Starter, with hot-reloading" ]
+            , div [] [ text "ハンドアウトメイカー" ]
             ]
-        , p [] [ text "Click on the button below to increment the state." ]
-        , div [ class "pure-g" ]
-            [ div [ class "pure-u-1-3" ]
-                [ button
-                    [ class "pure-button pure-button-primary"
-                    , onClick Inc
+        , article []
+            [ h1 []
+                [ text "シナリオタイトル" ]
+            , time [] [ text "2019/1/1" ]
+            , div [ class "handout-list" ]
+                [ section [ class "handout" ]
+                    [ div [ class "mission-card" ]
+                        [ div [ class "mission-card-head" ] [ text "Handout" ]
+                        , div [ class "mission-title-label" ] [ text "名前" ]
+                        , h2 [ class "mission-title" ] [ text "ハンドアウトタイトル" ]
+                        , div [ class "mission-label" ] [ text "使命" ]
+                        , p [ class "mission" ] [ text "  校門で君は気づいた。\n外に出られない。赤い赤い夕焼け空。長い長い黒い影。誰もいないグラウンド。音のしない校舎。風のない蒸し暑い空気。時計は 4 時 44 分 44 秒.校門に集まっているやつらの誰も、帰り方を知らない。君も分からない。君の使命は【家に帰る】ことである。" ]
+                        ]
+                    , div [ class "secret-card" ]
+                        [ div [ class "secret-label" ] [ text "秘密" ]
+                        , div [ class "shock-label" ] [ text "ショック" ]
+                        , div [ class "shock" ] [ text "PC１" ]
+                        , p [ class "secret" ] [ text "校門で君は気づいた。\n外に出られない。赤い赤い夕焼け空。長い長い黒い影。誰もいないグラウンド。音のしない校舎。風のない蒸し暑い空気。時計は 4 時 44 分 44 秒.校門に集まっているやつらの誰も、帰り方を知らない。君も分からない。君の使命は【家に帰る】ことである。" ]
+                        ]
                     ]
-                    [ text "+ 1" ]
-                , text <| String.fromInt model.counter
-                ]
-            , div [ class "pure-u-1-3" ] []
-            , div [ class "pure-u-1-3" ]
-                [ button
-                    [ class "pure-button pure-button-primary"
-                    , onClick TestServer
-                    ]
-                    [ text "ping dev server" ]
-                , text model.serverMessage
                 ]
             ]
-        , p [] [ text "Then make a change to the source code and see how the state is retained after you recompile." ]
-        , p []
-            [ text "And now don't forget to add a star to the Github repo "
-            , a [ href "https://github.com/simonh1000/elm-webpack-starter" ] [ text "elm-webpack-starter" ]
-            ]
-        , div[][canvas [ class "my-chart" ] []]
         ]
 
 
@@ -152,6 +149,7 @@ view model =
 -- ---------------------------
 -- MAIN
 -- ---------------------------
+
 
 main : Program Int Model Msg
 main =
