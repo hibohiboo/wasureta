@@ -1,7 +1,7 @@
 version: '3'
 services:
 
-  elm:
+  insane:
     build: ./elm-webpack-starter
     volumes:
       - ../src:/app/src

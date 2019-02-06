@@ -16,7 +16,7 @@ const filename = MODE === 'production' ? '[name]-[hash].js' : 'index.js';
 
 const common = {
   mode: MODE,
-  entry: './src/index.ts',
+  entry: './src/assets/js/index.ts',
   output: {
     path: path.join(__dirname, 'dist'),
     publicPath: '/',
@@ -130,6 +130,8 @@ if (MODE === 'development') {
       ],
     },
     devServer: {
+      hot: true,
+      progress: true,
       inline: true,
       stats: 'errors-only',
       contentBase: path.join(__dirname, 'src/assets'),

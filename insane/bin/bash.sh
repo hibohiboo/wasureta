@@ -4,7 +4,7 @@
 bin_dir=$(cd $(dirname $0) && pwd)
 parent_dir=$bin_dir/..
 docker_dir=$parent_dir/docker
-container_name=${1:-elm}
+container_name=${1:-insane}
 
 # $container_nameの有無をgrepで調べる
 docker ps | grep $container_name

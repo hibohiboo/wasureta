@@ -2,7 +2,7 @@
 
 # このシェルスクリプトのディレクトリの絶対パスを取得。
 bin_dir=$(cd $(dirname $0) && pwd)
-name=${1:-elm}
+name=${1:-insane}
 dir_docker="$bin_dir/../../../docker"
 inputFile="/app/src/assets/js/elm/characters/views/Main.elm"
 outputFile="/app/dist/js/elm/characters/views/Main.js"

@@ -4,7 +4,7 @@
 
 # このシェルスクリプトのディレクトリの絶対パスを取得。
 bin_dir=$(cd $(dirname $0) && pwd)
-container_name=${1:-elm}
+container_name=${1:-insane}
 
 # $container_nameの有無をgrepで調べる
 docker ps | grep $container_name
