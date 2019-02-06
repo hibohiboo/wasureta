@@ -1,5 +1,11 @@
 @import "~purecss/build/pure.css";
 
+* {
+  margin: 0;
+  padding: 0;
+}
+
+
 body {
   background-color: #ddd;
   margin-top: 20px;
@@ -47,10 +53,6 @@ button {
   border: #000 1px solid;
 }
 
-.mission-card * {
-  margin: 0;
-  padding: 0;
-}
 
 .mission-card-head{
   grid-column: 1/-1;
@@ -60,6 +62,21 @@ button {
   align-self: center; // 縦方向中央揃え
   text-align: center; // 横方向中央揃え
 
+}
+// ハンドアウトの名前の上下の罫線
+.mission-card::before {
+  grid-column: 1/-1;
+  grid-row: 2;
+  content: '';
+  border-top:  solid 1px #000 ;
+  border-bottom: solid 1px #000 ;
+}
+// ハンドアウトの名前の右の罫線
+.mission-card::after {
+  grid-column: 1;
+  grid-row: 2;
+  content: '';
+  border-right:  solid 1px #000 ;
 }
 .mission-title-label {
   grid-column: 1;
@@ -75,10 +92,15 @@ button {
   font-size: 0.8em;
   font-weight: bold;
   align-self: center;
+  padding-left: 5px;
 }
 .mission-label {
   grid-column: 1/-1;
   grid-row:3;
+  align-self: center;
+  text-align: center;
+  font-size: 0.8em;
+  margin-top: -8px; // 使命の行を狭くする
 }
 .mission{
   grid-column: 1/-1;
@@ -86,4 +108,7 @@ button {
   font-size: 0.8em;
   // 改行を反映
   white-space: pre-wrap;
+  border-top:  solid 1px #000 ;
+  padding: 5px;
+  margin-top:  -10px; // 使命の行を狭くする
 }
