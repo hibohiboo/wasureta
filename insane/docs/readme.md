@@ -93,5 +93,7 @@
 ## 参考
 
 [elm webpack starter][*1]
+[elm で HTML パーサを作った；][*2]
 
 [*1]:https://github.com/simonh1000/elm-webpack-starter/blob/master/package.json
+[*2]:http://jinjor-labo.hatenablog.com/entry/2016/09/11/222251
