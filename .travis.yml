@@ -4,5 +4,4 @@ node_js:
 before_script:
   - npm install -g elm
   - npm install -g elm-test
-  - elm-package install -y
-script: elm-test
+script: ./bin/test.sh
