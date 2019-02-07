@@ -93,7 +93,9 @@
 ## 参考
 
 [elm webpack starter][*1]
-[elm で HTML パーサを作った；][*2]
+[elm で HTML パーサを作った][*2]
+[elm で markdown パーサを作った][*3]
 
 [*1]:https://github.com/simonh1000/elm-webpack-starter/blob/master/package.json
 [*2]:http://jinjor-labo.hatenablog.com/entry/2016/09/11/222251
+[*3]:https://scrapbox.io/gaaamii/Elm%E3%81%A7Markdown%E3%82%A8%E3%83%87%E3%82%A3%E3%82%BF%E3%82%92%E4%BD%9C%E3%82%8B%E3%81%BE%E3%81%A7%E3%81%AE%E9%81%93%E3%81%AE%E3%82%8A
