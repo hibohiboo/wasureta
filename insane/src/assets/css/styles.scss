@@ -7,7 +7,7 @@
 
 
 body {
-  background-color: #ddd;
+  background-color: #fff;
   margin-top: 20px;
 }
 
@@ -38,6 +38,15 @@ button {
   width: 60px;
 }
 
+.handout-list{
+  display: flex;
+}
+
+.handout-list section{
+  margin-right: 5px;
+}
+
+
 .handout {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -47,7 +56,7 @@ button {
   // font-family: 游ゴシック体, 'Yu Gothic', YuGothic, 'ヒラギノ角ゴシック Pro', 'Hiragino Kaku Gothic Pro', メイリオ, Meiryo, Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
   font-family: "游明朝", "YuMincho", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "HG明朝E", "ＭＳ Ｐ明朝", "ＭＳ 明朝", serif; 
   background-color: #fff;
-  width: 410px;
+  width: 390px;
   border: solid 1px #000;
   box-sizing: border-box;
 }
@@ -65,7 +74,7 @@ button {
 // グリッドレイアウトの開始：ハンドアウト（中）
 .handout-card {
   height: 300px;
-  width: 200px;
+  width: 190px;
   border: solid 1px #000;
   padding:4px 8px;
   box-sizing: border-box;
@@ -107,7 +116,7 @@ button {
 // グリッドレイアウトの開始：ハンドアウト（左:中）
 .mission-card-inner {
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(12, 1fr);
+  grid-template-rows: 1fr 14px repeat(10, 1fr);
 }
 
 // ハンドアウトの名前の下の罫線
@@ -146,14 +155,12 @@ button {
   align-self: center;
   text-align: center;
   font-size: 0.8em;
-  margin-top: -6px; // 使命の行を狭くする
 }
 .mission{
   grid-column: 1/-1;
   grid-row: 3/-1;
   border-top:  solid 1px #000 ;
   padding: 5px;
-  margin-top:  -6px; // 使命の行を狭くする
 }
 
 .secret-card {
@@ -168,14 +175,12 @@ button {
   grid-row: 2;
   content: '';
   border-right:  solid 1px #000 ;
-  margin-top: -8px;   // 縦の長さを調節
-  margin-bottom: 8px; // これをしないとはみ出す
 }
 
 // グリッドレイアウトの開始：ハンドアウト（左:中）
 .secret-card-inner {
   grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: repeat(12, 1fr);
+  grid-template-rows: 14px repeat(11, 1fr);
   background-color: #fff;
   color: #000;
 }
@@ -187,8 +192,11 @@ button {
   background-color: #000;
   color: #fff;
   font-size: 0.8em;
-  margin-top: -2px;
 }
+
+// ショックの下の2重線のせいで、中央だと上に寄ってに見えてしまうため少し下にずらす。
+$shock-padding-top: 1px;
+
 .shock-label {
   grid-column: 1/3;
   grid-row: 2;
@@ -197,8 +205,7 @@ button {
   text-align: center;
   align-self: center;
   white-space: nowrap;
-  padding: 0;
-  margin-top: -6px;
+  padding-top: $shock-padding-top;
 }
 .shock {
   grid-column: 4/-1;
@@ -206,7 +213,7 @@ button {
   font-size: 0.8em;
   align-self: center;
   padding-left: 5px;
-  margin-top: -6px;
+  padding-top: $shock-padding-top;
 }
 .secret{
   grid-column: 1/-1;
@@ -215,7 +222,6 @@ button {
   padding: 5px;
   background-color: #fff;
   color: #000;
-  margin-top: -6px;
 }
 .secret-caution {
   grid-column: 1/-1;
@@ -226,4 +232,16 @@ button {
   color: #fff;
   font-size: 0.6em;
   white-space: pre-wrap;
+}
+
+// 印刷用のレイアウト
+@media print{
+  header{
+    // 印刷に不要なものは非表示
+    display: none;
+  }
+  .page-break {
+     page-break-after: always;
+  }
+
 }

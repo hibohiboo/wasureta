@@ -125,7 +125,20 @@ view model =
                 [ text "シナリオタイトル" ]
             , time [] [ text "2019/1/1" ]
             , div [ class "handout-list" ]
-                [ section [ class "handout" ]
+                [
+                  handout
+                , handout]
+        ]
+        ]
+
+-- ---------------------------
+-- ハンドアウト
+-- ---------------------------
+
+
+handout : Html Msg
+handout =
+         section [ class "handout" ]
                     [ div [ class "mission-card handout-card" ]
                         [ div [ class "mission-card-head" ] [ text "Handout" ]
                         , div [ class "handout-card-inner mission-card-inner" ]
@@ -146,9 +159,6 @@ view model =
                             ]
                         ]
                     ]
-                ]
-            ]
-        ]
 
 
 
