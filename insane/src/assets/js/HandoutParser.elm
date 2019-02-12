@@ -48,7 +48,7 @@ text : Parser String
 text =
     getChompedString <|
         succeed ()
-            |. chompWhile (\c -> c /= '(' && c /= ')' && c /= ',' && c /= ' ' && c /= '\n')
+            |. chompWhile (\c -> c /= '\n')
 
 
 

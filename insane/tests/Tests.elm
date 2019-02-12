@@ -20,5 +20,5 @@ testParse s ast =
 all : Test
 all =
     describe "HandoutParser"
-        [ test "ハンドアウト" (testParse "ハンドアウト名:てすと\n使命:しめい" (Handout "てすと" "しめい"))
+        [ test "ハンドアウト" (testParse "ハンドアウト名:て すと\n使命:しめい" (Handout "て すと" "しめい"))
         ]
