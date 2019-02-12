@@ -15,7 +15,7 @@ parse s =
             x
 
         Err _ ->
-            Handout "error"
+            Handout "e" "e"
 
 
 
@@ -23,7 +23,8 @@ parse s =
 
 
 type alias Handout =
-    { x : String
+    { name : String
+    , mission : String
     }
 
 
@@ -37,13 +38,17 @@ point =
         |. keyword "ハンドアウト名:"
         |. spaces
         |= text
+        |. spaces
+        |. keyword "使命:"
+        |. spaces
+        |= text
 
 
 text : Parser String
 text =
     getChompedString <|
         succeed ()
-            |. chompWhile (\c -> c /= '(' && c /= ')' && c /= ',' && c /= ' ')
+            |. chompWhile (\c -> c /= '(' && c /= ')' && c /= ',' && c /= ' ' && c /= '\n')
 
 
 

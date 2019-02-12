@@ -6,9 +6,8 @@ import HandoutParser
 
 
 type alias Handout =
-    { x : String
-
-    -- , y : String
+    { name : String
+    , mission : String
     }
 
 
@@ -21,5 +20,5 @@ testParse s ast =
 all : Test
 all =
     describe "HandoutParser"
-        [ test "ハンドアウト名" (testParse "ハンドアウト名:てすと" (Handout "てすと"))
+        [ test "ハンドアウト" (testParse "ハンドアウト名:てすと\n使命:しめい" (Handout "てすと" "しめい"))
         ]
