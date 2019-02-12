@@ -1,4 +1,4 @@
-module HtmlParser exposing (..)
+module HandoutParser exposing (..)
 
 import Parser exposing (Parser, (|.), (|=), chompWhile, getChompedString, succeed, symbol, keyword, spaces)
 
@@ -8,23 +8,22 @@ type Node
     | Comment String
 
 
-parse : String -> Point
+parse : String -> Handout
 parse s =
     case Parser.run point s of
         Ok x ->
             x
 
         Err _ ->
-            Point "error" "error"
+            Handout "error"
 
 
 
 -- TODO 実装する
 
 
-type alias Point =
+type alias Handout =
     { x : String
-    , y : String
     }
 
 
@@ -32,25 +31,19 @@ type alias Point =
 -- "( 3, 4 )" という文字列を { x = 3, y = 4 } のように解釈するパーサーの定義
 
 
-point : Parser Point
+point : Parser Handout
 point =
-    succeed Point
-        |. symbol "("
+    succeed Handout
+        |. keyword "ハンドアウト名:"
         |. spaces
         |= text
-        |. spaces
-        |. symbol ","
-        |. spaces
-        |= text
-        |. spaces
-        |. symbol ")"
 
 
 text : Parser String
 text =
     getChompedString <|
         succeed ()
-            |. chompWhile (\c -> Char.isAlphaNum c || c == '_')
+            |. chompWhile (\c -> c /= '(' && c /= ')' && c /= ',' && c /= ' ')
 
 
 

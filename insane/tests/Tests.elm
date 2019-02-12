@@ -2,23 +2,24 @@ module Tests exposing (..)
 
 import Test exposing (..)
 import Expect
-import HtmlParser
+import HandoutParser
 
 
-type alias Point =
+type alias Handout =
     { x : String
-    , y : String
+
+    -- , y : String
     }
 
 
-testParse : String -> Point -> (() -> Expect.Expectation)
+testParse : String -> Handout -> (() -> Expect.Expectation)
 testParse s ast =
     \_ ->
-        Expect.equal ast (HtmlParser.parse s)
+        Expect.equal ast (HandoutParser.parse s)
 
 
 all : Test
 all =
-    describe "HtmlParser"
-        [ test "(1,2)" (testParse "(1,2)" (Point "1" "2"))
+    describe "HandoutParser"
+        [ test "ハンドアウト名" (testParse "ハンドアウト名:てすと" (Handout "てすと"))
         ]
