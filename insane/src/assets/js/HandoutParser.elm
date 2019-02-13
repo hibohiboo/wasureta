@@ -8,16 +8,6 @@ type Node
     | Comment String
 
 
-{-| Parse Handout.
-
-以下のフォーマットのテキストをパースする
-
-[ハンドアウト名][てすと]
-[使命][しめい]
-[ショック][PC1]
-[秘密][秘密あのねのね]
-
--}
 parse : String -> Maybe Handout
 parse s =
     case Parser.run point s of
@@ -36,6 +26,16 @@ type alias Handout =
     }
 
 
+{-| Parse Handout.
+
+以下のフォーマットのテキストをパースする
+
+[ハンドアウト名][てすと]
+[使命][しめい]
+[ショック][PC1]
+[秘密][秘密あのねのね]
+
+-}
 point : Parser Handout
 point =
     succeed Handout
