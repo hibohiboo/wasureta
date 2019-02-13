@@ -20,7 +20,7 @@ all =
 
 expectHandout : HandoutParser.Handout
 expectHandout =
-    HandoutParser.Handout "てすと" "しめ\nい" "PC1"
+    HandoutParser.Handout "てすと" "しめ\nい" "PC1" "秘密\nあのねのね"
 
 
 testText : String
@@ -28,3 +28,4 @@ testText =
     "[ハンドアウト名][てすと]"
         ++ "\n[使命][しめ\nい]"
         ++ "\n[ショック][PC1]"
+        ++ "\n[秘密][秘密\nあのねのね]"

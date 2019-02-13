@@ -18,14 +18,11 @@ parse s =
             Nothing
 
 
-
--- TODO 実装する
-
-
 type alias Handout =
     { name : String
     , mission : String
     , shock : String
+    , secret : String
     }
 
 
@@ -49,6 +46,12 @@ point =
         |. symbol "]"
         |. spaces
         |. keyword "[ショック]"
+        |. spaces
+        |. symbol "["
+        |= text
+        |. symbol "]"
+        |. spaces
+        |. keyword "[秘密]"
         |. spaces
         |. symbol "["
         |= text
