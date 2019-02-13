@@ -26,10 +26,10 @@ all =
 
 expectHandout : Handout
 expectHandout =
-    Handout "てすと" "しめい"
+    Handout "てすと" "しめ\nい"
 
 
 testText : String
 testText =
-    "ハンドアウト名:てすと"
-        ++ "\n使命:しめい"
+    "[ハンドアウト名][てすと]"
+        ++ "\n[使命][しめ\nい]"

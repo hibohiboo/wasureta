@@ -35,20 +35,25 @@ type alias Handout =
 point : Parser Handout
 point =
     succeed Handout
-        |. keyword "ハンドアウト名:"
+        |. keyword "[ハンドアウト名]"
         |. spaces
+        |. symbol "["
         |= text
+        |. symbol "]"
         |. spaces
-        |. keyword "使命:"
+        |. keyword "[使命]"
         |. spaces
+        |. symbol "["
         |= text
+        |. symbol "]"
+        |. spaces
 
 
 text : Parser String
 text =
     getChompedString <|
         succeed ()
-            |. chompWhile (\c -> c /= '\n')
+            |. chompWhile (\c -> c /= ']')
 
 
 
