@@ -15,7 +15,7 @@ parse s =
             x
 
         Err _ ->
-            Handout "e" "e"
+            Handout "e" "e" "e"
 
 
 
@@ -25,6 +25,7 @@ parse s =
 type alias Handout =
     { name : String
     , mission : String
+    , shock : String
     }
 
 
@@ -42,6 +43,12 @@ point =
         |. symbol "]"
         |. spaces
         |. keyword "[使命]"
+        |. spaces
+        |. symbol "["
+        |= text
+        |. symbol "]"
+        |. spaces
+        |. keyword "[ショック]"
         |. spaces
         |. symbol "["
         |= text

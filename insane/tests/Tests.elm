@@ -5,13 +5,7 @@ import Expect
 import HandoutParser
 
 
-type alias Handout =
-    { name : String
-    , mission : String
-    }
-
-
-testParse : String -> Handout -> (() -> Expect.Expectation)
+testParse : String -> HandoutParser.Handout -> (() -> Expect.Expectation)
 testParse s ast =
     \_ ->
         Expect.equal ast (HandoutParser.parse s)
@@ -24,12 +18,13 @@ all =
         ]
 
 
-expectHandout : Handout
+expectHandout : HandoutParser.Handout
 expectHandout =
-    Handout "てすと" "しめ\nい"
+    HandoutParser.Handout "てすと" "しめ\nい" "PC1"
 
 
 testText : String
 testText =
     "[ハンドアウト名][てすと]"
         ++ "\n[使命][しめ\nい]"
+        ++ "\n[ショック][PC1]"
