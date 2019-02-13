@@ -8,6 +8,16 @@ type Node
     | Comment String
 
 
+{-| Parse Handout.
+
+以下のフォーマットのテキストをパースする
+
+[ハンドアウト名][てすと]
+[使命][しめい]
+[ショック][PC1]
+[秘密][秘密あのねのね]
+
+-}
 parse : String -> Maybe Handout
 parse s =
     case Parser.run point s of
@@ -24,10 +34,6 @@ type alias Handout =
     , shock : String
     , secret : String
     }
-
-
-
--- "( 3, 4 )" という文字列を { x = 3, y = 4 } のように解釈するパーサーの定義
 
 
 point : Parser Handout
