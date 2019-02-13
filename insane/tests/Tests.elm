@@ -20,5 +20,16 @@ testParse s ast =
 all : Test
 all =
     describe "HandoutParser"
-        [ test "ハンドアウト" (testParse "ハンドアウト名:て すと\n使命:しめい" (Handout "て すと" "しめい"))
+        [ test "ハンドアウト" (testParse testText expectHandout)
         ]
+
+
+expectHandout : Handout
+expectHandout =
+    Handout "てすと" "しめい"
+
+
+testText : String
+testText =
+    "ハンドアウト名:てすと"
+        ++ "\n使命:しめい"
