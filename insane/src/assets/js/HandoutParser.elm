@@ -8,14 +8,14 @@ type Node
     | Comment String
 
 
-parse : String -> Handout
+parse : String -> Maybe Handout
 parse s =
     case Parser.run point s of
         Ok x ->
-            x
+            Just x
 
         Err _ ->
-            Handout "e" "e" "e"
+            Nothing
 
 
 

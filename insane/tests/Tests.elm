@@ -5,7 +5,7 @@ import Expect
 import HandoutParser
 
 
-testParse : String -> HandoutParser.Handout -> (() -> Expect.Expectation)
+testParse : String -> Maybe HandoutParser.Handout -> (() -> Expect.Expectation)
 testParse s ast =
     \_ ->
         Expect.equal ast (HandoutParser.parse s)
@@ -14,7 +14,7 @@ testParse s ast =
 all : Test
 all =
     describe "HandoutParser"
-        [ test "ハンドアウト" (testParse testText expectHandout)
+        [ test "ハンドアウト" (testParse testText (Just expectHandout))
         ]
 
 
