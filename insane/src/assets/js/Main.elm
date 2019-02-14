@@ -176,9 +176,12 @@ view model =
     div [ class "container" ]
         [ header []
             [ -- img [ src "/images/logo.png" ] []
-              span [ class "logo" ] []
-            , div []
-                [ text "ハンドアウトメイカー"
+              -- span [ class "logo" ] []
+              -- ,
+              div []
+                [ h1 [] [ text "ハンドアウトメイカー" ]
+                , p [] [ text "印刷用のハンドアウトが作成できます。" ]
+                , p [] [ text "フォーマットに従ってテキストを入力し、「ハンドアウト更新」のボタンを押してください。" ]
                 ]
             ]
         , editArea model
