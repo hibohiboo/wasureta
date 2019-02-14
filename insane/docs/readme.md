@@ -114,6 +114,7 @@
 [backtracable を理解][*5]
 [parser公式docs][*6]
 [text area sample][*7]
+[insane同人誌の作り方][*8]
 
 [*1]:https://github.com/simonh1000/elm-webpack-starter/blob/master/package.json
 [*2]:http://jinjor-labo.hatenablog.com/entry/2016/09/11/222251
@@ -122,3 +123,4 @@
 [*5]:https://qiita.com/arowM/items/19f2dbc6d04dcddb6000
 [*6]:https://package.elm-lang.org/packages/elm/parser/latest/Parser
 [*7]:https://qiita.com/jinjor/items/3ebeb56702b11685b0df
+[*8]:https://twitter.com/i/moments/1029048187733008384
