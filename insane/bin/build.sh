@@ -6,6 +6,6 @@ docker_dir=$parent_dir/docker
 
 rm -rf  $parent_dir/../app/public/insane
 
-#bash $bin_dir/separate/build.sh
+bash $bin_dir/separate/build.sh
 
 cp -r $parent_dir/separate/dist $parent_dir/../app/public/insane

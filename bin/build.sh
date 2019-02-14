@@ -42,7 +42,7 @@ bash $bin_dir/postcss/build.sh
 #   cd $bin_dir/../docker && docker-compose run -e NODE_ENV=production $container_name /bin/bash -c 'cp -r /app/dist /bkup/public-` date +"%Y%m%d%I%M%S"` && rm -rf /app/dist/* && yarn prod'
 # fi
 
-bash $bin_dir/../insane/build.sh
+bash $bin_dir/../insane/bin/build.sh
 
 cp -r $bin_dir/../dist/html/index.html $bin_dir/../app/public/index.html
 cp -r $bin_dir/../dist/assets $bin_dir/../app/public/assets
