@@ -92,7 +92,3 @@ text =
 
 
 -- )
-
-
-{-| Parse Handout.
--}

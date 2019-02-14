@@ -224,11 +224,11 @@ handouts list =
 
 handout : Int -> Handout -> Html Msg
 handout i h =
-    section [ class "handout" ]
+    section [ class (sectionClass i) ]
         [ div [ class "mission-card handout-card" ]
             [ div [ class "mission-card-head" ] [ text "Handout" ]
             , div [ class "handout-card-inner mission-card-inner" ]
-                [ div [ class "mission-title-label" ] [ text ("名前" ++ String.fromInt i) ]
+                [ div [ class "mission-title-label" ] [ text "名前" ]
                 , h2 [ class "mission-title" ] [ text h.name ]
                 , div [ class "mission-label" ] [ text "使命" ]
                 , p [ class "mission" ] [ text h.mission ]
@@ -245,6 +245,14 @@ handout i h =
                 ]
             ]
         ]
+
+
+sectionClass : Int -> String
+sectionClass i =
+    if i == 8 then
+        "handout page-break"
+    else
+        "handout"
 
 
 
