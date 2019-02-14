@@ -37,12 +37,34 @@ type alias Model =
 
 init : Int -> ( Model, Cmd Msg )
 init flags =
-    ( { counter = flags, serverMessage = "", value = "", handouts = initHandouts }, Cmd.batch [ initialize () ] )
+    ( initModel flags, Cmd.batch [ initialize () ] )
 
 
-initHandouts =
-    [ Handout "PC1" "校門で君は気づいた。\n外に出られない。赤い赤い夕焼け空。長い長い黒い影。誰もいないグラウンド。音のしない校舎。風のない蒸し暑い空気。時計は 4 時 44 分 44 秒.校門に集まっているやつらの誰も、帰り方を知らない。君も分からない。君の使命は【家に帰る】ことである。" "なし" "秘密を見てはならない"
-    ]
+initModel : Int -> Model
+initModel flags =
+    { counter = flags, serverMessage = "", value = handoutToString initHandout, handouts = [ initHandout ] }
+
+
+handoutToString : Handout -> String
+handoutToString h =
+    "[ハンドアウト名]["
+        ++ h.name
+        ++ "]"
+        ++ "\n[使命]["
+        ++ h.mission
+        ++ "]"
+        ++ "\n[ショック]["
+        ++ h.shock
+        ++ "]"
+        ++ "\n[秘密]["
+        ++ h.secret
+        ++ "]"
+        ++ "\n----"
+
+
+initHandout : Handout
+initHandout =
+    Handout "PC1" "校門で君は気づいた。\n外に出られない。赤い赤い夕焼け空。長い長い黒い影。誰もいないグラウンド。音のしない校舎。風のない蒸し暑い空気。時計は 4 時 44 分 44 秒.校門に集まっているやつらの誰も、帰り方を知らない。君も分からない。君の使命は【家に帰る】ことである。" "なし" "秘密を見てはならない"
 
 
 
@@ -136,20 +158,21 @@ view model =
             [ h1 []
                 [ text "シナリオタイトル" ]
             , time [] [ text "2019/1/1" ]
-            , editArea
+            , editArea model.value
             , div [ class "handout-list" ]
                 (handouts model.handouts)
             ]
         ]
 
 
-editArea =
+editArea : String -> Html Msg
+editArea v =
     div [ class "editor" ]
         [ textarea
             [ id "editor"
             , onInput Input
             ]
-            [ text "Hello, press `Ctrl+S` to see the result." ]
+            [ text v ]
         ]
 
 
