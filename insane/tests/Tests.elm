@@ -5,7 +5,7 @@ import Expect
 import HandoutParser
 
 
-testParse : String -> Maybe HandoutParser.Handout -> (() -> Expect.Expectation)
+testParse : String -> Maybe (List HandoutParser.Handout) -> (() -> Expect.Expectation)
 testParse s ast =
     \_ ->
         Expect.equal ast (HandoutParser.parse s)
@@ -14,7 +14,8 @@ testParse s ast =
 all : Test
 all =
     describe "HandoutParser"
-        [ test "ハンドアウト" (testParse testText (Just expectHandout))
+        [ test "ハンドアウト" (testParse testText (Just [ expectHandout ]))
+        , test "複数ハンドアウト" (testParse (testText ++ testText) (Just [ expectHandout, expectHandout ]))
         ]
 
 
@@ -29,3 +30,4 @@ testText =
         ++ "\n[使命][しめ\nい]"
         ++ "\n[ショック][PC1]"
         ++ "\n[秘密][秘密\nあのねのね]"
+        ++ "\n----"

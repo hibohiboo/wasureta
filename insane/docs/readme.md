@@ -98,6 +98,9 @@
 
 ### ハンドアウト１つのパース
 
+[Circle CI動作確認時点](https://github.com/hibohiboo/wasureta/tree/939befe0ebdc4a0bd2b3c2f609972695e82b580c)  
+
+
 ## 参考
 
 [elm webpack starter][*1]

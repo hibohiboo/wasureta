@@ -1,6 +1,6 @@
 module HandoutParser exposing (..)
 
-import Parser exposing (Parser, (|.), (|=), chompWhile, getChompedString, succeed, symbol, keyword, spaces)
+import Parser exposing (Parser, (|.), (|=), chompWhile, getChompedString, succeed, symbol, keyword, spaces, loop, Step(..), map, oneOf)
 
 
 type Node
@@ -8,9 +8,9 @@ type Node
     | Comment String
 
 
-parse : String -> Maybe Handout
+parse : String -> Maybe (List Handout)
 parse s =
-    case Parser.run point s of
+    case Parser.run handouts s of
         Ok x ->
             Just x
 
@@ -26,6 +26,24 @@ type alias Handout =
     }
 
 
+handouts : Parser (List Handout)
+handouts =
+    loop [] handoutsHelp
+
+
+handoutsHelp : List Handout -> Parser (Step (List Handout) (List Handout))
+handoutsHelp revHandouts =
+    oneOf
+        [ succeed (\stmt -> Loop (stmt :: revHandouts))
+            |= handout
+            |. spaces
+            |. symbol "----"
+            |. spaces
+        , succeed ()
+            |> map (\_ -> Done (List.reverse revHandouts))
+        ]
+
+
 {-| Parse Handout.
 
 以下のフォーマットのテキストをパースする
@@ -36,8 +54,8 @@ type alias Handout =
 [秘密][秘密あのねのね]
 
 -}
-point : Parser Handout
-point =
+handout : Parser Handout
+handout =
     succeed Handout
         |. keyword "[ハンドアウト名]"
         |. spaces
