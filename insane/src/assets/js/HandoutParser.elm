@@ -1,4 +1,4 @@
-module HandoutParser exposing (..)
+module HandoutParser exposing (parse)
 
 import Parser exposing (Parser, (|.), (|=), chompWhile, getChompedString, succeed, symbol, keyword, spaces, loop, Step(..), map, oneOf)
 
@@ -8,6 +8,16 @@ type Node
     | Comment String
 
 
+{-| Parse Handout.
+
+以下のフォーマットのテキストをパースする
+
+[ハンドアウト名][てすと]
+[使命][しめい]
+[ショック][PC1]
+[秘密][秘密あのねのね]
+
+-}
 parse : String -> Maybe (List Handout)
 parse s =
     case Parser.run handouts s of
