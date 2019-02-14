@@ -7,6 +7,7 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Http exposing (Error(..))
 import Json.Decode as Decode
+import HandoutParser exposing (parse, Handout)
 
 
 -- ---------------------------
@@ -29,12 +30,19 @@ port initialize : () -> Cmd msg
 type alias Model =
     { counter : Int
     , serverMessage : String
+    , value : String
+    , handouts : List Handout
     }
 
 
 init : Int -> ( Model, Cmd Msg )
 init flags =
-    ( { counter = flags, serverMessage = "" }, Cmd.batch [ initialize () ] )
+    ( { counter = flags, serverMessage = "", value = "", handouts = initHandouts }, Cmd.batch [ initialize () ] )
+
+
+initHandouts =
+    [ Handout "PC1" "校門で君は気づいた。\n外に出られない。赤い赤い夕焼け空。長い長い黒い影。誰もいないグラウンド。音のしない校舎。風のない蒸し暑い空気。時計は 4 時 44 分 44 秒.校門に集まっているやつらの誰も、帰り方を知らない。君も分からない。君の使命は【家に帰る】ことである。" "なし" "秘密を見てはならない"
+    ]
 
 
 
@@ -48,6 +56,7 @@ type Msg
     | Set Int
     | TestServer
     | OnServerResponse (Result Http.Error String)
+    | Input String
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -75,6 +84,9 @@ update message model =
 
                 Err err ->
                     ( { model | serverMessage = "Error: " ++ httpErrorToString err }, Cmd.none )
+
+        Input text ->
+            ( { model | value = text }, Cmd.none )
 
 
 httpErrorToString : Http.Error -> String
@@ -124,41 +136,57 @@ view model =
             [ h1 []
                 [ text "シナリオタイトル" ]
             , time [] [ text "2019/1/1" ]
+            , editArea
             , div [ class "handout-list" ]
-                [
-                  handout
-                , handout]
+                (handouts model.handouts)
+            ]
         ]
+
+
+editArea =
+    div [ class "editor" ]
+        [ textarea
+            [ id "editor"
+            , onInput Input
+            ]
+            [ text "Hello, press `Ctrl+S` to see the result." ]
         ]
+
+
 
 -- ---------------------------
 -- ハンドアウト
 -- ---------------------------
 
 
-handout : Html Msg
-handout =
-         section [ class "handout" ]
-                    [ div [ class "mission-card handout-card" ]
-                        [ div [ class "mission-card-head" ] [ text "Handout" ]
-                        , div [ class "handout-card-inner mission-card-inner" ]
-                            [ div [ class "mission-title-label" ] [ text "名前" ]
-                            , h2 [ class "mission-title" ] [ text "ハンドアウトタイトル" ]
-                            , div [ class "mission-label" ] [ text "使命" ]
-                            , p [ class "mission" ] [ text "  校門で君は気づいた。\n外に出られない。赤い赤い夕焼け空。長い長い黒い影。誰もいないグラウンド。音のしない校舎。風のない蒸し暑い空気。時計は 4 時 44 分 44 秒.校門に集まっているやつらの誰も、帰り方を知らない。君も分からない。君の使命は【家に帰る】ことである。" ]
-                            ]
-                        ]
-                    , div [ class "secret-card handout-card" ]
-                        [ div [ class "secret-card-head" ] [ text "Handout" ]
-                        , div [ class "handout-card-inner secret-card-inner" ]
-                            [ div [ class "secret-label" ] [ text "秘密" ]
-                            , div [ class "shock-label" ] [ text "ショック" ]
-                            , div [ class "shock" ] [ text "PC１" ]
-                            , p [ class "secret" ] [ text "君は気づいてしまった。\nずっと、希薄な影がゆらゆら\nとこの学校を彷徨っている。\n自分たちから伸びる影が\nゆっくり薄くなっている。\n自分の影が薄くなるにつれ\nさまよう影は濃くなっていく。\nこのままではアレらと同じに\nなってしまうに違いない。\n《時間》で恐怖判定。" ]
-                            , div [ class "secret-caution" ] [ text "この狂気を自分から\n明らかにすることはできない" ]
-                            ]
-                        ]
-                    ]
+handouts : List Handout -> List (Html Msg)
+handouts list =
+    List.map handout list
+
+
+handout : Handout -> Html Msg
+handout h =
+    section [ class "handout" ]
+        [ div [ class "mission-card handout-card" ]
+            [ div [ class "mission-card-head" ] [ text "Handout" ]
+            , div [ class "handout-card-inner mission-card-inner" ]
+                [ div [ class "mission-title-label" ] [ text "名前" ]
+                , h2 [ class "mission-title" ] [ text h.name ]
+                , div [ class "mission-label" ] [ text "使命" ]
+                , p [ class "mission" ] [ text h.mission ]
+                ]
+            ]
+        , div [ class "secret-card handout-card" ]
+            [ div [ class "secret-card-head" ] [ text "Handout" ]
+            , div [ class "handout-card-inner secret-card-inner" ]
+                [ div [ class "secret-label" ] [ text "秘密" ]
+                , div [ class "shock-label" ] [ text "ショック" ]
+                , div [ class "shock" ] [ text h.shock ]
+                , p [ class "secret" ] [ text h.secret ]
+                , div [ class "secret-caution" ] [ text "この狂気を自分から\n明らかにすることはできない" ]
+                ]
+            ]
+        ]
 
 
 
