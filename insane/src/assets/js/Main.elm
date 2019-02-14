@@ -79,6 +79,7 @@ type Msg
     | TestServer
     | OnServerResponse (Result Http.Error String)
     | Input String
+    | HandoutUpdate
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -109,6 +110,18 @@ update message model =
 
         Input text ->
             ( { model | value = text }, Cmd.none )
+
+        HandoutUpdate ->
+            let
+                list =
+                    parse model.value
+            in
+                case list of
+                    Just a ->
+                        ( { model | handouts = a }, Cmd.none )
+
+                    Nothing ->
+                        ( { model | handouts = [] }, Cmd.none )
 
 
 httpErrorToString : Http.Error -> String
@@ -176,6 +189,7 @@ editArea v =
             , onInput Input
             ]
             [ text v ]
+        , button [ onClick HandoutUpdate ] [ text "ハンドアウト更新" ]
         ]
 
 
