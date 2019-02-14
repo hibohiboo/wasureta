@@ -177,11 +177,10 @@ view model =
             ]
         , editArea model
         , article []
-            [ h1 []
-                [ text model.title ]
-
-            -- , time [] [ text "2019/1/1" ]
-            , div [ class "handout-list" ]
+            [ -- h1 [] [ text model.title ]
+              -- , time [] [ text "2019/1/1" ]
+              -- ,
+              div [ class "handout-list" ]
                 (handouts model.handouts)
             ]
         ]
@@ -190,16 +189,17 @@ view model =
 editArea : Model -> Html Msg
 editArea model =
     div [ class "editor" ]
-        [ label []
-            [ text "タイトル"
-            , input
-                [ id "title"
-                , onInput InputTitle
-                , value model.title
-                ]
-                []
-            ]
-        , div []
+        [ -- label []
+          -- [ text "タイトル"
+          -- , input
+          --     [ id "title"
+          --     , onInput InputTitle
+          --     , value model.title
+          --     ]
+          --     []
+          -- ]
+          -- ,
+          div []
             [ label [ for "editor" ] [ text "ハンドアウト" ]
             , textarea
                 [ id "editor"
