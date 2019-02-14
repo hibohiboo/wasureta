@@ -15,7 +15,7 @@ const opts = {
 
 module.exports = {
   mode: MODE,
-  entry: path.join(opts.src, 'index.js'),
+  entry: path.join(opts.src, 'assets/js/index.js'),
   output: {
     path: opts.dest,
     publicPath: '',
@@ -34,9 +34,11 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       {
-        from: path.join(opts.src, 'assets'),
-      },
-    ]),
+        from: '',
+        to: 'assets/images/',
+      }
+    ],
+    { context: `${opts.src}/assets/images` }),
     new MiniCssExtractPlugin({
       filename: '[name]-[hash].css',
     }),
@@ -89,9 +91,4 @@ module.exports = {
       },
     ],
   },
-    // cdnから読み込むものはここに
-    externals: {
-      jquery: 'jQuery',
-      'chart.js': 'Chart',
-    },
 };
