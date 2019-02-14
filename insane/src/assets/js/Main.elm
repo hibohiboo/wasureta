@@ -152,13 +152,15 @@ view model =
         [ header []
             [ -- img [ src "/images/logo.png" ] []
               span [ class "logo" ] []
-            , div [] [ text "ハンドアウトメイカー" ]
+            , div []
+                [ text "ハンドアウトメイカー"
+                ]
             ]
+        , editArea model.value
         , article []
             [ h1 []
                 [ text "シナリオタイトル" ]
             , time [] [ text "2019/1/1" ]
-            , editArea model.value
             , div [ class "handout-list" ]
                 (handouts model.handouts)
             ]
