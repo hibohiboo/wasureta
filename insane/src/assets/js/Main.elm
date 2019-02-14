@@ -1,4 +1,4 @@
-port module Main exposing (Model, Msg(..), add1, init, main, toJs, update, view)
+port module Main exposing (Model, Msg(..), init, main, toJs, update, view)
 
 import Browser
 import Browser.Navigation as Nav
@@ -29,9 +29,7 @@ port initialize : () -> Cmd msg
 
 
 type alias Model =
-    { counter : Int
-    , serverMessage : String
-    , value : String
+    { value : String
     , handouts : List Handout
     , title : String
     }
@@ -44,7 +42,7 @@ init flags =
 
 initModel : Int -> Model
 initModel flags =
-    { counter = flags, serverMessage = "", title = "シナリオタイトル", value = initValue, handouts = [ initHandout, initHandout ] }
+    { title = "シナリオタイトル", value = initValue, handouts = [ initHandout, initHandout ] }
 
 
 initValue : String
@@ -82,11 +80,7 @@ initHandout =
 
 
 type Msg
-    = Inc
-    | Set Int
-    | TestServer
-    | OnServerResponse (Result Http.Error String)
-    | Input String
+    = Input String
     | InputTitle String
     | HandoutUpdate
 
@@ -94,29 +88,6 @@ type Msg
 update : Msg -> Model -> ( Model, Cmd Msg )
 update message model =
     case message of
-        Inc ->
-            ( add1 model, toJs model.counter )
-
-        Set m ->
-            ( { model | counter = m }, toJs model.counter )
-
-        TestServer ->
-            let
-                expect =
-                    Http.expectJson OnServerResponse (Decode.field "result" Decode.string)
-            in
-                ( model
-                , Http.get { url = "/test", expect = expect }
-                )
-
-        OnServerResponse res ->
-            case res of
-                Ok r ->
-                    ( { model | serverMessage = r }, Cmd.none )
-
-                Err err ->
-                    ( { model | serverMessage = "Error: " ++ httpErrorToString err }, Cmd.none )
-
         InputTitle text ->
             ( { model | title = text }, Cmd.none )
 
@@ -134,35 +105,6 @@ update message model =
 
                     Nothing ->
                         ( { model | handouts = [] }, Cmd.none )
-
-
-httpErrorToString : Http.Error -> String
-httpErrorToString err =
-    case err of
-        BadUrl _ ->
-            "BadUrl"
-
-        Timeout ->
-            "Timeout"
-
-        NetworkError ->
-            "NetworkError"
-
-        BadStatus _ ->
-            "BadStatus"
-
-        BadBody s ->
-            "BadBody: " ++ s
-
-
-{-| increments the counter
-
-    add1 5 --> 6
-
--}
-add1 : Model -> Model
-add1 model =
-    { model | counter = model.counter + 1 }
 
 
 
@@ -247,7 +189,7 @@ handouts list =
 
 handout : Int -> Handout -> Html Msg
 handout i h =
-    section [ class (sectionClass i) ]
+    section [ class "handout" ]
         [ div [ class "mission-card handout-card" ]
             [ div [ class "mission-card-head" ] [ text "Handout" ]
             , div [ class "handout-card-inner mission-card-inner" ]
@@ -268,14 +210,6 @@ handout i h =
                 ]
             ]
         ]
-
-
-sectionClass : Int -> String
-sectionClass i =
-    if i == 8 then
-        "handout page-break"
-    else
-        "handout"
 
 
 
