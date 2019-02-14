@@ -8,6 +8,7 @@ import Html.Events exposing (..)
 import Http exposing (Error(..))
 import Json.Decode as Decode
 import HandoutParser exposing (parse, Handout)
+import Array
 
 
 -- ---------------------------
@@ -32,6 +33,7 @@ type alias Model =
     , serverMessage : String
     , value : String
     , handouts : List Handout
+    , title : String
     }
 
 
@@ -42,7 +44,7 @@ init flags =
 
 initModel : Int -> Model
 initModel flags =
-    { counter = flags, serverMessage = "", value = handoutToString initHandout, handouts = [ initHandout ] }
+    { counter = flags, serverMessage = "", title = "シナリオタイトル", value = handoutToString initHandout, handouts = [ initHandout ] }
 
 
 handoutToString : Handout -> String
@@ -79,6 +81,7 @@ type Msg
     | TestServer
     | OnServerResponse (Result Http.Error String)
     | Input String
+    | InputTitle String
     | HandoutUpdate
 
 
@@ -107,6 +110,9 @@ update message model =
 
                 Err err ->
                     ( { model | serverMessage = "Error: " ++ httpErrorToString err }, Cmd.none )
+
+        InputTitle text ->
+            ( { model | title = text }, Cmd.none )
 
         Input text ->
             ( { model | value = text }, Cmd.none )
@@ -169,10 +175,10 @@ view model =
                 [ text "ハンドアウトメイカー"
                 ]
             ]
-        , editArea model.value
+        , editArea model
         , article []
             [ h1 []
-                [ text "シナリオタイトル" ]
+                [ text model.title ]
 
             -- , time [] [ text "2019/1/1" ]
             , div [ class "handout-list" ]
@@ -181,15 +187,27 @@ view model =
         ]
 
 
-editArea : String -> Html Msg
-editArea v =
+editArea : Model -> Html Msg
+editArea model =
     div [ class "editor" ]
-        [ textarea
-            [ id "editor"
-            , onInput Input
+        [ label []
+            [ text "タイトル"
+            , input
+                [ id "title"
+                , onInput InputTitle
+                , value model.title
+                ]
+                []
             ]
-            [ text v ]
-        , button [ onClick HandoutUpdate ] [ text "ハンドアウト更新" ]
+        , div []
+            [ label [ for "editor" ] [ text "ハンドアウト" ]
+            , textarea
+                [ id "editor"
+                , onInput Input
+                ]
+                [ text model.value ]
+            , button [ onClick HandoutUpdate ] [ text "ハンドアウト更新" ]
+            ]
         ]
 
 
@@ -201,16 +219,16 @@ editArea v =
 
 handouts : List Handout -> List (Html Msg)
 handouts list =
-    List.map handout list
+    Array.toList (Array.indexedMap handout (Array.fromList list))
 
 
-handout : Handout -> Html Msg
-handout h =
+handout : Int -> Handout -> Html Msg
+handout i h =
     section [ class "handout" ]
         [ div [ class "mission-card handout-card" ]
             [ div [ class "mission-card-head" ] [ text "Handout" ]
             , div [ class "handout-card-inner mission-card-inner" ]
-                [ div [ class "mission-title-label" ] [ text "名前" ]
+                [ div [ class "mission-title-label" ] [ text ("名前" ++ String.fromInt i) ]
                 , h2 [ class "mission-title" ] [ text h.name ]
                 , div [ class "mission-label" ] [ text "使命" ]
                 , p [ class "mission" ] [ text h.mission ]

@@ -39,7 +39,12 @@ button {
 }
 
 .handout-list{
-  display: flex;
+  // display: flex;
+  // flex-wrap: wrap;
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  row-gap: 8px;
+  margin-left: 5px;
 }
 
 .handout-list section{
@@ -58,7 +63,7 @@ button {
 // ハンドアウト部分
 $handout-border: 1px;
 $handout-card-width: 190px;
-$handout-gap: 5px;
+$handout-gap: 4px;
 
 .handout {
   display: grid;
@@ -89,9 +94,9 @@ $handout-gap: 5px;
   height: 300px;
   width: $handout-card-width;
   border: solid 1px #000;
-  padding:4px 8px;
+  padding:2px 8px;
   box-sizing: border-box;
-  height: 270px;
+  height: 266px;
 }
 
 .mission-card{
@@ -194,7 +199,7 @@ $handout-gap: 5px;
 // グリッドレイアウトの開始：ハンドアウト（左:中）
 .secret-card-inner {
   grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: 14px repeat(11, 1fr);
+  grid-template-rows: 18px repeat(11, 1fr);
   background-color: #fff;
   color: #000;
 }
@@ -210,6 +215,13 @@ $handout-gap: 5px;
 
 // ショックの下の2重線のせいで、中央だと上に寄ってに見えてしまうため少し下にずらす。
 $shock-padding-top: 1px;
+
+  // 改ページ用の疑似要素作成
+  .handout:nth-child(8n)::after{
+    content: '';
+    display: block;
+    page-break-after: always;
+  }
 
 .shock-label {
   grid-column: 1/3;
@@ -250,12 +262,17 @@ $shock-padding-top: 1px;
 
 // 印刷用のレイアウト
 @media print{
-  header{
+  @page {
+    margin: 0;
+  }
+  header,
+  .editor,
+  h1{
     // 印刷に不要なものは非表示
     display: none;
   }
   .page-break {
-     page-break-after: always;
+    page-break-after: always;
   }
 
 }
