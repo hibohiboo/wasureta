@@ -1,4 +1,4 @@
-module HandoutParser exposing (parse)
+module HandoutParser exposing (parse, Handout)
 
 import Parser exposing (Parser, (|.), (|=), chompWhile, getChompedString, succeed, symbol, keyword, spaces, loop, Step(..), map, oneOf)
 
