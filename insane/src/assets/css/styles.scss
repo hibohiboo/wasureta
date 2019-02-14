@@ -43,7 +43,7 @@ button {
   // flex-wrap: wrap;
   display:grid;
   grid-template-columns: repeat(2, 1fr);
-  row-gap: 8px;
+  row-gap: 6px;
   margin-left: 5px;
 }
 
@@ -77,7 +77,6 @@ $handout-gap: 4px;
   width: ($handout-card-width * 2 + $handout-border * 2 + $handout-gap);
   border: solid $handout-border #000;
   box-sizing: border-box;
-  margin-bottom: 5px;
 }
 
 // ハンドアウト間の破線
@@ -92,7 +91,6 @@ $handout-gap: 4px;
 
 // グリッドレイアウトの開始：ハンドアウト（中）
 .handout-card {
-  height: 300px;
   width: $handout-card-width;
   border: solid 1px #000;
   padding:2px 8px;
@@ -261,6 +259,7 @@ $shock-padding-top: 1px;
   white-space: pre-wrap;
 }
 
+
 // 印刷用のレイアウト
 @media print{
   @page {
@@ -273,7 +272,15 @@ $shock-padding-top: 1px;
     display: none;
   }
   .page-break {
-    page-break-after: always;
+    // gridレイアウトでは改ページ使用不可
+    //page-break-after: always;
   }
+  // 上記の理由により、改ページが必要な部分には空白を作る
+  .handout:nth-of-type(8n-1),
+  .handout:nth-of-type(8n){
+    // A4で6ページ目までは無事な印刷レイアウトとなることを確認
+    margin-bottom: 28px;
+  }
+  
 
 }
