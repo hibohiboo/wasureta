@@ -160,7 +160,8 @@ view model =
         , article []
             [ h1 []
                 [ text "シナリオタイトル" ]
-            , time [] [ text "2019/1/1" ]
+
+            -- , time [] [ text "2019/1/1" ]
             , div [ class "handout-list" ]
                 (handouts model.handouts)
             ]

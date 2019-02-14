@@ -56,18 +56,21 @@ button {
 }
 
 // ハンドアウト部分
+$handout-border: 1px;
+$handout-card-width: 190px;
+$handout-gap: 5px;
 
 .handout {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: 1fr;
-  column-gap: 5px;
+  column-gap: $handout-gap;
   font-size: 14px;
   // font-family: 游ゴシック体, 'Yu Gothic', YuGothic, 'ヒラギノ角ゴシック Pro', 'Hiragino Kaku Gothic Pro', メイリオ, Meiryo, Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
   font-family: "游明朝", "YuMincho", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "HG明朝E", "ＭＳ Ｐ明朝", "ＭＳ 明朝", serif; 
   background-color: #fff;
-  width: 390px;
-  border: solid 1px #000;
+  width: ($handout-card-width * 2 + $handout-border * 2 + $handout-gap);
+  border: solid $handout-border #000;
   box-sizing: border-box;
 }
 
@@ -77,14 +80,14 @@ button {
   grid-row: 1;
   content: '';
   border-right: dashed 1px #000 ;
-  margin-right: -2px;
+  margin-right: -3px; // 二つのカードの中央に合わせる。gapが5なので中央の3とする。
   z-index: 10;
 }
 
 // グリッドレイアウトの開始：ハンドアウト（中）
 .handout-card {
   height: 300px;
-  width: 190px;
+  width: $handout-card-width;
   border: solid 1px #000;
   padding:4px 8px;
   box-sizing: border-box;
