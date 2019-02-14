@@ -61,7 +61,23 @@ button {
   padding-bottom: 20px;
 }
 
+// ハンドアウトがないとき
+
+.handout-guide{
+  .pre{
+    white-space: pre;
+    padding: 5px;
+    border: dotted 1px #000;
+  }
+  .caution{
+    font-size: 10px;
+    color: #ff0000;
+  }
+}
+
 // ハンドアウト部分
+
+
 $handout-border: 1px;
 $handout-card-width: 190px;
 $handout-gap: 4px;

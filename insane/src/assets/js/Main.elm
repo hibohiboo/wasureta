@@ -44,7 +44,12 @@ init flags =
 
 initModel : Int -> Model
 initModel flags =
-    { counter = flags, serverMessage = "", title = "シナリオタイトル", value = handoutToString initHandout, handouts = [ initHandout ] }
+    { counter = flags, serverMessage = "", title = "シナリオタイトル", value = initValue, handouts = [ initHandout, initHandout ] }
+
+
+initValue : String
+initValue =
+    (handoutToString initHandout) ++ (handoutToString initHandout)
 
 
 handoutToString : Handout -> String
@@ -62,6 +67,7 @@ handoutToString h =
         ++ h.secret
         ++ "]"
         ++ "\n----"
+        ++ "\n"
 
 
 initHandout : Handout
@@ -180,8 +186,7 @@ view model =
             [ -- h1 [] [ text model.title ]
               -- , time [] [ text "2019/1/1" ]
               -- ,
-              div [ class "handout-list" ]
-                (handouts model.handouts)
+              handoutArea model
             ]
         ]
 
@@ -215,6 +220,21 @@ editArea model =
 -- ---------------------------
 -- ハンドアウト
 -- ---------------------------
+
+
+handoutArea model =
+    if (List.length model.handouts) == 0 then
+        div [ class "handout-guide" ]
+            [ span [ class "caution" ] [ text "ハンドアウトの入力フォーマットが異なります。" ]
+            , br [] []
+            , text "以下の形式でハンドアウトを入力してください。"
+            , br [] []
+            , div [ class "pre" ] [ text "[ハンドアウト名][〇〇]\n[使命][〇〇]\n[ショック][〇〇]\n[秘密][〇〇]\n----\n" ]
+            , span [ class "caution" ] [ text "※注意： 最後の----までがフォーマットです。入力を間違えると表示できません。" ]
+            ]
+    else
+        div [ class "handout-list" ]
+            (handouts model.handouts)
 
 
 handouts : List Handout -> List (Html Msg)
