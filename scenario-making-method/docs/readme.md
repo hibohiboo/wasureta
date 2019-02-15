@@ -118,6 +118,9 @@
 [spa][*9]  
 [visual][*10]  
 [svg d3][*11]  
+[svg elm][*12]
+[svg で改行][*13]
+[svg text][*14]
 
 [*1]:https://qiita.com/norami_dream/items/8751708e49a66f6352b8
 [*2]:http://nexus1.hatenablog.com/entry/2017/06/21/231548
@@ -130,4 +133,6 @@
 [*9]:https://qiita.com/shuhei/items/53adf6a09cd5ceae62a9
 [*10]:https://package.elm-lang.org/packages/gampleman/elm-visualization/latest/
 [*11]:https://qiita.com/daxanya1/items/734e65a7ca58bbe2a98c
-
+[*12]:https://package.elm-lang.org/packages/elm-community/typed-svg/latest/TypedSvg#text_
+[*13]:https://bl.ocks.org/shimizu/44ac0be6f0ce6e75bd62
+[*14]:https://developer.mozilla.org/ja/docs/Web/SVG/Element/text
