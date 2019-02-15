@@ -77,20 +77,20 @@ const common = {
         //       modules: true
         //     }
         //   },
-          // {
-          //   loader: 'postcss-loader',
-          //   options: {
-          //     ident: 'postcss',
-          //     plugins: (loader) => [require('autoprefixer')()]
-          //   }
-          // },
-          // { loader: 'sass-loader',
-          //   options: {
-          //     sourceMap: true
-          //   }
-          // }
+        // {
+        //   loader: 'postcss-loader',
+        //   options: {
+        //     ident: 'postcss',
+        //     plugins: (loader) => [require('autoprefixer')()]
+        //   }
+        // },
+        // { loader: 'sass-loader',
+        //   options: {
+        //     sourceMap: true
+        //   }
+        // }
         // ]
-      }, 
+      },
       {
         test: /\.css$/,
         exclude: [/elm-stuff/, /node_modules/],

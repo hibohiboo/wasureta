@@ -36,7 +36,7 @@ module.exports = {
       {
         from: '',
         to: 'assets/images/',
-      }
+      },
     ],
     { context: `${opts.src}/assets/images` }),
     new MiniCssExtractPlugin({
