@@ -107,14 +107,16 @@
 
 ## 参考
 
-[elm webpack starter][*1]
-[elm で HTML パーサを作った][*2]
-[elm で markdown パーサを作った][*3]
-[elm parser][*4]
-[backtracable を理解][*5]
-[parser公式docs][*6]
-[text area sample][*7]
-[insane同人誌の作り方][*8]
+[elm webpack starter][*1]  
+[elm で HTML パーサを作った][*2]  
+[elm で markdown パーサを作った][*3]  
+[elm parser][*4]  
+[backtracable を理解][*5]  
+[parser公式docs][*6]  
+[text area sample][*7]  
+[insane同人誌の作り方][*8]  
+[goole font 候補1][*9][候補2][*10][候補3][*11]
+[force example][*12]
 
 [*1]:https://github.com/simonh1000/elm-webpack-starter/blob/master/package.json
 [*2]:http://jinjor-labo.hatenablog.com/entry/2016/09/11/222251
@@ -124,3 +126,7 @@
 [*6]:https://package.elm-lang.org/packages/elm/parser/latest/Parser
 [*7]:https://qiita.com/jinjor/items/3ebeb56702b11685b0df
 [*8]:https://twitter.com/i/moments/1029048187733008384
+[*9]:https://fonts.google.com/specimen/Nanum+Brush+Script
+[*10]:https://fonts.google.com/specimen/IM+Fell+DW+Pica+SC
+[*11]:https://fonts.google.com/specimen/East+Sea+Dokdo
+[*12]:https://code.gampleman.eu/elm-visualization/ForceDirectedGraph/

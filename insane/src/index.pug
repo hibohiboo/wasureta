@@ -1,6 +1,6 @@
 //- 変数一覧
 - var title="インセインハンドアウトメイカー"
-- var description="インセインのセッション準備に。文章を打ち込むだけで印刷用っぽいハンドアウトを生成！"
+- var description="インセインのセッション準備に。文章を打ち込むだけで印刷用ハンドアウトを生成！"
 - var keywords="TRPG,ホラー,インセイン,ハンドアウト,TRPG支援ツール"
 
 doctype html
@@ -33,6 +33,8 @@ html
     meta(name="twitter:description" content=description)
     meta(name="twitter:image" content="https://wasureta-d6b34.firebaseapp.com/insane/assets/images/screenshot.png")
     title=title
+    script(defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js")
+
     .
       <!-- Google Tag Manager -->
       <script>
@@ -49,3 +51,13 @@ html
       height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <!-- End Google Tag Manager (noscript) -->
     #main 
+    footer.page-footer
+      aside.sns-icons
+        ul
+          li: a.white-text(href="https://twitter.com/hibohiboo" target="_blank")
+            span.fab.fa-twitter(title="Twitter")
+          li: a.white-text(href="https://github.com/hibohiboo/wasureta/tree/master/insane" target="_blank")
+            span.fab.fa-github(title="Github")
+      .footer-copyright
+        | © Made by 
+        a(href='https://twitter.com/hibohiboo') hibo
