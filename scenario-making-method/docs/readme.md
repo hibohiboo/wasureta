@@ -107,26 +107,27 @@
 
 ## 参考
 
-[elm webpack starter][*1]  
-[elm で HTML パーサを作った][*2]  
-[elm で markdown パーサを作った][*3]  
-[elm parser][*4]  
-[backtracable を理解][*5]  
-[parser公式docs][*6]  
-[text area sample][*7]  
-[insane同人誌の作り方][*8]  
-[goole font 候補1][*9][候補2][*10][候補3][*11]
-[force example][*12]
+[svgを画像として保存][*1]  
+[関数型よく知らない人のelm入門 番外編 - 失敗した設計たち][*2]  
+[decoder a ][*3]  
+[解析][*4]
+[font-awe-some][*5]  
+[start font awe some][*6]
+[シナリオの作り方][*7]  
+[elm graph][*8]  
+[spa][*9]  
+[visual][*10]  
+[svg d3][*11]  
 
-[*1]:https://github.com/simonh1000/elm-webpack-starter/blob/master/package.json
-[*2]:http://jinjor-labo.hatenablog.com/entry/2016/09/11/222251
-[*3]:https://scrapbox.io/gaaamii/Elm%E3%81%A7Markdown%E3%82%A8%E3%83%87%E3%82%A3%E3%82%BF%E3%82%92%E4%BD%9C%E3%82%8B%E3%81%BE%E3%81%A7%E3%81%AE%E9%81%93%E3%81%AE%E3%82%8A
+[*1]:https://qiita.com/norami_dream/items/8751708e49a66f6352b8
+[*2]:http://nexus1.hatenablog.com/entry/2017/06/21/231548
+[*3]:https://qiita.com/ymtszw/items/1cabbdbda4273b4c1978
 [*4]:https://qiita.com/jinjor/items/d0d4b83b530251df913e
-[*5]:https://qiita.com/arowM/items/19f2dbc6d04dcddb6000
-[*6]:https://package.elm-lang.org/packages/elm/parser/latest/Parser
-[*7]:https://qiita.com/jinjor/items/3ebeb56702b11685b0df
-[*8]:https://twitter.com/i/moments/1029048187733008384
-[*9]:https://fonts.google.com/specimen/Nanum+Brush+Script
-[*10]:https://fonts.google.com/specimen/IM+Fell+DW+Pica+SC
-[*11]:https://fonts.google.com/specimen/East+Sea+Dokdo
-[*12]:https://code.gampleman.eu/elm-visualization/ForceDirectedGraph/
+[*5]:https://niwaka-web.com/fontawsome5_css/
+[*6]:https://fontawesome.com/start
+[*7]:http://transmitter.seesaa.net/article/437904513.html  
+[*8]:https://package.elm-lang.org/packages/elm-community/graph/latest/Graph
+[*9]:https://qiita.com/shuhei/items/53adf6a09cd5ceae62a9
+[*10]:https://package.elm-lang.org/packages/gampleman/elm-visualization/latest/
+[*11]:https://qiita.com/daxanya1/items/734e65a7ca58bbe2a98c
+

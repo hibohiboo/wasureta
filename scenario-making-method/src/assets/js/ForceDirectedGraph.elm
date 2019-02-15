@@ -74,10 +74,14 @@ init _ =
             Graph.mapContexts initializeNode miserablesGraph
 
         link { from, to } =
-            ( from, to )
+            { source = from
+            , target = to
+            , distance = 50
+            , strength = Just 0.03
+            }
 
         forces =
-            [ Force.links <| List.map link <| Graph.edges graph
+            [ Force.customLinks 0 <| List.map link <| Graph.edges graph
             , Force.manyBody <| List.map .id <| Graph.nodes graph
             , Force.center (w / 2) (h / 2)
             ]
@@ -195,7 +199,7 @@ linkElement graph edge =
             Maybe.withDefault (Force.entity 0 "") <| Maybe.map (.node >> .label) <| Graph.get edge.to graph
     in
         line
-            [ strokeWidth 1
+            [ strokeWidth 2
             , stroke (Color.rgb255 170 170 170)
             , x1 source.x
             , y1 source.y
@@ -207,7 +211,7 @@ linkElement graph edge =
 
 nodeElement node rl =
     circle
-        [ r rl
+        [ r 20
         , fill (Fill Color.black)
         , stroke (Color.rgba 0 0 0 0)
         , strokeWidth 7
