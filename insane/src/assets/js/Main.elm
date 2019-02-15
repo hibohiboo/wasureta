@@ -16,7 +16,7 @@ import Array
 -- ---------------------------
 
 
-port toJs : Int -> Cmd msg
+port toJs : String -> Cmd msg
 
 
 port initialize : () -> Cmd msg
@@ -42,14 +42,26 @@ type NumberPosition
     | Hidden
 
 
-init : Int -> ( Model, Cmd Msg )
+init : String -> ( Model, Cmd Msg )
 init flags =
     ( initModel flags, Cmd.batch [ initialize () ] )
 
 
-initModel : Int -> Model
+initModel : String -> Model
 initModel flags =
-    { title = "シナリオタイトル", value = initValue, handouts = [ initHandout, initHandout ], displayNumber = Hidden }
+    if (String.isEmpty flags) then
+        { title = "シナリオタイトル", value = initValue, handouts = [ initHandout, initHandout ], displayNumber = Hidden }
+    else
+        let
+            list =
+                parse flags
+        in
+            case list of
+                Just a ->
+                    { title = "シナリオタイトル", value = flags, handouts = a, displayNumber = Hidden }
+
+                Nothing ->
+                    { title = "シナリオタイトル", value = flags, handouts = [], displayNumber = Hidden }
 
 
 initValue : String
@@ -100,7 +112,7 @@ update message model =
             ( { model | title = text }, Cmd.none )
 
         Input text ->
-            ( { model | value = text }, Cmd.none )
+            ( { model | value = text }, toJs model.value )
 
         HandoutUpdate ->
             let
@@ -276,7 +288,7 @@ handoutNumber i f =
 -- ---------------------------
 
 
-main : Program Int Model Msg
+main : Program String Model Msg
 main =
     Browser.element
         { init = init
