@@ -13,6 +13,5 @@ const app = Elm.Main.init({  node:mountNode, flags });
 // app.ports.initialize.subscribe(() => {
 // });
 app.ports.toJs.subscribe((data: string) => {
-  console.log(data);
   localStorage.insaneHandouts = data;
 });

@@ -47,6 +47,10 @@ init flags =
     ( initModel flags, Cmd.batch [ initialize () ] )
 
 
+
+-- 初期化時に、前回の入力を復元する。なければ、サンプルのハンドアウトを入力したものを表示する
+
+
 initModel : String -> Model
 initModel flags =
     if (String.isEmpty flags) then
