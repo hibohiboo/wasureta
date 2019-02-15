@@ -32,7 +32,14 @@ type alias Model =
     { value : String
     , handouts : List Handout
     , title : String
+    , displayNumber : NumberPosition
     }
+
+
+type NumberPosition
+    = LeftNumber
+    | RightNumber
+    | Hidden
 
 
 init : Int -> ( Model, Cmd Msg )
@@ -42,7 +49,7 @@ init flags =
 
 initModel : Int -> Model
 initModel flags =
-    { title = "シナリオタイトル", value = initValue, handouts = [ initHandout, initHandout ] }
+    { title = "シナリオタイトル", value = initValue, handouts = [ initHandout, initHandout ], displayNumber = Hidden }
 
 
 initValue : String
@@ -83,6 +90,7 @@ type Msg
     = Input String
     | InputTitle String
     | HandoutUpdate
+    | SwitchTo NumberPosition
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -106,6 +114,9 @@ update message model =
                     Nothing ->
                         ( { model | handouts = [] }, Cmd.none )
 
+        SwitchTo pos ->
+            ( { model | displayNumber = pos }, Cmd.none )
+
 
 
 -- ---------------------------
@@ -122,7 +133,7 @@ view model =
               -- ,
               div []
                 [ h1 [] [ text "ハンドアウトメイカー" ]
-                , p [] [ text "印刷用のハンドアウトが作成できます。" ]
+                , p [] [ text "印刷用のハンドアウトが作成できます。「ctrl + p」 で印刷のプレビューを確認できます。" ]
                 , p [] [ text "フォーマットに従ってテキストを入力し、「ハンドアウト更新」のボタンを押してください。" ]
                 ]
             ]
@@ -156,8 +167,28 @@ editArea model =
                 , onInput Input
                 ]
                 [ text model.value ]
+            , numberDisplayEdit model
             , button [ onClick HandoutUpdate ] [ text "ハンドアウト更新" ]
             ]
+        ]
+
+
+numberDisplayEdit : Model -> Html Msg
+numberDisplayEdit model =
+    div [ class "number-display-edit-area" ]
+        [ label [] [ text "番号表示" ]
+        , radio "左" (model.displayNumber == LeftNumber) (SwitchTo LeftNumber)
+        , radio "非表示" (model.displayNumber == Hidden) (SwitchTo Hidden)
+        , radio "右" (model.displayNumber == RightNumber) (SwitchTo RightNumber)
+        ]
+
+
+radio : String -> Bool -> msg -> Html msg
+radio value isChecked msg =
+    label
+        []
+        [ input [ type_ "radio", name "font-size", onInput (\x -> msg), checked isChecked ] []
+        , text value
         ]
 
 
@@ -179,37 +210,64 @@ handoutArea model =
             ]
     else
         div [ class "handout-list" ]
-            (handouts model.handouts)
+            (handouts model.handouts model.displayNumber)
 
 
-handouts : List Handout -> List (Html Msg)
-handouts list =
-    Array.toList (Array.indexedMap handout (Array.fromList list))
+handouts : List Handout -> NumberPosition -> List (Html Msg)
+handouts list pos =
+    Array.toList (Array.indexedMap handout (Array.fromList (List.map (\h -> HandoutAndNumberPosition h pos) list)))
 
 
-handout : Int -> Handout -> Html Msg
-handout i h =
-    section [ class "handout" ]
-        [ div [ class "mission-card handout-card" ]
-            [ div [ class "mission-card-head" ] [ text "Handout" ]
-            , div [ class "handout-card-inner mission-card-inner" ]
-                [ div [ class "mission-title-label" ] [ text "名前" ]
-                , h2 [ class "mission-title" ] [ text h.name ]
-                , div [ class "mission-label" ] [ text "使命" ]
-                , p [ class "mission" ] [ text h.mission ]
+type alias HandoutAndNumberPosition =
+    { handout : Handout
+    , position : NumberPosition
+    }
+
+
+handout : Int -> HandoutAndNumberPosition -> Html Msg
+handout i hp =
+    let
+        h =
+            hp.handout
+
+        pos =
+            hp.position
+    in
+        section [ class "handout" ]
+            [ div [ class "mission-card handout-card" ]
+                [ div [ class "mission-card-head" ]
+                    [ div [ class "handout-label" ] [ text "Handout" ]
+                    , handoutNumber i (pos == LeftNumber)
+                    ]
+                , div [ class "handout-card-inner mission-card-inner" ]
+                    [ div [ class "mission-title-label" ] [ text "名前" ]
+                    , h2 [ class "mission-title" ] [ text h.name ]
+                    , div [ class "mission-label" ] [ text "使命" ]
+                    , p [ class "mission" ] [ text h.mission ]
+                    ]
+                ]
+            , div [ class "secret-card handout-card" ]
+                [ div [ class "secret-card-head" ]
+                    [ div [ class "handout-label" ] [ text "Handout" ]
+                    , handoutNumber i (pos == RightNumber)
+                    ]
+                , div [ class "handout-card-inner secret-card-inner" ]
+                    [ div [ class "secret-label" ] [ text "秘密" ]
+                    , div [ class "shock-label" ] [ text "ショック" ]
+                    , div [ class "shock" ] [ text h.shock ]
+                    , p [ class "secret" ] [ text h.secret ]
+                    , div [ class "secret-caution" ] [ text "この狂気を自分から\n明らかにすることはできない" ]
+                    ]
                 ]
             ]
-        , div [ class "secret-card handout-card" ]
-            [ div [ class "secret-card-head" ] [ text "Handout" ]
-            , div [ class "handout-card-inner secret-card-inner" ]
-                [ div [ class "secret-label" ] [ text "秘密" ]
-                , div [ class "shock-label" ] [ text "ショック" ]
-                , div [ class "shock" ] [ text h.shock ]
-                , p [ class "secret" ] [ text h.secret ]
-                , div [ class "secret-caution" ] [ text "この狂気を自分から\n明らかにすることはできない" ]
-                ]
-            ]
-        ]
+
+
+handoutNumber : Int -> Bool -> Html Msg
+handoutNumber i f =
+    if f then
+        div [ class "handout-number display" ] [ text <| String.fromInt <| i + 1 ]
+    else
+        div [ class "handout-number" ] [ text <| String.fromInt <| i + 1 ]
 
 
 
