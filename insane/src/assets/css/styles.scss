@@ -177,41 +177,53 @@ $handout-gap: 4px;
   padding: 2px 8px;
   width: $handout-card-width;
 }
-.handout-card>div{
+.secret-card-head,
+.mission-card-head{
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
-  // ハンドアウトに追加する番号
-.handout-label,
-.handout-number{
-  grid-row: 1;
-  grid-column: 1;
+
+  // ハンドアウトに追加する番号とHandoutの文字を同じ行に設定
+  .handout-label,
+  .handout-number{
+    grid-row: 1;
+    grid-column: 1;
+  }
+
+  // 〇で囲む
+  .handout-number {
+    $fontSize: 0.6em;
+    $fontBorderSize: 1.5em;
+    border-radius: 50%;
+    display: none;
+    font-size: $fontSize;
+    height: $fontBorderSize;
+    line-height: $fontBorderSize;
+    text-align: center;
+    text-decoration: none;
+    width: $fontBorderSize;
+  }
 }
 
-.handout-number{
+// 右の場合、秘密カードの上に番号表示
+.secret-card-head .handout-number {
   justify-self: right;
-  $iconColor: #fff;
-  $fontSize: 0.6em;
-  $fontBorderSize: 1.5em;
+  color: #fff;
   border: solid 1px #fff;
-  border-radius: 50%;
-  color: $iconColor;
-  display: block;
-  font-size: $fontSize;
-  height: $fontBorderSize;
-  line-height: $fontBorderSize;
-  text-align: center;
-  text-decoration: none;
-  width: $fontBorderSize;
-}
+  &.display{
+    display: block;
+  }
 }
 
-
-
-.mission-card {
-  grid-column: 1;
-  grid-row: 1;
+// 左の場合、使命カードの上に番号表示
+.mission-card-head .handout-number {
+  justify-self: left;
+  border: solid 1px #000;
+  &.display{
+    display: block;
+  }
 }
+
 
 .mission-card-head,
 .secret-card-head {
@@ -240,6 +252,13 @@ $handout-gap: 4px;
   line-height: 1.4;
   white-space: pre-wrap; // 改行を反映
 }
+
+
+.mission-card {
+  grid-column: 1;
+  grid-row: 1;
+}
+
 
 // グリッドレイアウトの開始：ハンドアウト（左:中）
 .mission-card-inner {

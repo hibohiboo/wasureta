@@ -32,18 +32,14 @@ type alias Model =
     { value : String
     , handouts : List Handout
     , title : String
-    , displayNumber : Maybe DisplayNumber
+    , displayNumber : NumberPosition
     }
 
 
 type NumberPosition
     = LeftNumber
     | RightNumber
-
-
-type alias DisplayNumber =
-    { position : NumberPosition
-    }
+    | Hidden
 
 
 init : Int -> ( Model, Cmd Msg )
@@ -53,7 +49,7 @@ init flags =
 
 initModel : Int -> Model
 initModel flags =
-    { title = "シナリオタイトル", value = initValue, handouts = [ initHandout, initHandout ], displayNumber = Nothing }
+    { title = "シナリオタイトル", value = initValue, handouts = [ initHandout, initHandout ], displayNumber = Hidden }
 
 
 initValue : String
@@ -190,11 +186,11 @@ handoutArea model =
             ]
     else
         div [ class "handout-list" ]
-            (handouts model.handouts)
+            (handouts model.handouts model.displayNumber)
 
 
-handouts : List Handout -> List (Html Msg)
-handouts list =
+handouts : List Handout -> NumberPosition -> List (Html Msg)
+handouts list pos =
     Array.toList (Array.indexedMap handout (Array.fromList list))
 
 
@@ -202,7 +198,10 @@ handout : Int -> Handout -> Html Msg
 handout i h =
     section [ class "handout" ]
         [ div [ class "mission-card handout-card" ]
-            [ div [ class "mission-card-head" ] [ text "Handout" ]
+            [ div [ class "mission-card-head" ]
+                [ div [ class "handout-label" ] [ text "Handout" ]
+                , handoutNumber i False --(pos == LeftNumber)
+                ]
             , div [ class "handout-card-inner mission-card-inner" ]
                 [ div [ class "mission-title-label" ] [ text "名前" ]
                 , h2 [ class "mission-title" ] [ text h.name ]
@@ -213,7 +212,7 @@ handout i h =
         , div [ class "secret-card handout-card" ]
             [ div [ class "secret-card-head" ]
                 [ div [ class "handout-label" ] [ text "Handout" ]
-                , div [ class "handout-number" ] [ text <| String.fromInt i ]
+                , handoutNumber i True --(pos == RightNumber)
                 ]
             , div [ class "handout-card-inner secret-card-inner" ]
                 [ div [ class "secret-label" ] [ text "秘密" ]
@@ -224,6 +223,14 @@ handout i h =
                 ]
             ]
         ]
+
+
+handoutNumber : Int -> Bool -> Html Msg
+handoutNumber i f =
+    if f then
+        div [ class "handout-number display" ] [ text <| String.fromInt <| i + 1 ]
+    else
+        div [ class "handout-number" ] [ text <| String.fromInt <| i + 1 ]
 
 
 
