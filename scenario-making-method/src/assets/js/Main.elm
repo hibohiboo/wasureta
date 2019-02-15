@@ -7,13 +7,23 @@ based on their co-occurence in a scene. Try dragging the nodes!
 import Browser
 import Browser.Events
 import ForceDirectedGraph exposing (..)
+import Html exposing (..)
+import Html.Attributes exposing (..)
+import Html.Events exposing (..)
+
+
+view : Model -> Html.Html Msg
+view model =
+    div []
+        [ forceGraph model
+        ]
 
 
 main : Program () Model Msg
 main =
     Browser.element
         { init = init
-        , view = forceGraph
+        , view = view
         , update = \msg model -> ( update msg model, Cmd.none )
         , subscriptions = subscriptions
         }
