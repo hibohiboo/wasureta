@@ -1,4 +1,4 @@
-module Main exposing (main)
+port module Main exposing (main)
 
 {-| This demonstrates laying out the characters in Les Miserables
 based on their co-occurence in a scene. Try dragging the nodes!
@@ -12,19 +12,41 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 
 
-view : Model -> Html.Html Msg
+-- ---------------------------
+-- PORTS
+-- ---------------------------
+
+
+port toJs : String -> Cmd msg
+
+
+type alias ForceMsg =
+    ForceDirectedGraph.Msg
+
+
+type Msg
+    = ForceMsg ForceDirectedGraph.Model
+    | Input
+
+
+view : Model -> Html.Html ForceMsg
 view model =
     div []
         [ forceGraph model
         ]
 
 
-main : Program () Model Msg
+update : ForceMsg -> Model -> ( Model, Cmd ForceMsg )
+update msg model =
+    ( ForceDirectedGraph.update msg model, Cmd.none )
+
+
+main : Program () Model ForceMsg
 main =
     Browser.element
         { init = init
         , view = view
-        , update = \msg model -> ( update msg model, Cmd.none )
+        , update = update -- \msg model -> ( update msg model, Cmd.none )
         , subscriptions = subscriptions
         }
 
