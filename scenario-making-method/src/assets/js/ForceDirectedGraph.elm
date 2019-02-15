@@ -82,7 +82,7 @@ init _ =
             , Force.center (w / 2) (h / 2)
             ]
     in
-        ( Model Nothing graph (Force.simulation forces) "", Cmd.none )
+        ( Model Nothing graph (Force.simulation forces) "10", Cmd.none )
 
 
 updateNode : ( Float, Float ) -> NodeContext Entity () -> NodeContext Entity ()
@@ -113,7 +113,7 @@ updateGraphWithList =
 
 
 update : Msg -> Model -> Model
-update msg ({ drag, graph, simulation } as model) =
+update msg ({ drag, graph, simulation, value } as model) =
     case msg of
         Tick t ->
             let
@@ -122,7 +122,7 @@ update msg ({ drag, graph, simulation } as model) =
             in
                 case drag of
                     Nothing ->
-                        Model drag (updateGraphWithList graph list) newState ""
+                        Model drag (updateGraphWithList graph list) newState value
 
                     Just { current, index } ->
                         Model drag
@@ -131,10 +131,10 @@ update msg ({ drag, graph, simulation } as model) =
                                 (updateGraphWithList graph list)
                             )
                             newState
-                            ""
+                            value
 
         DragStart index xy ->
-            Model (Just (Drag xy xy index)) graph simulation ""
+            Model (Just (Drag xy xy index)) graph simulation value
 
         DragAt xy ->
             case drag of
@@ -142,10 +142,10 @@ update msg ({ drag, graph, simulation } as model) =
                     Model (Just (Drag start xy index))
                         (Graph.update index (Maybe.map (updateNode xy)) graph)
                         (Force.reheat simulation)
-                        ""
+                        value
 
                 Nothing ->
-                    Model Nothing graph simulation ""
+                    Model Nothing graph simulation value
 
         DragEnd xy ->
             case drag of
@@ -153,13 +153,13 @@ update msg ({ drag, graph, simulation } as model) =
                     Model Nothing
                         (Graph.update index (Maybe.map (updateNode xy)) graph)
                         simulation
-                        ""
+                        value
 
                 Nothing ->
-                    Model Nothing graph simulation ""
+                    Model Nothing graph simulation value
 
         Input val ->
-            model
+            Model Nothing graph (Force.reheat simulation) val
 
 
 subscriptions : Model -> Sub Msg
@@ -205,9 +205,9 @@ linkElement graph edge =
             []
 
 
-nodeElement node =
+nodeElement node rl =
     circle
-        [ r 10.5
+        [ r rl
         , fill (Fill Color.black)
         , stroke (Color.rgba 0 0 0 0)
         , strokeWidth 7
@@ -225,6 +225,24 @@ forceGraph model =
             |> List.map (linkElement model.graph)
             |> g [ class [ "links" ] ]
         , Graph.nodes model.graph
-            |> List.map nodeElement
+            |> List.map (\node -> nodeElement node (valueToFloat model))
             |> g [ class [ "nodes" ] ]
         ]
+
+
+valueToFloat : Model -> Float
+valueToFloat model =
+    let
+        fl =
+            String.toFloat model.value
+    in
+        case fl of
+            Just a ->
+                a
+
+            Nothing ->
+                1.0
+
+
+
+-- let fl = String.toFloat model.value in case fl of Just a -> a _ -> 0
