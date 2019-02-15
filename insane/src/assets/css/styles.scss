@@ -177,6 +177,36 @@ $handout-gap: 4px;
   padding: 2px 8px;
   width: $handout-card-width;
 }
+.handout-card>div{
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  // ハンドアウトに追加する番号
+.handout-label,
+.handout-number{
+  grid-row: 1;
+  grid-column: 1;
+}
+
+.handout-number{
+  justify-self: right;
+  $iconColor: #fff;
+  $fontSize: 0.6em;
+  $fontBorderSize: 1.5em;
+  border: solid 1px #fff;
+  border-radius: 50%;
+  color: $iconColor;
+  display: block;
+  font-size: $fontSize;
+  height: $fontBorderSize;
+  line-height: $fontBorderSize;
+  text-align: center;
+  text-decoration: none;
+  width: $fontBorderSize;
+}
+}
+
+
 
 .mission-card {
   grid-column: 1;
@@ -346,6 +376,7 @@ $shock-padding-top: 1px;
   text-align: center;
   white-space: pre-wrap;
 }
+
 
 
 // 印刷用のレイアウト

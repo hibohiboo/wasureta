@@ -32,6 +32,17 @@ type alias Model =
     { value : String
     , handouts : List Handout
     , title : String
+    , displayNumber : Maybe DisplayNumber
+    }
+
+
+type NumberPosition
+    = LeftNumber
+    | RightNumber
+
+
+type alias DisplayNumber =
+    { position : NumberPosition
     }
 
 
@@ -42,7 +53,7 @@ init flags =
 
 initModel : Int -> Model
 initModel flags =
-    { title = "シナリオタイトル", value = initValue, handouts = [ initHandout, initHandout ] }
+    { title = "シナリオタイトル", value = initValue, handouts = [ initHandout, initHandout ], displayNumber = Nothing }
 
 
 initValue : String
@@ -200,7 +211,10 @@ handout i h =
                 ]
             ]
         , div [ class "secret-card handout-card" ]
-            [ div [ class "secret-card-head" ] [ text "Handout" ]
+            [ div [ class "secret-card-head" ]
+                [ div [ class "handout-label" ] [ text "Handout" ]
+                , div [ class "handout-number" ] [ text <| String.fromInt i ]
+                ]
             , div [ class "handout-card-inner secret-card-inner" ]
                 [ div [ class "secret-label" ] [ text "秘密" ]
                 , div [ class "shock-label" ] [ text "ショック" ]
