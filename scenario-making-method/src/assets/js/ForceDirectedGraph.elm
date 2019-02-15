@@ -1,4 +1,4 @@
-module ForceDirectedGraph exposing (init, update, forceGraph, Msg, Model, subscriptions)
+module ForceDirectedGraph exposing (init, update, forceGraph, Msg(..), Model, subscriptions)
 
 {-| This demonstrates laying out the characters in Les Miserables
 based on their co-occurence in a scene. Try dragging the nodes!
@@ -37,12 +37,14 @@ type Msg
     | DragAt ( Float, Float )
     | DragEnd ( Float, Float )
     | Tick Time.Posix
+    | Input String
 
 
 type alias Model =
     { drag : Maybe Drag
     , graph : Graph Entity ()
     , simulation : Force.State NodeId
+    , value : String
     }
 
 
@@ -80,7 +82,7 @@ init _ =
             , Force.center (w / 2) (h / 2)
             ]
     in
-        ( Model Nothing graph (Force.simulation forces), Cmd.none )
+        ( Model Nothing graph (Force.simulation forces) "", Cmd.none )
 
 
 updateNode : ( Float, Float ) -> NodeContext Entity () -> NodeContext Entity ()
@@ -120,7 +122,7 @@ update msg ({ drag, graph, simulation } as model) =
             in
                 case drag of
                     Nothing ->
-                        Model drag (updateGraphWithList graph list) newState
+                        Model drag (updateGraphWithList graph list) newState ""
 
                     Just { current, index } ->
                         Model drag
@@ -129,9 +131,10 @@ update msg ({ drag, graph, simulation } as model) =
                                 (updateGraphWithList graph list)
                             )
                             newState
+                            ""
 
         DragStart index xy ->
-            Model (Just (Drag xy xy index)) graph simulation
+            Model (Just (Drag xy xy index)) graph simulation ""
 
         DragAt xy ->
             case drag of
@@ -139,9 +142,10 @@ update msg ({ drag, graph, simulation } as model) =
                     Model (Just (Drag start xy index))
                         (Graph.update index (Maybe.map (updateNode xy)) graph)
                         (Force.reheat simulation)
+                        ""
 
                 Nothing ->
-                    Model Nothing graph simulation
+                    Model Nothing graph simulation ""
 
         DragEnd xy ->
             case drag of
@@ -149,9 +153,13 @@ update msg ({ drag, graph, simulation } as model) =
                     Model Nothing
                         (Graph.update index (Maybe.map (updateNode xy)) graph)
                         simulation
+                        ""
 
                 Nothing ->
-                    Model Nothing graph simulation
+                    Model Nothing graph simulation ""
+
+        Input val ->
+            model
 
 
 subscriptions : Model -> Sub Msg

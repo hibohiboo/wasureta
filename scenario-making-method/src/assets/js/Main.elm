@@ -20,54 +20,42 @@ import Html.Events exposing (..)
 port toJs : String -> Cmd msg
 
 
-type alias ForceMsg =
-    ForceDirectedGraph.Msg
-
-
-type Msg
-    = ForceMsg ForceDirectedGraph.Model
-    | Input
-
-
-view : Model -> Html.Html ForceMsg
+view : Model -> Html Msg
 view model =
     div []
-        [ forceGraph model
+        [ editArea model
+        , forceGraph model
         ]
 
 
-update : ForceMsg -> Model -> ( Model, Cmd ForceMsg )
+editArea : Model -> Html Msg
+editArea model =
+    div [ class "editor" ]
+        [ div []
+            [ label [ for "editor" ] [ text "シナリオプロット" ]
+            , textarea
+                [ id "editor"
+                , onInput Input
+                ]
+                [ text model.value ]
+            ]
+        ]
+
+
+update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     ( ForceDirectedGraph.update msg model, Cmd.none )
 
 
-main : Program () Model ForceMsg
+main : Program () Model Msg
 main =
     Browser.element
         { init = init
         , view = view
-        , update = update -- \msg model -> ( update msg model, Cmd.none )
+        , update = update
         , subscriptions = subscriptions
         }
 
 
 
--- view : Model -> Html.Html Msg
--- view model =
---     div []
---         [ editArea model
---         , forceGraph model
---         ]
--- editArea : Model -> Html Msg
--- editArea model =
---     div [ class "editor" ]
---         [ div []
---             [ label [ for "editor" ] [ text "シナリオプロット" ]
---             , textarea
---                 [ id "editor"
---                 , onInput Input
---                 ]
---                 [ text model.value ]
---             ]
---         ]
 {- {"delay": 5001} -}
