@@ -116,7 +116,7 @@ update message model =
             ( { model | title = text }, Cmd.none )
 
         Input text ->
-            ( { model | value = text }, toJs model.value )
+            ( { model | value = text }, toJs text )
 
         HandoutUpdate ->
             let
