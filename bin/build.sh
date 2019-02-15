@@ -4,20 +4,31 @@
 bin_dir=$(cd $(dirname $0) && pwd)
 
 cp -r $bin_dir/../app/public $bin_dir/../bkup/public-` date +"%Y%m%d%I%M%S"`
-# rm -rf $bin_dir/../app/public
-# rm -rf $bin_dir/../dist/assets
-# rm -rf $bin_dir/../dist/html
-# rm -rf $bin_dir/../pre-dist/assets
 
-# # html作成
+# html作成
 bash $bin_dir/pug/build.sh
 
-# # 静的ファイルコピー
+# 静的ファイルコピー
 # bash $bin_dir/files/build.sh
 
 # scss -> postcss の順番で依存関係があるので、順番を入れ替えてはならない
 bash $bin_dir/scss/build.sh
 bash $bin_dir/postcss/build.sh
+
+# インセインのハンドアウトメーカーをビルド
+# bash $bin_dir/../insane/bin/build.sh
+
+# pugで作成したhtmlをコピー
+cp -r $bin_dir/../dist/html/index.html $bin_dir/../app/public/index.html
+cp -r $bin_dir/../dist/html/privacy-policy.html $bin_dir/../app/public/privacy-policy.html
+cp -r $bin_dir/../dist/assets $bin_dir/../app/public/assets
+
+
+# 以下、 bkup
+# rm -rf $bin_dir/../app/public
+# rm -rf $bin_dir/../dist/assets
+# rm -rf $bin_dir/../dist/html
+# rm -rf $bin_dir/../pre-dist/assets
 
 # # elm -> ts -> js の順番で、依存関係
 # bash $bin_dir/elm/build.sh
@@ -41,8 +52,3 @@ bash $bin_dir/postcss/build.sh
 #   # コンテナを立ち上げて接続
 #   cd $bin_dir/../docker && docker-compose run -e NODE_ENV=production $container_name /bin/bash -c 'cp -r /app/dist /bkup/public-` date +"%Y%m%d%I%M%S"` && rm -rf /app/dist/* && yarn prod'
 # fi
-
-bash $bin_dir/../insane/bin/build.sh
-
-cp -r $bin_dir/../dist/html/index.html $bin_dir/../app/public/index.html
-cp -r $bin_dir/../dist/assets $bin_dir/../app/public/assets
