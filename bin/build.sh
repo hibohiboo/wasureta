@@ -15,6 +15,9 @@ bash $bin_dir/pug/build.sh
 bash $bin_dir/scss/build.sh
 bash $bin_dir/postcss/build.sh
 
+# 廃棄世界漂流をビルド
+# bash $bin_dir/../go-waste/bin/build.sh
+
 # インセインのハンドアウトメーカーをビルド
 # bash $bin_dir/../insane/bin/build.sh
 
