@@ -29,6 +29,7 @@ header {
 
 // フッタ設定
 footer {
+  margin-top: 10px;
   background-color: #000;
   color: #fff;
   display: grid;
@@ -120,6 +121,11 @@ button {
   textarea {
     height: 200px;
     width: 90%;
+  }
+  .number-display-edit-area{
+    label {
+      padding-right: 20px;
+    }
   }
 }
 
@@ -403,24 +409,23 @@ $shock-padding-top: 1px;
   header,
   .editor,
   h1,
-footer {
+  footer {
     // 印刷に不要なものは非表示
     display: none;
   }
 
-  .page-break {
-    // gridレイアウトでは改ページ使用不可
-    //page-break-after: always;
-  }
+  // .page-break {
+  //   // gridレイアウトでは改ページ使用不可
+  //   //page-break-after: always;
+  // }
   // 上記の理由により、改ページが必要な部分には空白を作る
   .handout:nth-of-type(8n-1),
   .handout:nth-of-type(8n) {
     // A4で6ページ目までは無事な印刷レイアウトとなることを確認
     margin-bottom: 28px;
   }
-  @page {
-    margin: 0;
-  }
-  
+  // @page {
+  //   margin: 0;
+  // }
 
 }
