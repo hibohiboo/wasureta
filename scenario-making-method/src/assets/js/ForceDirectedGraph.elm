@@ -210,32 +210,39 @@ linkElement graph edge =
 
 
 nodeElement node rl =
-    g []
-        [ rect
-            [ x node.label.x
-            , y node.label.y
-            , width 100
-            , height 75
-            , stroke (Color.black)
-            , fill (Fill Color.white)
-            , strokeWidth 10
-            , onMouseDown node.id
-            ]
-            [ title [] [ text node.label.value ] ]
-        , text_ [ x node.label.x, y node.label.y, fill (Fill Color.black) ] [ text "test" ]
+    let
+        dispText =
+            "test てすと"
 
-        -- circle
-        --     [ r 30
-        --     , fill (Fill Color.black)
-        --     , stroke (Color.rgba 0 0 0 0)
-        --     , strokeWidth 7
-        --     , onMouseDown node.id
-        --     , cx node.label.x
-        --     , cy node.label.y
-        --     ]
-        --     [ title [] [ text node.label.value ] ]
-        -- , text_ [ x node.label.x, y node.label.y, fill (Fill Color.white) ] [ text "test" ]
-        ]
+        wid =
+            100
+    in
+        g []
+            [ rect
+                [ x node.label.x
+                , y node.label.y
+                , width wid
+                , height 75
+                , stroke (Color.black)
+                , fill (Fill Color.white)
+                , strokeWidth 3
+                , onMouseDown node.id
+                ]
+                [ title [] [ text node.label.value ] ]
+            , text_ [ x node.label.x, y node.label.y, fill (Fill Color.black) ] [ text dispText ]
+
+            -- circle
+            --     [ r 30
+            --     , fill (Fill Color.black)
+            --     , stroke (Color.rgba 0 0 0 0)
+            --     , strokeWidth 7
+            --     , onMouseDown node.id
+            --     , cx node.label.x
+            --     , cy node.label.y
+            --     ]
+            --     [ title [] [ text node.label.value ] ]
+            -- , text_ [ x node.label.x, y node.label.y, fill (Fill Color.white) ] [ text "test" ]
+            ]
 
 
 forceGraph : Model -> Svg Msg

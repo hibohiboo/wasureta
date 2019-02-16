@@ -121,6 +121,8 @@
 [svg elm][*12]
 [svg で改行][*13]
 [svg text][*14]
+[font][*16]
+[text][*17]
 
 [*1]:https://qiita.com/norami_dream/items/8751708e49a66f6352b8
 [*2]:http://nexus1.hatenablog.com/entry/2017/06/21/231548
@@ -137,3 +139,5 @@
 [*13]:https://bl.ocks.org/shimizu/44ac0be6f0ce6e75bd62
 [*14]:https://developer.mozilla.org/ja/docs/Web/SVG/Element/text
 [*15]:https://gist.github.com/h3h/ce339825f2ba8fe1e4d3bf2d1a3e60da
+[*16]:http://useyan.x0.com/s/html/mono-font.htm
+[*17]:http://defghi1977.html.xdomain.jp/tech/svgMemo/svgMemo_08.htm
