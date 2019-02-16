@@ -15,9 +15,9 @@ import Html.Events.Extra.Mouse as Mouse
 import Json.Decode as Decode
 import SampleData exposing (miserablesGraph)
 import Time
-import TypedSvg exposing (circle, g, line, svg, title, text_)
+import TypedSvg exposing (circle, g, line, svg, title, text_, rect)
 import TypedSvg.Attributes exposing (class, fill, stroke, viewBox)
-import TypedSvg.Attributes.InPx exposing (cx, cy, r, strokeWidth, x1, x2, y1, y2, x, y)
+import TypedSvg.Attributes.InPx exposing (cx, cy, r, strokeWidth, x1, x2, y1, y2, x, y, height, width)
 import TypedSvg.Core exposing (Attribute, Svg, text)
 import TypedSvg.Types exposing (Fill(..))
 
@@ -211,17 +211,29 @@ linkElement graph edge =
 
 nodeElement node rl =
     g []
-        [ circle
-            [ r 30
-            , fill (Fill Color.black)
-            , stroke (Color.rgba 0 0 0 0)
-            , strokeWidth 7
-            , onMouseDown node.id
-            , cx node.label.x
-            , cy node.label.y
+        [ rect
+            [ x node.label.x
+            , y node.label.y
+            , width 100
+            , height 75
+            , stroke (Color.black)
+            , fill (Fill Color.white)
+            , strokeWidth 10
             ]
             [ title [] [ text node.label.value ] ]
-        , text_ [ x node.label.x, y node.label.y, fill (Fill Color.white) ] [ text "test" ]
+        , text_ [ x node.label.x, y node.label.y, fill (Fill Color.black) ] [ text "test" ]
+
+        -- circle
+        --     [ r 30
+        --     , fill (Fill Color.black)
+        --     , stroke (Color.rgba 0 0 0 0)
+        --     , strokeWidth 7
+        --     , onMouseDown node.id
+        --     , cx node.label.x
+        --     , cy node.label.y
+        --     ]
+        --     [ title [] [ text node.label.value ] ]
+        -- , text_ [ x node.label.x, y node.label.y, fill (Fill Color.white) ] [ text "test" ]
         ]
 
 

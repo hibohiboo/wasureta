@@ -136,3 +136,4 @@
 [*12]:https://package.elm-lang.org/packages/elm-community/typed-svg/latest/TypedSvg#text_
 [*13]:https://bl.ocks.org/shimizu/44ac0be6f0ce6e75bd62
 [*14]:https://developer.mozilla.org/ja/docs/Web/SVG/Element/text
+[*15]:https://gist.github.com/h3h/ce339825f2ba8fe1e4d3bf2d1a3e60da
