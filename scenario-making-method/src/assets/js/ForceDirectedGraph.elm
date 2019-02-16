@@ -219,6 +219,7 @@ nodeElement node rl =
             , stroke (Color.black)
             , fill (Fill Color.white)
             , strokeWidth 10
+            , onMouseDown node.id
             ]
             [ title [] [ text node.label.value ] ]
         , text_ [ x node.label.x, y node.label.y, fill (Fill Color.black) ] [ text "test" ]
