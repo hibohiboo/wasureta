@@ -9,12 +9,13 @@ import Browser.Events
 import Color
 import Force exposing (State)
 import Graph exposing (Edge, Graph, Node, NodeContext, NodeId)
-import Html
+import Html exposing (div)
 import Html.Events exposing (on)
 import Html.Events.Extra.Mouse as Mouse
 import Json.Decode as Decode
 import SampleData exposing (miserablesGraph)
 import Time
+import Svg exposing (foreignObject)
 import TypedSvg exposing (circle, g, line, svg, title, text_, rect)
 import TypedSvg.Attributes exposing (class, fill, stroke, viewBox)
 import TypedSvg.Attributes.InPx exposing (cx, cy, r, strokeWidth, x1, x2, y1, y2, x, y, height, width)
@@ -76,8 +77,8 @@ init _ =
         link { from, to } =
             { source = from
             , target = to
-            , distance = 50
-            , strength = Just 0.03
+            , distance = 300
+            , strength = Just 1.001
             }
 
         forces =
@@ -209,27 +210,69 @@ linkElement graph edge =
             []
 
 
+
+-- タイトルのフォントサイズ (px) css参照
+
+
+titleSize =
+    14
+
+
+
+-- フォントサイズ (px) css参照
+
+
+fontSize =
+    12
+
+
+
+-- 1行の文字数
+
+
+maxTextLength =
+    14
+
+
+
+-- 線の太さ
+
+
+strokeWidthNum =
+    3
+
+
 nodeElement node rl =
     let
         dispText =
-            "test てすと"
+            "10:姿を消すとき、ヘイロ\nン絡みのトラブルに巻き\n込まれていたようだ。"
 
+        -- 左パディング＋文字の大きさ*文字の長さ＋右パディング
         wid =
-            100
+            fontSize + (fontSize * maxTextLength) + fontSize
+
+        -- 改行の数
+        newLineCount =
+            List.length (String.split "\n" dispText)
+
+        -- 文字のmargin-top + 文字列の行数 + 下マージン
+        hei =
+            (titleSize + fontSize * 2) + (((String.length dispText) // maxTextLength + newLineCount) * fontSize) + fontSize
     in
         g []
             [ rect
                 [ x node.label.x
                 , y node.label.y
                 , width wid
-                , height 75
+                , height <| toFloat <| hei
                 , stroke (Color.black)
                 , fill (Fill Color.white)
-                , strokeWidth 3
+                , strokeWidth strokeWidthNum
                 , onMouseDown node.id
                 ]
                 [ title [] [ text node.label.value ] ]
-            , text_ [ x node.label.x, y node.label.y, fill (Fill Color.black) ] [ text dispText ]
+            , text_ [ x (node.label.x + fontSize), y (node.label.y + titleSize + fontSize), fill (Fill Color.black) ] [ text "タイトル" ]
+            , foreignObject [ x (node.label.x + fontSize), y (node.label.y + titleSize + fontSize * 2) ] [ div [] [ text dispText ] ]
 
             -- circle
             --     [ r 30

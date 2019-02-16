@@ -120,7 +120,22 @@ button {
   }
 }
 
-svg text{
-  font-family: "Osaka－等幅" "ＭＳ 明朝" "Courier New", Consolas, monospace;
-  font-size: 12px;
+svg {
+  $titleSize: 14px;
+  $textSize: 12px; // 文字の大きさ
+  $textLength: 14; // 1行の文字数
+  text, div{
+    font-family: "Osaka－等幅" "ＭＳ 明朝" "Courier New", Consolas, monospace;
+
+  }
+  text{
+    font-size: $titleSize;
+    font-weight: bold;
+  }
+  div{
+    white-space: wrap;
+    font-size: $textSize;
+    width: $textSize * $textLength;
+  }
+
 }
