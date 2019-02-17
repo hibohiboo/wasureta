@@ -31,7 +31,7 @@ w =
 
 h : Float
 h =
-    504
+    1004
 
 
 type Msg

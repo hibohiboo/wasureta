@@ -3,6 +3,8 @@ module Tests exposing (..)
 import Test exposing (..)
 import Expect
 import InfoParser
+import InfoToData
+import Graph
 
 
 testParse : String -> Maybe (List InfoParser.Info) -> (() -> Expect.Expectation)
@@ -13,9 +15,14 @@ testParse s ast =
 
 all : Test
 all =
-    describe "InfoParser"
-        [ test "情報" (testParse testText (Just [ expectInfo ]))
-        , test "複数の情報" (testParse (testText ++ testText) (Just [ expectInfo, expectInfo ]))
+    describe "UnitTests"
+        [ describe "InfoParser"
+            [ test "情報" (testParse testText (Just [ expectInfo ]))
+            , test "複数の情報" (testParse (testText ++ testText) (Just [ expectInfo, expectInfo ]))
+            ]
+        , describe "InfoData"
+            [ test "情報->グラフ用データ" (testData [ sourceInfo ] expectData)
+            ]
         ]
 
 
@@ -32,3 +39,26 @@ testText =
         ++ "\n[リンク先][1,2]"
         ++ "\n//コメント"
         ++ "\n----\n"
+
+
+
+-- データのテスト
+
+
+testData : List InfoParser.Info -> Graph.Graph String () -> (() -> Expect.Expectation)
+testData informations ast =
+    \_ ->
+        Expect.equal ast (InfoToData.toData informations)
+
+
+sourceInfo : InfoParser.Info
+sourceInfo =
+    InfoParser.Info "Myriel" "title" [ 0 ]
+
+
+expectData =
+    Graph.fromNodeLabelsAndEdgePairs
+        [ "Myriel"
+        ]
+        [ ( 1, 0 )
+        ]
