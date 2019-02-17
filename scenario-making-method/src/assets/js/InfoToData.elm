@@ -12,6 +12,12 @@ toData informations =
             (\info -> info.title)
             informations
         )
-        (Array.toList
-            (Array.indexedMap (\i info -> ( 0, 1 )) (Array.fromList informations))
+        ((Array.indexedMap infoToData (Array.fromList informations))
+            |> Array.toList
+            |> List.concat
         )
+
+
+infoToData : Int -> Info -> List ( Graph.NodeId, Graph.NodeId )
+infoToData i info =
+    List.concat [ (List.map (\v -> ( i, v )) info.list) ]

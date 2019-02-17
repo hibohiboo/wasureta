@@ -53,12 +53,12 @@ testData informations ast =
 
 sourceInfo : InfoParser.Info
 sourceInfo =
-    InfoParser.Info "Myriel" "title" [ 0 ]
+    InfoParser.Info "Myriel" "title" [ 1 ]
 
 
 expectData =
     Graph.fromNodeLabelsAndEdgePairs
         [ "Myriel"
         ]
-        [ ( 1, 0 )
+        [ ( 0, 1 )
         ]
