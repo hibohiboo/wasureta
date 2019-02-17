@@ -22,6 +22,7 @@ all =
             ]
         , describe "InfoData"
             [ test "情報->グラフ用データ" (testData [ sourceInfo ] expectData)
+            , test "情報->グラフ用データ2" (testData [ sourceInfo, sourceInfo ] expectData2)
             ]
         ]
 
@@ -62,4 +63,16 @@ expectData =
         ]
         [ ( 0, 1 )
         , ( 0, 2 )
+        ]
+
+
+expectData2 =
+    Graph.fromNodeLabelsAndEdgePairs
+        [ "Myriel"
+        , "Myriel"
+        ]
+        [ ( 0, 1 )
+        , ( 0, 2 )
+        , ( 1, 1 )
+        , ( 1, 2 )
         ]
