@@ -2,32 +2,32 @@ module Tests exposing (..)
 
 import Test exposing (..)
 import Expect
-import HandoutParser
+import InfoParser
 
 
-testParse : String -> Maybe (List HandoutParser.Handout) -> (() -> Expect.Expectation)
+testParse : String -> Maybe (List InfoParser.Info) -> (() -> Expect.Expectation)
 testParse s ast =
     \_ ->
-        Expect.equal ast (HandoutParser.parse s)
+        Expect.equal ast (InfoParser.parse s)
 
 
 all : Test
 all =
-    describe "HandoutParser"
-        [ test "ハンドアウト" (testParse testText (Just [ expectHandout ]))
-        , test "複数ハンドアウト" (testParse (testText ++ testText) (Just [ expectHandout, expectHandout ]))
+    describe "InfoParser"
+        [ test "情報" (testParse testText (Just [ expectInfo ]))
+        , test "複数の情報" (testParse (testText ++ testText) (Just [ expectInfo, expectInfo ]))
         ]
 
 
-expectHandout : HandoutParser.Handout
-expectHandout =
-    HandoutParser.Handout "てすと" "しめ\nい" "PC1" "秘密\nあのねのね"
+expectInfo : InfoParser.Info
+expectInfo =
+    InfoParser.Info "てすと" "しめ\nい"
 
 
 testText : String
 testText =
-    "[ハンドアウト名][てすと]"
-        ++ "\n[使命][しめ\nい]"
-        ++ "\n[ショック][PC1]"
-        ++ "\n[秘密][秘密\nあのねのね]"
+    "\n//コメント"
+        ++ "\n[タイトル][てすと]"
+        ++ "\n[情報][しめ\nい]"
+        ++ "\n//コメント"
         ++ "\n----"

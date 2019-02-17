@@ -1,11 +1,19 @@
-module InfoParser exposing (parse, Handout)
+module InfoParser exposing (parse, Info)
 
 import Parser exposing (Parser, (|.), (|=), chompWhile, getChompedString, succeed, symbol, keyword, spaces, loop, Step(..), map, oneOf)
 
 
-parse : String -> Maybe (List String)
+{-| Parse Info.
+
+以下のフォーマットのテキストをパースする
+
+[タイトル][てすと]
+[情報][しめい]
+
+-}
+parse : String -> Maybe (List Info)
 parse s =
-    case Parser.run handouts s of
+    case Parser.run infomations s of
         Ok x ->
             Just x
 
@@ -13,58 +21,49 @@ parse s =
             Nothing
 
 
-handouts : Parser (List Handout)
-handouts =
-    loop [] handoutsHelp
+type alias Info =
+    { title : String
+    , info : String
+    }
 
 
-handoutsHelp : List Handout -> Parser (Step (List Handout) (List Handout))
-handoutsHelp revHandouts =
+infomations : Parser (List Info)
+infomations =
+    loop [] infomationsHelp
+
+
+infomationsHelp : List Info -> Parser (Step (List Info) (List Info))
+infomationsHelp revinfomations =
     oneOf
-        [ succeed (\stmt -> Loop (stmt :: revHandouts))
-            |= handout
-            |. symbol "\n"
+        [ succeed (\stmt -> Loop (stmt :: revinfomations))
+            |= info
+            |. spaces
+            |. symbol "----"
+            |. spaces
         , succeed ()
-            |> map (\_ -> Done (List.reverse revHandouts))
+            |> map (\_ -> Done (List.reverse revinfomations))
         ]
 
 
-{-| Parse Handout.
-
-以下のフォーマットのテキストをパースする
-
-[ハンドアウト名][てすと]
-[使命][しめい]
-[ショック][PC1]
-[秘密][秘密あのねのね]
-
--}
-handout : Parser String
-handout =
-    succeed Handout
-        |. keyword "[ハンドアウト名]"
+info : Parser Info
+info =
+    succeed Info
+        |. spaces
+        |. (Parser.lineComment "//")
+        |. spaces
+        |. keyword "[タイトル]"
         |. spaces
         |. symbol "["
         |= text
         |. symbol "]"
         |. spaces
-        |. keyword "[使命]"
+        |. keyword "[情報]"
         |. spaces
         |. symbol "["
         |= text
         |. symbol "]"
         |. spaces
-        |. keyword "[ショック]"
-        |. spaces
-        |. symbol "["
-        |= text
-        |. symbol "]"
-        |. spaces
-        |. keyword "[秘密]"
-        |. spaces
-        |. symbol "["
-        |= text
-        |. symbol "]"
+        |. (Parser.lineComment "//")
         |. spaces
 
 
