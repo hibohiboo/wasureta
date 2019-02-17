@@ -33,7 +33,7 @@ w =
 
 h : Float
 h =
-    1004
+    1504
 
 
 type Msg
@@ -80,7 +80,7 @@ init _ =
             { source = from
             , target = to
             , distance = 300
-            , strength = Just 1.001
+            , strength = Just 1.501
             }
 
         forces =
@@ -90,10 +90,29 @@ init _ =
             ]
 
         informations =
-            [ InfoParser.Info "オープニング" "開始" [ 1, 2, 3 ]
-            , InfoParser.Info "PC1" "ヒロインと出会う" []
-            , InfoParser.Info "PC2" "敵と出会う" []
-            , InfoParser.Info "PC3" "事件を追う" []
+            [ InfoParser.Info "オープニング" "開始" [ 1, 2, 3 ] -- 0
+            , InfoParser.Info "PC1" "ヒロインと出会う" [ 4, 16 ] -- 1
+            , InfoParser.Info "PC2" "ボスとの因縁" [ 5 ] -- 2
+            , InfoParser.Info "PC3" "事件を追う" [ 6, 7 ] -- 3
+            , InfoParser.Info "【情報1】" "ヒロインについて" [ 16 ] -- 4
+            , InfoParser.Info "【情報2】" "ボスについて" [ 17 ] -- 5
+            , InfoParser.Info "【情報3】" "事件について" [ 9, 10 ] -- 6
+            , InfoParser.Info "【情報4】" "アイテムについて" [ 9 ] -- 7
+            , InfoParser.Info "【情報5】" "ヒロイン性" [] -- 8
+            , InfoParser.Info "【情報6】" "事件・アイテムの裏" [ 18 ] -- 9
+            , InfoParser.Info "【情報7】" "裏ボスについて" [ 13, 18 ] -- 10
+            , InfoParser.Info "【情報8】" "ヒロインの過去" [ 19 ] -- 11
+            , InfoParser.Info "【情報9】" "ボスの経歴" [ 14 ] -- 12
+            , InfoParser.Info "【情報10】" "裏ボスの経歴" [ 14 ] -- 13
+            , InfoParser.Info "【情報11】" "ボスたちの行動と結果予測" [ 15 ] -- 14
+            , InfoParser.Info "【情報12】" "クライマックスへの到達方法" [ 20 ] -- 15
+            , InfoParser.Info "【イベント】PC1" "ボスがヒロインを狙う" [] -- 16
+            , InfoParser.Info "【イベント】PC2" "ボスが警告" [ 12 ] -- 17
+            , InfoParser.Info "【イベント】PC3" "上司からの発破" [] -- 18
+            , InfoParser.Info "【イベント】PC1" "ヒロインからの問いかけ" [ 14 ] -- 19
+            , InfoParser.Info "【イベント】マスター" "クライマックス前演出" [ 21 ] -- 20
+            , InfoParser.Info "【イベント】クライマックス" "クライマックス前演出" [ 22 ] -- 21
+            , InfoParser.Info "【イベント】エンディング" "ふたりは幸せなキスをして終了" [] -- 22
             ]
 
         graph =
