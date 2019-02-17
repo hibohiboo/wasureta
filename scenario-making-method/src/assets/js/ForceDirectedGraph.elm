@@ -97,8 +97,30 @@ init _ =
 
         graph =
             Graph.mapContexts initializeNode (toData informations)
+
+        value =
+            Array.fromList informations
+                |> Array.indexedMap (\i info -> infoToString i info)
+                |> Array.toList
+                |> String.join "\n"
     in
-        ( Model Nothing graph (Force.simulation forces) "10" informations, Cmd.none )
+        ( Model Nothing graph (Force.simulation forces) value informations, Cmd.none )
+
+
+infoToString : Int -> Info -> String
+infoToString i info =
+    "// "
+        ++ String.fromInt i
+        ++ "\n[タイトル]["
+        ++ info.title
+        ++ "]"
+        ++ "\n[情報]["
+        ++ info.info
+        ++ "]"
+        ++ "\n[リンク先]["
+        ++ (String.join "," <| List.map (\n -> String.fromInt n) info.list)
+        ++ "]"
+        ++ "\n----\n"
 
 
 updateNode : ( Float, Float ) -> NodeContext Entity () -> NodeContext Entity ()
