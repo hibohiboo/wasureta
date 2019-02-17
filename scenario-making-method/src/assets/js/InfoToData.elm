@@ -18,6 +18,10 @@ toData informations =
         )
 
 
+
+-- infoの中のlistを(0, 1)のような形にする
+
+
 infoToData : Int -> Info -> List ( Graph.NodeId, Graph.NodeId )
 infoToData i info =
     List.concat [ (List.map (\v -> ( i, v )) info.list) ]

@@ -22,6 +22,8 @@ import TypedSvg.Attributes.InPx exposing (cx, cy, r, strokeWidth, x1, x2, y1, y2
 import TypedSvg.Core exposing (Attribute, Svg, text)
 import TypedSvg.Types exposing (Fill(..))
 import Array
+import InfoToData exposing (toData)
+import InfoParser exposing (parse, Info)
 
 
 w : Float
@@ -47,6 +49,7 @@ type alias Model =
     , graph : Graph Entity ()
     , simulation : Force.State NodeId
     , value : String
+    , informations : List Info
     }
 
 
@@ -72,9 +75,6 @@ initializeNode ctx =
 init : () -> ( Model, Cmd Msg )
 init _ =
     let
-        graph =
-            Graph.mapContexts initializeNode miserablesGraph
-
         link { from, to } =
             { source = from
             , target = to
@@ -87,8 +87,17 @@ init _ =
             , Force.manyBody <| List.map .id <| Graph.nodes graph
             , Force.center (w / 2) (h / 2)
             ]
+
+        informations =
+            [ InfoParser.Info "Myriel" "title" [ 1, 2 ]
+            , InfoParser.Info "Myriel" "title" []
+            , InfoParser.Info "Myriel" "title" []
+            ]
+
+        graph =
+            Graph.mapContexts initializeNode (toData informations)
     in
-        ( Model Nothing graph (Force.simulation forces) "10", Cmd.none )
+        ( Model Nothing graph (Force.simulation forces) "10" informations, Cmd.none )
 
 
 updateNode : ( Float, Float ) -> NodeContext Entity () -> NodeContext Entity ()
@@ -119,7 +128,7 @@ updateGraphWithList =
 
 
 update : Msg -> Model -> Model
-update msg ({ drag, graph, simulation, value } as model) =
+update msg ({ drag, graph, simulation, value, informations } as model) =
     case msg of
         Tick t ->
             let
@@ -128,7 +137,7 @@ update msg ({ drag, graph, simulation, value } as model) =
             in
                 case drag of
                     Nothing ->
-                        Model drag (updateGraphWithList graph list) newState value
+                        Model drag (updateGraphWithList graph list) newState value informations
 
                     Just { current, index } ->
                         Model drag
@@ -138,9 +147,10 @@ update msg ({ drag, graph, simulation, value } as model) =
                             )
                             newState
                             value
+                            informations
 
         DragStart index xy ->
-            Model (Just (Drag xy xy index)) graph simulation value
+            Model (Just (Drag xy xy index)) graph simulation value informations
 
         DragAt xy ->
             case drag of
@@ -149,9 +159,10 @@ update msg ({ drag, graph, simulation, value } as model) =
                         (Graph.update index (Maybe.map (updateNode xy)) graph)
                         (Force.reheat simulation)
                         value
+                        informations
 
                 Nothing ->
-                    Model Nothing graph simulation value
+                    Model Nothing graph simulation value informations
 
         DragEnd xy ->
             case drag of
@@ -160,12 +171,13 @@ update msg ({ drag, graph, simulation, value } as model) =
                         (Graph.update index (Maybe.map (updateNode xy)) graph)
                         simulation
                         value
+                        informations
 
                 Nothing ->
-                    Model Nothing graph simulation value
+                    Model Nothing graph simulation value informations
 
         Input val ->
-            Model Nothing graph (Force.reheat simulation) val
+            Model Nothing graph (Force.reheat simulation) val informations
 
 
 subscriptions : Model -> Sub Msg
