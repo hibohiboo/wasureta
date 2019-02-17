@@ -21,13 +21,14 @@ all =
 
 expectInfo : InfoParser.Info
 expectInfo =
-    InfoParser.Info "てすと" "しめ\nい"
+    InfoParser.Info "てすと" "しめ\nい" [ 1, 2 ]
 
 
 testText : String
 testText =
-    "\n//コメント"
+    "//コメント"
         ++ "\n[タイトル][てすと]"
         ++ "\n[情報][しめ\nい]"
+        ++ "\n[リンク先][1,2]"
         ++ "\n//コメント"
-        ++ "\n----"
+        ++ "\n----\n"

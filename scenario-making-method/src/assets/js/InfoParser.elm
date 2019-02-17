@@ -1,6 +1,6 @@
 module InfoParser exposing (parse, Info)
 
-import Parser exposing (Parser, (|.), (|=), chompWhile, getChompedString, succeed, symbol, keyword, spaces, loop, Step(..), map, oneOf)
+import Parser exposing (Parser, (|.), (|=), chompWhile, getChompedString, succeed, symbol, keyword, spaces, loop, Step(..), map, oneOf, int, lazy)
 
 
 {-| Parse Info.
@@ -24,6 +24,7 @@ parse s =
 type alias Info =
     { title : String
     , info : String
+    , list : List Int
     }
 
 
@@ -33,15 +34,15 @@ infomations =
 
 
 infomationsHelp : List Info -> Parser (Step (List Info) (List Info))
-infomationsHelp revinfomations =
+infomationsHelp revInfomations =
     oneOf
-        [ succeed (\stmt -> Loop (stmt :: revinfomations))
+        [ succeed (\stmt -> Loop (stmt :: revInfomations))
             |= info
             |. spaces
             |. symbol "----"
             |. spaces
         , succeed ()
-            |> map (\_ -> Done (List.reverse revinfomations))
+            |> map (\_ -> Done (List.reverse revInfomations))
         ]
 
 
@@ -63,6 +64,12 @@ info =
         |= text
         |. symbol "]"
         |. spaces
+        |. keyword "[リンク先]"
+        |. spaces
+        |. symbol "["
+        |= intValues
+        |. symbol "]"
+        |. spaces
         |. (Parser.lineComment "//")
         |. spaces
 
@@ -72,6 +79,24 @@ text =
     getChompedString <|
         succeed ()
             |. chompWhile (\c -> c /= ']')
+
+
+intValues : Parser (List Int)
+intValues =
+    succeed (::)
+        |= int
+        |= intValuesTail
+
+
+intValuesTail : Parser (List Int)
+intValuesTail =
+    oneOf
+        [ succeed (::)
+            |. symbol ","
+            |= int
+            |= lazy (\_ -> intValuesTail)
+        , succeed []
+        ]
 
 
 
