@@ -22,7 +22,7 @@ port toJs : String -> Cmd msg
 
 view : Model -> Html Msg
 view model =
-    div []
+    div [ class "container" ]
         [ editArea model
         , button [ onClick InformationsUpdate ] [ text "情報項目更新" ]
         , forceGraph model
@@ -34,6 +34,7 @@ editArea model =
     div [ class "editor" ]
         [ div []
             [ label [ for "editor" ] [ text "シナリオプロット" ]
+            , br [] []
             , textarea
                 [ id "editor"
                 , onInput Input

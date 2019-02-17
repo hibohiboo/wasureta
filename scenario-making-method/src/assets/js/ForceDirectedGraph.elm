@@ -28,7 +28,7 @@ import InfoParser exposing (parse, Info)
 
 w : Float
 w =
-    990
+    1290
 
 
 h : Float
@@ -79,15 +79,15 @@ init _ =
         link { from, to } =
             { source = from
             , target = to
-            , distance = 100
-            , strength = Just 0.501
+            , distance = 150
+            , strength = Just 0.605
             }
 
         forces =
             [ Force.customLinks 0 <| List.map link <| Graph.edges graph
             , Force.manyBody <| List.map .id <| Graph.nodes graph
-            , Force.manyBodyStrength -200 <| List.map .id <| Graph.nodes graph
-            , Force.center (w / 2) (h / 2)
+            , Force.manyBodyStrength -150 <| List.map .id <| Graph.nodes graph
+            , Force.center (w / 2) (h / 2 - 300)
             ]
 
         informations =
@@ -107,7 +107,7 @@ init _ =
             , InfoParser.Info "【情報10】" "裏ボスの経歴" [ 14 ] -- 13
             , InfoParser.Info "【情報11】" "ボスたちの行動と結果予測" [ 15 ] -- 14
             , InfoParser.Info "【情報12】" "クライマックスへの到達方法" [ 20 ] -- 15
-            , InfoParser.Info "【イベント】PC1" "ボスがヒロインを狙う" [ 8 ] -- 16
+            , InfoParser.Info "【イベント】PC1" "ボスがヒロインを狙う" [ 11 ] -- 16
             , InfoParser.Info "【イベント】PC2" "ボスが警告" [ 12 ] -- 17
             , InfoParser.Info "【イベント】PC3" "上司からの発破" [] -- 18
             , InfoParser.Info "【イベント】PC1" "ヒロインからの問いかけ" [ 14 ] -- 19
@@ -200,16 +200,20 @@ update msg ({ drag, graph, simulation, value, informations } as model) =
             Model (Just (Drag xy xy index)) graph simulation value informations
 
         DragAt xy ->
-            case drag of
-                Just { start, index } ->
-                    Model (Just (Drag start xy index))
-                        (Graph.update index (Maybe.map (updateNode xy)) graph)
-                        (Force.reheat simulation)
-                        value
-                        informations
+            let
+                ( posX, posY ) =
+                    xy
+            in
+                case drag of
+                    Just { start, index } ->
+                        Model (Just (Drag start xy index))
+                            (Graph.update index (Maybe.map (updateNode xy)) graph)
+                            (Force.reheat simulation)
+                            value
+                            informations
 
-                Nothing ->
-                    Model Nothing graph simulation value informations
+                    Nothing ->
+                        Model Nothing graph simulation value informations
 
         DragEnd xy ->
             case drag of
