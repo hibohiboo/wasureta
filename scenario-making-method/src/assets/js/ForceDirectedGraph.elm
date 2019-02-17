@@ -210,13 +210,12 @@ update msg ({ drag, graph, simulation, value, informations } as model) =
             in
                 case list of
                     Just a ->
-                        { model | informations = a }
+                        let
+                            gr =
+                                Graph.mapContexts initializeNode (toData a)
+                        in
+                            Model Nothing gr (Force.reheat simulation) value a
 
-                    -- let
-                    --     gr =
-                    --         Graph.mapContexts initializeNode (toData a)
-                    -- in
-                    --     Model Nothing gr simulation value a
                     Nothing ->
                         { model | informations = [] }
 
