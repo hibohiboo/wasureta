@@ -117,12 +117,13 @@
 [elm graph][*8]  
 [spa][*9]  
 [visual][*10]  
-[svg d3][*11]  
-[svg elm][*12]
-[svg で改行][*13]
-[svg text][*14]
-[font][*16]
-[text][*17]
+[svg d3][*11]   
+[svg elm][*12]  
+[svg で改行][*13]  
+[svg text][*14]  
+[font][*16]  
+[text][*17]  
+[svg to png][*18]
 
 [*1]:https://qiita.com/norami_dream/items/8751708e49a66f6352b8
 [*2]:http://nexus1.hatenablog.com/entry/2017/06/21/231548
@@ -141,3 +142,4 @@
 [*15]:https://gist.github.com/h3h/ce339825f2ba8fe1e4d3bf2d1a3e60da
 [*16]:http://useyan.x0.com/s/html/mono-font.htm
 [*17]:http://defghi1977.html.xdomain.jp/tech/svgMemo/svgMemo_08.htm
+[*18]:https://qiita.com/skryoooo/items/a37455bef54321a6195a

@@ -228,14 +228,9 @@ fontSizeNum =
 
 
 
--- 1行の文字数
-
-
-maxTextLength =
-    14
-
-
-
+-- -- 1行の文字数
+-- maxTextLength =
+--     14
 -- 線の太さ
 
 
@@ -252,23 +247,36 @@ nodeElement node rl =
         texts =
             Array.fromList (String.lines dispText)
 
+        -- 改行の数
+        newLineCount =
+            Array.length texts
+
+        -- 1行の最大文字数
+        maxTextLength =
+            let
+                max =
+                    Array.map (\s -> String.length s) texts |> Array.toList |> List.maximum
+            in
+                case max of
+                    Just m ->
+                        m
+
+                    Nothing ->
+                        0
+
         -- 左パディング＋文字の大きさ*文字の長さ＋右パディング
         wid =
             fontSizeNum + (fontSizeNum * maxTextLength) + fontSizeNum
 
-        -- 改行の数
-        newLineCount =
-            List.length (String.split "\n" dispText)
-
         -- 文字のmargin-top + 文字列の行数 + 下マージン
         hei =
-            (titleSize + fontSizeNum * 2) + (((String.length dispText) // maxTextLength + newLineCount) * fontSizeNum) + fontSizeNum
+            (titleSize + fontSizeNum * 2) + (newLineCount * fontSizeNum) + fontSizeNum
     in
         g []
             [ rect
                 [ x node.label.x
                 , y node.label.y
-                , width wid
+                , width <| toFloat <| wid
                 , height <| toFloat <| hei
                 , stroke (Color.black)
                 , fill (Fill Color.white)
@@ -282,6 +290,7 @@ nodeElement node rl =
                     (Array.indexedMap (\i dtext -> text_ [ x (node.label.x + fontSizeNum), y (node.label.y + titleSize + fontSizeNum * (3 + (toFloat i))), fontSize fontSizeNum ] [ text dtext ]) texts)
                 )
 
+            -- foreignObjectは画像にしたときに表示されないので却下。
             --, foreignObject [ x (node.label.x + fontSizeNum), y (node.label.y + titleSize + fontSizeNum * 2) ] [ div [] [ text dispText ] ]
             -- circle
             --     [ r 30
