@@ -24,3 +24,29 @@ const app = Elm.Main.init({  node:mountNode, flags });
 //     localStorage.removeItem(STORAGE_KEY);  
 //   }
 // });
+function save(){
+  console.log('click')
+  var svg = document.querySelector("svg"); // tslint:disable-line
+  if(svg == null){return;}
+  var svgData = new XMLSerializer().serializeToString(svg);
+  var canvas = document.createElement("canvas"); 
+  console.log(svg)
+  canvas.width = svg.width.baseVal.value;
+  canvas.height = svg.height.baseVal.value;
+  
+  var ctx = canvas.getContext("2d"); 
+  var image = new Image; 
+  image.onload = function(){
+    if(ctx==null) return;
+    console.log(ctx)
+      ctx.drawImage( image, 0, 0 ); 
+      var a = document.createElement("a");
+      a.href = canvas.toDataURL("image/png");
+      a.setAttribute("download", "image.png");
+      a.dispatchEvent(new MouseEvent("click"));
+      console.log(a)
+  }
+  image.src = "data:image/svg+xml;charset=utf-8;base64," + btoa(unescape(encodeURIComponent(svgData))); 
+}
+var button = document.getElementById('save')
+if(button){button.addEventListener('click', save);}

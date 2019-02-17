@@ -1,24 +1,9 @@
-module HandoutParser exposing (parse, Handout)
+module InfoParser exposing (parse, Handout)
 
 import Parser exposing (Parser, (|.), (|=), chompWhile, getChompedString, succeed, symbol, keyword, spaces, loop, Step(..), map, oneOf)
 
 
-type Node
-    = Text String
-    | Comment String
-
-
-{-| Parse Handout.
-
-以下のフォーマットのテキストをパースする
-
-[ハンドアウト名][てすと]
-[使命][しめい]
-[ショック][PC1]
-[秘密][秘密あのねのね]
-
--}
-parse : String -> Maybe (List Handout)
+parse : String -> Maybe (List String)
 parse s =
     case Parser.run handouts s of
         Ok x ->
@@ -26,14 +11,6 @@ parse s =
 
         Err _ ->
             Nothing
-
-
-type alias Handout =
-    { name : String
-    , mission : String
-    , shock : String
-    , secret : String
-    }
 
 
 handouts : Parser (List Handout)
@@ -46,9 +23,7 @@ handoutsHelp revHandouts =
     oneOf
         [ succeed (\stmt -> Loop (stmt :: revHandouts))
             |= handout
-            |. spaces
-            |. symbol "----"
-            |. spaces
+            |. symbol "\n"
         , succeed ()
             |> map (\_ -> Done (List.reverse revHandouts))
         ]
@@ -64,7 +39,7 @@ handoutsHelp revHandouts =
 [秘密][秘密あのねのね]
 
 -}
-handout : Parser Handout
+handout : Parser String
 handout =
     succeed Handout
         |. keyword "[ハンドアウト名]"

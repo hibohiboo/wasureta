@@ -18,9 +18,10 @@ import Time
 import Svg exposing (foreignObject)
 import TypedSvg exposing (circle, g, line, svg, title, text_, rect)
 import TypedSvg.Attributes exposing (class, fill, stroke, viewBox)
-import TypedSvg.Attributes.InPx exposing (cx, cy, r, strokeWidth, x1, x2, y1, y2, x, y, height, width)
+import TypedSvg.Attributes.InPx exposing (cx, cy, r, strokeWidth, x1, x2, y1, y2, x, y, height, width, fontSize)
 import TypedSvg.Core exposing (Attribute, Svg, text)
 import TypedSvg.Types exposing (Fill(..))
+import Array
 
 
 w : Float
@@ -222,7 +223,7 @@ titleSize =
 -- フォントサイズ (px) css参照
 
 
-fontSize =
+fontSizeNum =
     12
 
 
@@ -245,11 +246,15 @@ strokeWidthNum =
 nodeElement node rl =
     let
         dispText =
-            "10:姿を消すとき、ヘイロ\nン絡みのトラブルに巻き\n込まれていたようだ。"
+            "10:姿を消すとき、ヘイロ\nン絡みのトラブルに巻き\n込まれていたようだ。\n11:その他のテストを行うこと。成功すればその他なんか適用にうまくできるような気がする。"
+
+        --1行ずつ分割する
+        texts =
+            Array.fromList (String.lines dispText)
 
         -- 左パディング＋文字の大きさ*文字の長さ＋右パディング
         wid =
-            fontSize + (fontSize * maxTextLength) + fontSize
+            fontSizeNum + (fontSizeNum * maxTextLength) + fontSizeNum
 
         -- 改行の数
         newLineCount =
@@ -257,7 +262,7 @@ nodeElement node rl =
 
         -- 文字のmargin-top + 文字列の行数 + 下マージン
         hei =
-            (titleSize + fontSize * 2) + (((String.length dispText) // maxTextLength + newLineCount) * fontSize) + fontSize
+            (titleSize + fontSizeNum * 2) + (((String.length dispText) // maxTextLength + newLineCount) * fontSizeNum) + fontSizeNum
     in
         g []
             [ rect
@@ -271,9 +276,13 @@ nodeElement node rl =
                 , onMouseDown node.id
                 ]
                 [ title [] [ text node.label.value ] ]
-            , text_ [ x (node.label.x + fontSize), y (node.label.y + titleSize + fontSize), fill (Fill Color.black) ] [ text "タイトル" ]
-            , foreignObject [ x (node.label.x + fontSize), y (node.label.y + titleSize + fontSize * 2) ] [ div [] [ text dispText ] ]
+            , text_ [ x (node.label.x + fontSizeNum), y (node.label.y + titleSize + fontSizeNum), fill (Fill Color.black) ] [ text "タイトル" ]
+            , g []
+                (Array.toList
+                    (Array.indexedMap (\i dtext -> text_ [ x (node.label.x + fontSizeNum), y (node.label.y + titleSize + fontSizeNum * (3 + (toFloat i))), fontSize fontSizeNum ] [ text dtext ]) texts)
+                )
 
+            --, foreignObject [ x (node.label.x + fontSizeNum), y (node.label.y + titleSize + fontSizeNum * 2) ] [ div [] [ text dispText ] ]
             -- circle
             --     [ r 30
             --     , fill (Fill Color.black)
