@@ -53,7 +53,7 @@ testData informations ast =
 
 sourceInfo : InfoParser.Info
 sourceInfo =
-    InfoParser.Info "Myriel" "title" [ 1 ]
+    InfoParser.Info "Myriel" "title" [ 1, 2 ]
 
 
 expectData =
@@ -61,4 +61,5 @@ expectData =
         [ "Myriel"
         ]
         [ ( 0, 1 )
+        , ( 0, 2 )
         ]
