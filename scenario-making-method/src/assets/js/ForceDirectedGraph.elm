@@ -89,9 +89,10 @@ init _ =
             ]
 
         informations =
-            [ InfoParser.Info "Myriel" "title" [ 1, 2 ]
-            , InfoParser.Info "Myriel" "title" []
-            , InfoParser.Info "Myriel" "title" []
+            [ InfoParser.Info "オープニング" "開始" [ 1, 2, 3 ]
+            , InfoParser.Info "PC1" "ヒロインと出会う" []
+            , InfoParser.Info "PC2" "敵と出会う" []
+            , InfoParser.Info "PC3" "事件を追う" []
             ]
 
         graph =
@@ -250,13 +251,21 @@ strokeWidthNum =
     3
 
 
-nodeElement node rl =
+nodeElement node informations =
     let
+        info =
+            case (Array.get node.id informations) of
+                Just a ->
+                    a
+
+                Nothing ->
+                    Info "" "" []
+
         titleText =
-            "タイトル"
+            info.title
 
         dispText =
-            "10:姿を消すとき、ヘイロ\nン絡みのトラブルに巻き\n込まれていたようだ。\n11:その他のテストを行うこと。\n成功すればその他なんか適用に\nうまくできるような気がする。"
+            info.info
 
         --1行ずつ分割する
         texts =
@@ -329,14 +338,18 @@ nodeElement node rl =
 
 forceGraph : Model -> Svg Msg
 forceGraph model =
-    svg [ viewBox 0 0 w h ]
-        [ Graph.edges model.graph
-            |> List.map (linkElement model.graph)
-            |> g [ class [ "links" ] ]
-        , Graph.nodes model.graph
-            |> List.map (\node -> nodeElement node (valueToFloat model))
-            |> g [ class [ "nodes" ] ]
-        ]
+    let
+        arrayInformations =
+            Array.fromList model.informations
+    in
+        svg [ viewBox 0 0 w h ]
+            [ Graph.edges model.graph
+                |> List.map (linkElement model.graph)
+                |> g [ class [ "links" ] ]
+            , Graph.nodes model.graph
+                |> List.map (\node -> nodeElement node arrayInformations)
+                |> g [ class [ "nodes" ] ]
+            ]
 
 
 valueToFloat : Model -> Float
