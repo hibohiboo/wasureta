@@ -19,10 +19,12 @@ all =
         [ describe "InfoParser"
             [ test "情報" (testParse testText (Just [ expectInfo ]))
             , test "複数の情報" (testParse (testText ++ testText) (Just [ expectInfo, expectInfo ]))
+            , test "リストがない場合" (testParse emptyListText (Just [ expectEnptyListInfo ]))
             ]
         , describe "InfoData"
             [ test "情報->グラフ用データ" (testData [ sourceInfo ] expectData)
             , test "情報->グラフ用データ2" (testData [ sourceInfo, sourceInfo ] expectData2)
+            , test "リストがない場合" (testData [ sourceInfoEmptyLink ] expectData3)
             ]
         ]
 
@@ -38,7 +40,20 @@ testText =
         ++ "\n[タイトル][てすと]"
         ++ "\n[情報][しめ\nい]"
         ++ "\n[リンク先][1,2]"
-        ++ "\n//コメント"
+        ++ "\n----\n"
+
+
+expectEnptyListInfo : InfoParser.Info
+expectEnptyListInfo =
+    InfoParser.Info "てすと" "しめ\nい" []
+
+
+emptyListText : String
+emptyListText =
+    "//コメント"
+        ++ "\n[タイトル][てすと]"
+        ++ "\n[情報][しめ\nい]"
+        ++ "\n[リンク先][]"
         ++ "\n----\n"
 
 
@@ -76,3 +91,14 @@ expectData2 =
         , ( 1, 1 )
         , ( 1, 2 )
         ]
+
+
+sourceInfoEmptyLink =
+    InfoParser.Info "Myriel" "title" []
+
+
+expectData3 =
+    Graph.fromNodeLabelsAndEdgePairs
+        [ "Myriel"
+        ]
+        []

@@ -24,6 +24,7 @@ view : Model -> Html Msg
 view model =
     div []
         [ editArea model
+        , button [ onClick InformationsUpdate ] [ text "情報項目更新" ]
         , forceGraph model
         ]
 
@@ -44,7 +45,12 @@ editArea model =
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    ( ForceDirectedGraph.update msg model, Cmd.none )
+    case msg of
+        Input text ->
+            ( ForceDirectedGraph.update msg model, toJs text )
+
+        _ ->
+            ( ForceDirectedGraph.update msg model, Cmd.none )
 
 
 main : Program () Model Msg

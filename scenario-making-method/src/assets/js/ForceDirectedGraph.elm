@@ -42,6 +42,7 @@ type Msg
     | DragEnd ( Float, Float )
     | Tick Time.Posix
     | Input String
+    | InformationsUpdate
 
 
 type alias Model =
@@ -199,8 +200,25 @@ update msg ({ drag, graph, simulation, value, informations } as model) =
                 Nothing ->
                     Model Nothing graph simulation value informations
 
-        Input val ->
-            Model Nothing graph (Force.reheat simulation) val informations
+        Input text ->
+            { model | value = text }
+
+        InformationsUpdate ->
+            let
+                list =
+                    parse value
+            in
+                case list of
+                    Just a ->
+                        { model | informations = a }
+
+                    -- let
+                    --     gr =
+                    --         Graph.mapContexts initializeNode (toData a)
+                    -- in
+                    --     Model Nothing gr simulation value a
+                    Nothing ->
+                        { model | informations = [] }
 
 
 subscriptions : Model -> Sub Msg
@@ -372,20 +390,6 @@ forceGraph model =
                 |> List.map (\node -> nodeElement node arrayInformations)
                 |> g [ class [ "nodes" ] ]
             ]
-
-
-valueToFloat : Model -> Float
-valueToFloat model =
-    let
-        fl =
-            String.toFloat model.value
-    in
-        case fl of
-            Just a ->
-                a
-
-            Nothing ->
-                1.0
 
 
 

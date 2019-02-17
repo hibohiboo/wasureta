@@ -70,8 +70,6 @@ info =
         |= intValues
         |. symbol "]"
         |. spaces
-        |. (Parser.lineComment "//")
-        |. spaces
 
 
 text : Parser String
@@ -83,9 +81,12 @@ text =
 
 intValues : Parser (List Int)
 intValues =
-    succeed (::)
-        |= int
-        |= intValuesTail
+    oneOf
+        [ succeed (::)
+            |= int
+            |= intValuesTail
+        , succeed []
+        ]
 
 
 intValuesTail : Parser (List Int)
