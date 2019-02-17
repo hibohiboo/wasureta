@@ -215,7 +215,7 @@ linkElement graph edge =
 -- タイトルのフォントサイズ (px) css参照
 
 
-titleSize =
+titleSizeNum =
     14
 
 
@@ -240,9 +240,13 @@ strokeWidthNum =
 
 nodeElement node rl =
     let
-        dispText =
-            "10:姿を消すとき、ヘイロ\nン絡みのトラブルに巻き\n込まれていたようだ。\n11:その他のテストを行うこと。成功すればその他なんか適用にうまくできるような気がする。"
+        titleText =
+            "タイトル"
 
+        dispText =
+            ""
+
+        --"10:姿を消すとき、ヘイロ\nン絡みのトラブルに巻き\n込まれていたようだ。\n11:その他のテストを行うこと。成功すればその他なんか適用にうまくできるような気がする。"
         --1行ずつ分割する
         texts =
             Array.fromList (String.lines dispText)
@@ -266,11 +270,18 @@ nodeElement node rl =
 
         -- 左パディング＋文字の大きさ*文字の長さ＋右パディング
         wid =
-            fontSizeNum + (fontSizeNum * maxTextLength) + fontSizeNum
+            let
+                titleLength =
+                    String.length titleText
+            in
+                if maxTextLength > titleLength then
+                    fontSizeNum + (fontSizeNum * maxTextLength) + fontSizeNum
+                else
+                    titleSizeNum + (titleSizeNum * titleLength) + titleSizeNum
 
         -- 文字のmargin-top + 文字列の行数 + 下マージン
         hei =
-            (titleSize + fontSizeNum * 2) + (newLineCount * fontSizeNum) + fontSizeNum
+            (titleSizeNum + fontSizeNum * 2) + (newLineCount * fontSizeNum) + fontSizeNum
     in
         g []
             [ rect
@@ -284,14 +295,14 @@ nodeElement node rl =
                 , onMouseDown node.id
                 ]
                 [ title [] [ text node.label.value ] ]
-            , text_ [ x (node.label.x + fontSizeNum), y (node.label.y + titleSize + fontSizeNum), fill (Fill Color.black) ] [ text "タイトル" ]
+            , text_ [ x (node.label.x + fontSizeNum), y (node.label.y + titleSizeNum + fontSizeNum), fill (Fill Color.black) ] [ text titleText ]
             , g []
                 (Array.toList
-                    (Array.indexedMap (\i dtext -> text_ [ x (node.label.x + fontSizeNum), y (node.label.y + titleSize + fontSizeNum * (3 + (toFloat i))), fontSize fontSizeNum ] [ text dtext ]) texts)
+                    (Array.indexedMap (\i dtext -> text_ [ x (node.label.x + fontSizeNum), y (node.label.y + titleSizeNum + fontSizeNum * (3 + (toFloat i))), fontSize fontSizeNum ] [ text dtext ]) texts)
                 )
 
             -- foreignObjectは画像にしたときに表示されないので却下。
-            --, foreignObject [ x (node.label.x + fontSizeNum), y (node.label.y + titleSize + fontSizeNum * 2) ] [ div [] [ text dispText ] ]
+            --, foreignObject [ x (node.label.x + fontSizeNum), y (node.label.y + titleSizeNum + fontSizeNum * 2) ] [ div [] [ text dispText ] ]
             -- circle
             --     [ r 30
             --     , fill (Fill Color.black)
