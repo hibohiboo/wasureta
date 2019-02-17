@@ -244,9 +244,8 @@ nodeElement node rl =
             "タイトル"
 
         dispText =
-            ""
+            "10:姿を消すとき、ヘイロ\nン絡みのトラブルに巻き\n込まれていたようだ。\n11:その他のテストを行うこと。\n成功すればその他なんか適用に\nうまくできるような気がする。"
 
-        --"10:姿を消すとき、ヘイロ\nン絡みのトラブルに巻き\n込まれていたようだ。\n11:その他のテストを行うこと。成功すればその他なんか適用にうまくできるような気がする。"
         --1行ずつ分割する
         texts =
             Array.fromList (String.lines dispText)
@@ -303,17 +302,16 @@ nodeElement node rl =
 
             -- foreignObjectは画像にしたときに表示されないので却下。
             --, foreignObject [ x (node.label.x + fontSizeNum), y (node.label.y + titleSizeNum + fontSizeNum * 2) ] [ div [] [ text dispText ] ]
-            -- circle
-            --     [ r 30
-            --     , fill (Fill Color.black)
-            --     , stroke (Color.rgba 0 0 0 0)
-            --     , strokeWidth 7
-            --     , onMouseDown node.id
-            --     , cx node.label.x
-            --     , cy node.label.y
-            --     ]
-            --     [ title [] [ text node.label.value ] ]
-            -- , text_ [ x node.label.x, y node.label.y, fill (Fill Color.white) ] [ text "test" ]
+            , circle
+                [ r 10
+                , fill (Fill Color.black)
+                , stroke (Color.rgba 0 0 0 0)
+                , strokeWidth 7
+                , onMouseDown node.id
+                , cx node.label.x
+                , cy node.label.y
+                ]
+                [ title [] [ text node.label.value ] ]
             ]
 
 
