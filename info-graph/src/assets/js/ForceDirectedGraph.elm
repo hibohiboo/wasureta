@@ -44,12 +44,24 @@ type Msg
     | InformationsUpdate
 
 
+
+-- | ChangeTextEditMode
+-- | ChangeLinkEditMode
+
+
+type EditMode
+    = TextEditMode
+    | LinkEditMode
+
+
 type alias Model =
     { drag : Maybe Drag
     , graph : Graph Entity ()
     , simulation : Force.State NodeId
     , value : String
     , informations : List Info
+
+    -- , editMode : EditMode
     }
 
 
@@ -186,20 +198,20 @@ update msg ({ drag, graph, simulation, value, informations } as model) =
             in
                 case drag of
                     Nothing ->
-                        Model drag (updateGraphWithList graph list) newState value informations
+                        { model | graph = (updateGraphWithList graph list), simulation = newState }
 
                     Just { current, index } ->
-                        Model drag
-                            (Graph.update index
-                                (Maybe.map (updateNode current))
-                                (updateGraphWithList graph list)
-                            )
-                            newState
-                            value
-                            informations
+                        { model
+                            | graph =
+                                (Graph.update index
+                                    (Maybe.map (updateNode current))
+                                    (updateGraphWithList graph list)
+                                )
+                            , simulation = newState
+                        }
 
         DragStart index xy ->
-            Model (Just (Drag xy xy index)) graph simulation value informations
+            { model | drag = (Just (Drag xy xy index)) }
 
         DragAt xy ->
             let
@@ -208,26 +220,22 @@ update msg ({ drag, graph, simulation, value, informations } as model) =
             in
                 case drag of
                     Just { start, index } ->
-                        Model (Just (Drag start xy index))
-                            (Graph.update index (Maybe.map (updateNode xy)) graph)
-                            (Force.reheat simulation)
-                            value
-                            informations
+                        { model
+                            | drag = (Just (Drag start xy index))
+                            , graph = (Graph.update index (Maybe.map (updateNode xy)) graph)
+                            , simulation = (Force.reheat simulation)
+                        }
 
                     Nothing ->
-                        Model Nothing graph simulation value informations
+                        { model | drag = Nothing }
 
         DragEnd xy ->
             case drag of
                 Just { start, index } ->
-                    Model Nothing
-                        (Graph.update index (Maybe.map (updateNode xy)) graph)
-                        simulation
-                        value
-                        informations
+                    { model | drag = Nothing, graph = (Graph.update index (Maybe.map (updateNode xy)) graph) }
 
                 Nothing ->
-                    Model Nothing graph simulation value informations
+                    { model | drag = Nothing }
 
         Input text ->
             { model | value = text }
@@ -243,10 +251,17 @@ update msg ({ drag, graph, simulation, value, informations } as model) =
                             gr =
                                 Graph.mapContexts initializeNode (toData a)
                         in
-                            Model Nothing gr (Force.reheat simulation) value a
+                            { model | drag = Nothing, graph = gr, simulation = (Force.reheat simulation), informations = a }
 
                     Nothing ->
                         { model | informations = [] }
+
+
+
+-- TextEditMode ->
+--     model
+-- LinkEditMode ->
+--     model
 
 
 subscriptions : Model -> Sub Msg

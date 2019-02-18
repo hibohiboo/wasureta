@@ -33,10 +33,18 @@ view model =
 editArea : Model -> Html Msg
 editArea model =
     div [ class "editor" ]
-        [ ul []
-            [ li [] [ text "色は次のうちから選べます。 [black, white, red, blue, green, yellow, purple, gray, brown]" ]
+        [ nav [ class "tabs" ]
+            [ a [ class "selected" ] [ text "情報入力" ]
+            , a [] [ text "リンク作成" ]
             ]
-        , div
+        , textEditArea
+            model
+        ]
+
+
+textEditArea model =
+    div [ class "editor-main" ]
+        [ div
             []
             [ label [ for "editor" ] [ text "シナリオプロット" ]
             , br [] []
@@ -46,6 +54,7 @@ editArea model =
                 ]
                 [ text model.value ]
             ]
+        , p [] [ text "色は次の中から選べます。 [black, white, red, blue, green, yellow, purple, gray, brown]" ]
         ]
 
 
