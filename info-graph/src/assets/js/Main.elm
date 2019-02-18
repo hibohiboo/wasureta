@@ -25,6 +25,7 @@ view model =
     div [ class "container" ]
         [ editArea model
         , button [ onClick InformationsUpdate ] [ text "情報項目更新" ]
+        , button [ id "save" ] [ text "画像ダウンロード" ]
         , forceGraph model
         ]
 
