@@ -32,7 +32,11 @@ view model =
 editArea : Model -> Html Msg
 editArea model =
     div [ class "editor" ]
-        [ div []
+        [ ul []
+            [ li [] [ text "色は次のうちから選べます。 [black, white, red, blue, green, yellow, purple, gray, brown]" ]
+            ]
+        , div
+            []
             [ label [ for "editor" ] [ text "シナリオプロット" ]
             , br [] []
             , textarea

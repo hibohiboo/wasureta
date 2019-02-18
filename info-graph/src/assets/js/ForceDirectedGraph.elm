@@ -380,8 +380,23 @@ nodeElement node informations =
                 "blue" ->
                     Color.blue
 
+                "gray" ->
+                    Color.gray
+
                 "white" ->
                     Color.white
+
+                "green" ->
+                    Color.green
+
+                "yellow" ->
+                    Color.yellow
+
+                "purple" ->
+                    Color.purple
+
+                "brown" ->
+                    Color.brown
 
                 _ ->
                     Color.black
