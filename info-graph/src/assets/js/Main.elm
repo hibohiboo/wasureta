@@ -10,6 +10,8 @@ import ForceDirectedGraph exposing (update, init, subscriptions, Msg(..), Model,
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
+import Array
+import InfoParser exposing (Info)
 
 
 -- ---------------------------
@@ -44,14 +46,19 @@ editArea model =
                 "selected"
             else
                 ""
+
+        edit =
+            if model.editMode == TextEditMode then
+                textEditArea model
+            else
+                linkEditArea model
     in
         div [ class "editor" ]
             [ nav [ class "tabs" ]
                 [ a [ class navTextClass, onClick ChangeTextEditMode ] [ text "情報入力" ]
                 , a [ class navLinkClass, onClick ChangeLinkEditMode ] [ text "リンク作成" ]
                 ]
-            , textEditArea
-                model
+            , edit
             ]
 
 
@@ -69,6 +76,68 @@ textEditArea model =
             ]
         , p [] [ text "色は次の中から選べます。 [black, white, red, blue, green, yellow, purple, gray, brown]" ]
         ]
+
+
+linkEditArea model =
+    let
+        itemNum =
+            List.length model.informations
+
+        deg =
+            360 / toFloat itemNum
+
+        rad =
+            deg * pi / 180
+
+        r =
+            300
+    in
+        div [ class "editor-main" ]
+            [ div [ class "link-edit-area" ]
+                (Array.toList <| Array.indexedMap (\i info -> linkInfoItem i info rad r model.selectedNode) <| Array.fromList model.informations)
+            ]
+
+
+linkInfoItem : Int -> Info -> Float -> Float -> Maybe Int -> Html Msg
+linkInfoItem i info rad r selectedNum =
+    let
+        fi =
+            toFloat i
+
+        x =
+            cos (rad * fi) * r + r
+
+        y =
+            sin (rad * fi) * r + r
+
+        leftX =
+            (String.fromFloat x) ++ "px"
+
+        topY =
+            (String.fromFloat y) ++ "px"
+
+        selectedClass =
+            case selectedNum of
+                Just a ->
+                    if a == i then
+                        "selected"
+                    else
+                        ""
+
+                Nothing ->
+                    ""
+    in
+        div
+            [ class "item"
+            , class selectedClass
+            , style "left" leftX
+            , style "top" topY
+            , onClick (ClickLinkNode i)
+            ]
+            [ span [ class "circle" ] [ text <| String.fromInt i ]
+            , span [ class "item-label" ] [ text info.title ]
+            , span [ class "item-links" ] [ text (String.join "," <| List.map String.fromInt info.list) ]
+            ]
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )

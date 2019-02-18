@@ -44,6 +44,7 @@ type Msg
     | InformationsUpdate
     | ChangeTextEditMode
     | ChangeLinkEditMode
+    | ClickLinkNode Int
 
 
 
@@ -62,6 +63,7 @@ type alias Model =
     , value : String
     , informations : List Info
     , editMode : EditMode
+    , selectedNode : Maybe Int
     }
 
 
@@ -139,7 +141,7 @@ init _ =
         simulation =
             (Force.simulation forces)
     in
-        ( Model Nothing graph simulation value informations TextEditMode, Cmd.none )
+        ( Model Nothing graph simulation value informations TextEditMode Nothing, Cmd.none )
 
 
 infoToString : Int -> Info -> String
@@ -262,6 +264,12 @@ update msg ({ drag, graph, simulation, value, informations } as model) =
 
         ChangeLinkEditMode ->
             { model | editMode = LinkEditMode }
+
+        ClickLinkNode i ->
+            if model.selectedNode == Nothing then
+                { model | selectedNode = Just i }
+            else
+                { model | selectedNode = Nothing }
 
 
 subscriptions : Model -> Sub Msg
