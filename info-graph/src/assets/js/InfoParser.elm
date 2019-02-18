@@ -25,6 +25,7 @@ type alias Info =
     { title : String
     , info : String
     , list : List Int
+    , color : String
     }
 
 
@@ -68,6 +69,12 @@ info =
         |. spaces
         |. symbol "["
         |= intValues
+        |. symbol "]"
+        |. spaces
+        |. keyword "[色]"
+        |. spaces
+        |. symbol "["
+        |= text
         |. symbol "]"
         |. spaces
 

@@ -31,7 +31,7 @@ all =
 
 expectInfo : InfoParser.Info
 expectInfo =
-    InfoParser.Info "てすと" "しめ\nい" [ 1, 2 ]
+    InfoParser.Info "てすと" "しめ\nい" [ 1, 2 ] "red"
 
 
 testText : String
@@ -40,12 +40,13 @@ testText =
         ++ "\n[タイトル][てすと]"
         ++ "\n[情報][しめ\nい]"
         ++ "\n[リンク先][1,2]"
+        ++ "\n[色][red]"
         ++ "\n----\n"
 
 
 expectEnptyListInfo : InfoParser.Info
 expectEnptyListInfo =
-    InfoParser.Info "てすと" "しめ\nい" []
+    InfoParser.Info "てすと" "しめ\nい" [] "red"
 
 
 emptyListText : String
@@ -54,6 +55,7 @@ emptyListText =
         ++ "\n[タイトル][てすと]"
         ++ "\n[情報][しめ\nい]"
         ++ "\n[リンク先][]"
+        ++ "\n[色][red]"
         ++ "\n----\n"
 
 
@@ -69,7 +71,7 @@ testData informations ast =
 
 sourceInfo : InfoParser.Info
 sourceInfo =
-    InfoParser.Info "Myriel" "title" [ 1, 2 ]
+    InfoParser.Info "Myriel" "title" [ 1, 2 ] "red"
 
 
 expectData =
@@ -94,7 +96,7 @@ expectData2 =
 
 
 sourceInfoEmptyLink =
-    InfoParser.Info "Myriel" "title" []
+    InfoParser.Info "Myriel" "title" [] "red"
 
 
 expectData3 =
