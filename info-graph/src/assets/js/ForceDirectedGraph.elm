@@ -266,10 +266,31 @@ update msg ({ drag, graph, simulation, value, informations } as model) =
             { model | editMode = LinkEditMode }
 
         ClickLinkNode i ->
-            if model.selectedNode == Nothing then
-                { model | selectedNode = Just i }
-            else
-                { model | selectedNode = Nothing }
+            case model.selectedNode of
+                Nothing ->
+                    { model | selectedNode = Just i }
+
+                Just selectedId ->
+                    let
+                        selectedInfo =
+                            getInfo selectedId informations
+
+                        newInfo =
+                            { selectedInfo | list = [ i ] }
+
+                        newList =
+                            Array.toList <|
+                                Array.indexedMap
+                                    (\idx info ->
+                                        if idx == selectedId then
+                                            newInfo
+                                        else
+                                            info
+                                    )
+                                <|
+                                    Array.fromList informations
+                    in
+                        { model | selectedNode = Nothing, informations = newList }
 
 
 subscriptions : Model -> Sub Msg
@@ -342,15 +363,24 @@ strokeWidthNum =
     3
 
 
-nodeElement node informations =
+getInfo : Int -> List Info -> Info
+getInfo index informationsList =
+    let
+        informations =
+            Array.fromList informationsList
+    in
+        case (Array.get index informations) of
+            Just a ->
+                a
+
+            Nothing ->
+                Info "" "" [] ""
+
+
+nodeElement node informationsList =
     let
         info =
-            case (Array.get node.id informations) of
-                Just a ->
-                    a
-
-                Nothing ->
-                    Info "" "" [] ""
+            getInfo node.id informationsList
 
         titleText =
             info.title
@@ -468,18 +498,14 @@ nodeElement node informations =
 
 forceGraph : Model -> Svg Msg
 forceGraph model =
-    let
-        arrayInformations =
-            Array.fromList model.informations
-    in
-        svg [ viewBox 0 0 w h ]
-            [ Graph.edges model.graph
-                |> List.map (linkElement model.graph)
-                |> g [ class [ "links" ] ]
-            , Graph.nodes model.graph
-                |> List.map (\node -> nodeElement node arrayInformations)
-                |> g [ class [ "nodes" ] ]
-            ]
+    svg [ viewBox 0 0 w h ]
+        [ Graph.edges model.graph
+            |> List.map (linkElement model.graph)
+            |> g [ class [ "links" ] ]
+        , Graph.nodes model.graph
+            |> List.map (\node -> nodeElement node model.informations)
+            |> g [ class [ "nodes" ] ]
+        ]
 
 
 
