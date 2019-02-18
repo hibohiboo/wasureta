@@ -90,29 +90,29 @@ init _ =
             ]
 
         informations =
-            [ InfoParser.Info "オープニング" "開始" [ 1, 2, 3 ] -- 0
-            , InfoParser.Info "PC1" "ヒロインと出会う" [ 4, 16 ] -- 1
-            , InfoParser.Info "PC2" "ボスとの因縁" [ 5 ] -- 2
-            , InfoParser.Info "PC3" "事件を追う" [ 6, 7 ] -- 3
-            , InfoParser.Info "【情報1】" "ヒロインについて" [ 8 ] -- 4
-            , InfoParser.Info "【情報2】" "ボスについて" [ 17 ] -- 5
-            , InfoParser.Info "【情報3】" "事件について" [ 9, 10 ] -- 6
-            , InfoParser.Info "【情報4】" "アイテムについて" [ 9 ] -- 7
-            , InfoParser.Info "【情報5】" "ヒロイン性" [ 11 ] -- 8
-            , InfoParser.Info "【情報6】" "事件・アイテムの裏" [ 18 ] -- 9
-            , InfoParser.Info "【情報7】" "裏ボスについて" [ 13, 18 ] -- 10
-            , InfoParser.Info "【情報8】" "ヒロインの過去" [ 19 ] -- 11
-            , InfoParser.Info "【情報9】" "ボスの経歴" [ 14 ] -- 12
-            , InfoParser.Info "【情報10】" "裏ボスの経歴" [ 14 ] -- 13
-            , InfoParser.Info "【情報11】" "ボスたちの行動と結果予測" [ 15 ] -- 14
-            , InfoParser.Info "【情報12】" "クライマックスへの到達方法" [ 20 ] -- 15
-            , InfoParser.Info "【イベント】PC1" "ボスがヒロインを狙う" [ 11 ] -- 16
-            , InfoParser.Info "【イベント】PC2" "ボスが警告" [ 12 ] -- 17
-            , InfoParser.Info "【イベント】PC3" "上司からの発破" [] -- 18
-            , InfoParser.Info "【イベント】PC1" "ヒロインからの問いかけ" [ 14 ] -- 19
-            , InfoParser.Info "【マスターシーン】" "クライマックス前演出" [ 21 ] -- 20
-            , InfoParser.Info "【クライマックス】" "前口上・クライマックス戦闘" [ 22 ] -- 21
-            , InfoParser.Info "【エンディング】" "ふたりは幸せなキスをして終了" [] -- 22
+            [ InfoParser.Info "オープニング" "開始" [ 1, 2, 3 ] "white" -- 0
+            , InfoParser.Info "PC1" "ヒロインと出会う" [ 4, 16 ] "blue" -- 1
+            , InfoParser.Info "PC2" "ボスとの因縁" [ 5 ] "blue" -- 2
+            , InfoParser.Info "PC3" "事件を追う" [ 6, 7 ] "blue" -- 3
+            , InfoParser.Info "【情報1】" "ヒロインについて" [ 8 ] "black" -- 4
+            , InfoParser.Info "【情報2】" "ボスについて" [ 17 ] "black" -- 5
+            , InfoParser.Info "【情報3】" "事件について" [ 9, 10 ] "black" -- 6
+            , InfoParser.Info "【情報4】" "アイテムについて" [ 9 ] "black" -- 7
+            , InfoParser.Info "【情報5】" "ヒロイン性" [ 11 ] "black" -- 8
+            , InfoParser.Info "【情報6】" "事件・アイテムの裏" [ 18 ] "black" -- 9
+            , InfoParser.Info "【情報7】" "裏ボスについて" [ 13, 18 ] "black" -- 10
+            , InfoParser.Info "【情報8】" "ヒロインの過去" [ 19 ] "black" -- 11
+            , InfoParser.Info "【情報9】" "ボスの経歴" [ 14 ] "black" -- 12
+            , InfoParser.Info "【情報10】" "裏ボスの経歴" [ 14 ] "black" -- 13
+            , InfoParser.Info "【情報11】" "ボスたちの行動と結果予測" [ 15 ] "black" -- 14
+            , InfoParser.Info "【情報12】" "クライマックスへの到達方法" [ 20 ] "black" -- 15
+            , InfoParser.Info "【イベント】PC1" "ボスがヒロインを狙う" [ 11 ] "blue" -- 16
+            , InfoParser.Info "【イベント】PC2" "ボスが警告" [ 12 ] "blue" -- 17
+            , InfoParser.Info "【イベント】PC3" "上司からの発破" [] "blue" -- 18
+            , InfoParser.Info "【イベント】PC1" "ヒロインからの問いかけ" [ 14 ] "blue" -- 19
+            , InfoParser.Info "【マスターシーン】" "クライマックス前演出" [ 21 ] "blue" -- 20
+            , InfoParser.Info "【クライマックス】" "前口上・クライマックス戦闘" [ 22 ] "blue" -- 21
+            , InfoParser.Info "【エンディング】" "ふたりは幸せなキスをして終了" [] "white" -- 22
             ]
 
         graph =
@@ -142,6 +142,9 @@ infoToString i info =
         ++ "]"
         ++ "\n[リンク先]["
         ++ (String.join "," <| List.map (\n -> String.fromInt n) info.list)
+        ++ "]"
+        ++ "\n[色]["
+        ++ info.color
         ++ "]"
         ++ "\n----\n"
 
@@ -324,7 +327,7 @@ nodeElement node informations =
                     a
 
                 Nothing ->
-                    Info "" "" []
+                    Info "" "" [] ""
 
         titleText =
             info.title
@@ -367,6 +370,30 @@ nodeElement node informations =
         -- 文字のmargin-top + 文字列の行数 + 下マージン
         hei =
             (titleSizeNum + fontSizeNum * 2) + (newLineCount * fontSizeNum) + fontSizeNum
+
+        -- 円の塗りつぶし色
+        nodeFillColor =
+            case info.color of
+                "red" ->
+                    Color.red
+
+                "blue" ->
+                    Color.blue
+
+                "white" ->
+                    Color.white
+
+                _ ->
+                    Color.black
+
+        -- 円の線の色
+        nodeStrokeColor =
+            case info.color of
+                "white" ->
+                    Color.black
+
+                _ ->
+                    (Color.rgba 0 0 0 0)
     in
         g []
             [ rect
@@ -390,8 +417,8 @@ nodeElement node informations =
             --, foreignObject [ x (node.label.x + fontSizeNum), y (node.label.y + titleSizeNum + fontSizeNum * 2) ] [ div [] [ text dispText ] ]
             , circle
                 [ r 10
-                , fill (Fill Color.black)
-                , stroke (Color.rgba 0 0 0 0)
+                , fill (Fill nodeFillColor)
+                , stroke nodeStrokeColor
                 , strokeWidth 7
                 , onMouseDown node.id
                 , cx node.label.x
