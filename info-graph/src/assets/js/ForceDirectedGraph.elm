@@ -13,7 +13,6 @@ import Html exposing (div)
 import Html.Events exposing (on)
 import Html.Events.Extra.Mouse as Mouse
 import Json.Decode as Decode
-import SampleData exposing (miserablesGraph)
 import Time
 import Svg exposing (foreignObject)
 import TypedSvg exposing (circle, g, line, svg, title, text_, rect)
