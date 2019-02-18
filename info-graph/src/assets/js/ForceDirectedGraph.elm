@@ -275,20 +275,23 @@ update msg ({ drag, graph, simulation, value, informations } as model) =
                         selectedInfo =
                             getInfo selectedId informations
 
+                        -- 選択したものがリストになければ追加、あれば削除
                         newInfo =
-                            { selectedInfo | list = [ i ] }
+                            if (List.member i selectedInfo.list) then
+                                { selectedInfo | list = (List.filter (\n -> n /= selectedId) selectedInfo.list) }
+                            else
+                                { selectedInfo | list = (i :: selectedInfo.list) }
 
                         newList =
-                            Array.toList <|
-                                Array.indexedMap
+                            Array.fromList informations
+                                |> Array.indexedMap
                                     (\idx info ->
                                         if idx == selectedId then
                                             newInfo
                                         else
                                             info
                                     )
-                                <|
-                                    Array.fromList informations
+                                |> Array.toList
                     in
                         { model | selectedNode = Nothing, informations = newList }
 
