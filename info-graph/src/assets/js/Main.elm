@@ -6,7 +6,7 @@ based on their co-occurence in a scene. Try dragging the nodes!
 
 import Browser
 import Browser.Events
-import ForceDirectedGraph exposing (update, init, subscriptions, Msg(..), Model, forceGraph)
+import ForceDirectedGraph exposing (update, init, subscriptions, Msg(..), Model, forceGraph, EditMode(..))
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
@@ -32,14 +32,27 @@ view model =
 
 editArea : Model -> Html Msg
 editArea model =
-    div [ class "editor" ]
-        [ nav [ class "tabs" ]
-            [ a [ class "selected" ] [ text "情報入力" ]
-            , a [] [ text "リンク作成" ]
+    let
+        navTextClass =
+            if model.editMode == TextEditMode then
+                "selected"
+            else
+                ""
+
+        navLinkClass =
+            if model.editMode == LinkEditMode then
+                "selected"
+            else
+                ""
+    in
+        div [ class "editor" ]
+            [ nav [ class "tabs" ]
+                [ a [ class navTextClass, onClick ChangeTextEditMode ] [ text "情報入力" ]
+                , a [ class navLinkClass, onClick ChangeLinkEditMode ] [ text "リンク作成" ]
+                ]
+            , textEditArea
+                model
             ]
-        , textEditArea
-            model
-        ]
 
 
 textEditArea model =

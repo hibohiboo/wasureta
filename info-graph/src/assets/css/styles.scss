@@ -128,7 +128,7 @@ svg {
 
 }
 
-// タブ
+// タブの設定
 
 nav {
 	position: relative;
@@ -136,6 +136,7 @@ nav {
 	padding-left: 1em;
 }
 
+// タブのタイトル部分。
 nav > a {
 	position: relative;
 	display: inline-block;
@@ -145,6 +146,7 @@ nav > a {
 	margin: 0 -.3em;
 } 
 
+// タブの下のメイン部分の色とタブの要素の色をそろえる
 nav > a::before,
 .editor-main {
 	border: .1em solid rgba(0,0,0,.4);

@@ -1,4 +1,4 @@
-module ForceDirectedGraph exposing (init, update, forceGraph, Msg(..), Model, subscriptions)
+module ForceDirectedGraph exposing (init, update, forceGraph, Msg(..), Model, subscriptions, EditMode(..))
 
 {-| This demonstrates laying out the characters in Les Miserables
 based on their co-occurence in a scene. Try dragging the nodes!
@@ -42,11 +42,12 @@ type Msg
     | Tick Time.Posix
     | Input String
     | InformationsUpdate
+    | ChangeTextEditMode
+    | ChangeLinkEditMode
 
 
 
--- | ChangeTextEditMode
--- | ChangeLinkEditMode
+-- テキスト入力とリンクの入力の状態を表す
 
 
 type EditMode
@@ -60,8 +61,7 @@ type alias Model =
     , simulation : Force.State NodeId
     , value : String
     , informations : List Info
-
-    -- , editMode : EditMode
+    , editMode : EditMode
     }
 
 
@@ -139,7 +139,7 @@ init _ =
         simulation =
             (Force.simulation forces)
     in
-        ( Model Nothing graph simulation value informations, Cmd.none )
+        ( Model Nothing graph simulation value informations TextEditMode, Cmd.none )
 
 
 infoToString : Int -> Info -> String
@@ -240,6 +240,7 @@ update msg ({ drag, graph, simulation, value, informations } as model) =
         Input text ->
             { model | value = text }
 
+        -- テキストの内容をパースしてグラフのモデルに反映する
         InformationsUpdate ->
             let
                 list =
@@ -256,12 +257,11 @@ update msg ({ drag, graph, simulation, value, informations } as model) =
                     Nothing ->
                         { model | informations = [] }
 
+        ChangeTextEditMode ->
+            { model | editMode = TextEditMode }
 
-
--- TextEditMode ->
---     model
--- LinkEditMode ->
---     model
+        ChangeLinkEditMode ->
+            { model | editMode = LinkEditMode }
 
 
 subscriptions : Model -> Sub Msg
