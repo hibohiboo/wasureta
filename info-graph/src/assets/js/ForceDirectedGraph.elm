@@ -277,10 +277,14 @@ update msg ({ drag, graph, simulation, value, informations } as model) =
 
                         -- 選択したものがリストになければ追加、あれば削除
                         newInfo =
-                            if (List.member i selectedInfo.list) then
-                                { selectedInfo | list = (List.filter (\n -> n /= selectedId) selectedInfo.list) }
-                            else
-                                { selectedInfo | list = (i :: selectedInfo.list) }
+                            let
+                                list =
+                                    selectedInfo.list
+                            in
+                                if (List.member i list) then
+                                    { selectedInfo | list = (List.filter (\n -> n /= i) list) }
+                                else
+                                    { selectedInfo | list = (i :: list) }
 
                         newList =
                             Array.fromList informations
