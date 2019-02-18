@@ -6,7 +6,7 @@ based on their co-occurence in a scene. Try dragging the nodes!
 
 import Browser
 import Browser.Events
-import ForceDirectedGraph exposing (..)
+import ForceDirectedGraph exposing (update, init, subscriptions, Msg(..), Model, forceGraph)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
