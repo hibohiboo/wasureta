@@ -8,6 +8,10 @@ import Array
 import InfoParser exposing (Info)
 
 
+{-|
+
+    リンク設定画面の背景に、リンクをつないだノード同士のリンクを描画する
+-}
 backCanvas : Int -> Int -> Float -> Float -> List Info -> List Renderable
 backCanvas width height rad r informations =
     [ shapes [ fill Color.white ] [ rect ( 0, 0 ) (toFloat width) (toFloat height) ]

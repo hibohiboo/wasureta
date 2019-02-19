@@ -133,15 +133,20 @@ init _ =
             Graph.mapContexts initializeNode (toData informations)
 
         value =
-            Array.fromList informations
-                |> Array.indexedMap (\i info -> infoToString i info)
-                |> Array.toList
-                |> String.join "\n"
+            informationsToString informations
 
         simulation =
             (Force.simulation forces)
     in
         ( Model Nothing graph simulation value informations TextEditMode Nothing, Cmd.none )
+
+
+informationsToString : List Info -> String
+informationsToString informations =
+    Array.fromList informations
+        |> Array.indexedMap (\i info -> infoToString i info)
+        |> Array.toList
+        |> String.join "\n"
 
 
 infoToString : Int -> Info -> String
@@ -244,26 +249,19 @@ update msg ({ drag, graph, simulation, value, informations } as model) =
 
         -- テキストの内容をパースしてグラフのモデルに反映する
         InformationsUpdate ->
-            let
-                list =
-                    parse value
-            in
-                case list of
-                    Just a ->
-                        let
-                            gr =
-                                Graph.mapContexts initializeNode (toData a)
-                        in
-                            { model | drag = Nothing, graph = gr, simulation = (Force.reheat simulation), informations = a }
-
-                    Nothing ->
-                        { model | informations = [] }
+            updateModelParseText value model
 
         ChangeTextEditMode ->
-            { model | editMode = TextEditMode }
+            -- リンクの作成を反映する
+            { model | editMode = TextEditMode, value = informationsToString model.informations }
 
         ChangeLinkEditMode ->
-            { model | editMode = LinkEditMode }
+            let
+                -- 編集していた内容を反映する
+                newModel =
+                    updateModelParseText model.value model
+            in
+                { newModel | editMode = LinkEditMode }
 
         ClickLinkNode i ->
             case model.selectedNode of
@@ -298,6 +296,38 @@ update msg ({ drag, graph, simulation, value, informations } as model) =
                                 |> Array.toList
                     in
                         { model | selectedNode = Nothing, informations = newList }
+
+
+updateModelParseText : String -> Model -> Model
+updateModelParseText value model =
+    let
+        list =
+            getParsedInfoList value
+    in
+        case list of
+            [] ->
+                { model | informations = [] }
+
+            _ ->
+                let
+                    gr =
+                        Graph.mapContexts initializeNode (toData list)
+                in
+                    { model | drag = Nothing, graph = gr, simulation = (Force.reheat model.simulation), informations = list }
+
+
+getParsedInfoList : String -> List Info
+getParsedInfoList value =
+    let
+        list =
+            parse value
+    in
+        case list of
+            Just a ->
+                a
+
+            Nothing ->
+                []
 
 
 subscriptions : Model -> Sub Msg
