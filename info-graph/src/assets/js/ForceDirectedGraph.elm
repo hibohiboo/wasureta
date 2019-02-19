@@ -45,6 +45,7 @@ type Msg
     | ChangeTextEditMode
     | ChangeLinkEditMode
     | ClickLinkNode Int
+    | NewInfo
 
 
 
@@ -86,8 +87,8 @@ initializeNode ctx =
     }
 
 
-init : () -> ( Model, Cmd Msg )
-init _ =
+init : String -> ( Model, Cmd Msg )
+init flags =
     let
         link { from, to } =
             { source = from
@@ -104,30 +105,33 @@ init _ =
             ]
 
         informations =
-            [ InfoParser.Info "オープニング" "開始" [ 1, 2, 3 ] "white" -- 0
-            , InfoParser.Info "PC1" "ヒロインと出会う" [ 4, 16 ] "blue" -- 1
-            , InfoParser.Info "PC2" "ボスとの因縁" [ 5 ] "blue" -- 2
-            , InfoParser.Info "PC3" "事件を追う" [ 6, 7 ] "blue" -- 3
-            , InfoParser.Info "【情報1】" "ヒロインについて" [ 8 ] "black" -- 4
-            , InfoParser.Info "【情報2】" "ボスについて" [ 17 ] "black" -- 5
-            , InfoParser.Info "【情報3】" "事件について" [ 9, 10 ] "black" -- 6
-            , InfoParser.Info "【情報4】" "アイテムについて" [ 9 ] "black" -- 7
-            , InfoParser.Info "【情報5】" "ヒロイン性" [ 11 ] "black" -- 8
-            , InfoParser.Info "【情報6】" "事件・アイテムの裏" [ 18 ] "black" -- 9
-            , InfoParser.Info "【情報7】" "裏ボスについて" [ 13, 18 ] "black" -- 10
-            , InfoParser.Info "【情報8】" "ヒロインの過去" [ 19 ] "black" -- 11
-            , InfoParser.Info "【情報9】" "ボスの経歴" [ 14 ] "black" -- 12
-            , InfoParser.Info "【情報10】" "裏ボスの経歴" [ 14 ] "black" -- 13
-            , InfoParser.Info "【情報11】" "ボスたちの行動と結果予測" [ 15 ] "black" -- 14
-            , InfoParser.Info "【情報12】" "クライマックスへの到達方法" [ 20 ] "black" -- 15
-            , InfoParser.Info "【イベント】PC1" "ボスがヒロインを狙う" [ 11 ] "blue" -- 16
-            , InfoParser.Info "【イベント】PC2" "ボスが警告" [ 12 ] "blue" -- 17
-            , InfoParser.Info "【イベント】PC3" "上司からの発破" [] "blue" -- 18
-            , InfoParser.Info "【イベント】PC1" "ヒロインからの問いかけ" [ 14 ] "blue" -- 19
-            , InfoParser.Info "【マスターシーン】" "クライマックス前演出" [ 21 ] "blue" -- 20
-            , InfoParser.Info "【クライマックス】" "前口上・クライマックス戦闘" [ 22 ] "blue" -- 21
-            , InfoParser.Info "【エンディング】" "ふたりは幸せなキスをして終了" [] "white" -- 22
-            ]
+            if (String.isEmpty flags) then
+                [ InfoParser.Info "オープニング" "開始" [ 1, 2, 3 ] "white" -- 0
+                , InfoParser.Info "PC1" "ヒロインと出会う" [ 4, 16 ] "blue" -- 1
+                , InfoParser.Info "PC2" "ボスとの因縁" [ 5 ] "blue" -- 2
+                , InfoParser.Info "PC3" "事件を追う" [ 6, 7 ] "blue" -- 3
+                , InfoParser.Info "【情報1】" "ヒロインについて" [ 8 ] "black" -- 4
+                , InfoParser.Info "【情報2】" "ボスについて" [ 17 ] "black" -- 5
+                , InfoParser.Info "【情報3】" "事件について" [ 9, 10 ] "black" -- 6
+                , InfoParser.Info "【情報4】" "アイテムについて" [ 9 ] "black" -- 7
+                , InfoParser.Info "【情報5】" "ヒロイン性" [ 11 ] "black" -- 8
+                , InfoParser.Info "【情報6】" "事件・アイテムの裏" [ 18 ] "black" -- 9
+                , InfoParser.Info "【情報7】" "裏ボスについて" [ 13, 18 ] "black" -- 10
+                , InfoParser.Info "【情報8】" "ヒロインの過去" [ 19 ] "black" -- 11
+                , InfoParser.Info "【情報9】" "ボスの経歴" [ 14 ] "black" -- 12
+                , InfoParser.Info "【情報10】" "裏ボスの経歴" [ 14 ] "black" -- 13
+                , InfoParser.Info "【情報11】" "ボスたちの行動と結果予測" [ 15 ] "black" -- 14
+                , InfoParser.Info "【情報12】" "クライマックスへの到達方法" [ 20 ] "black" -- 15
+                , InfoParser.Info "【イベント】PC1" "ボスがヒロインを狙う" [ 11 ] "blue" -- 16
+                , InfoParser.Info "【イベント】PC2" "ボスが警告" [ 12 ] "blue" -- 17
+                , InfoParser.Info "【イベント】PC3" "上司からの発破" [] "blue" -- 18
+                , InfoParser.Info "【イベント】PC1" "ヒロインからの問いかけ" [ 14 ] "blue" -- 19
+                , InfoParser.Info "【マスターシーン】" "クライマックス前演出" [ 21 ] "blue" -- 20
+                , InfoParser.Info "【クライマックス】" "前口上・クライマックス戦闘" [ 22 ] "blue" -- 21
+                , InfoParser.Info "【エンディング】" "ふたりは幸せなキスをして終了" [] "white" -- 22
+                ]
+            else
+                getParsedInfoList flags
 
         graph =
             Graph.mapContexts initializeNode (toData informations)
@@ -297,8 +301,27 @@ update msg ({ drag, graph, simulation, value, informations } as model) =
 
                         gr =
                             Graph.mapContexts initializeNode (toData newList)
+
+                        newVal =
+                            informationsToString newList
                     in
-                        { model | selectedNode = Nothing, informations = newList, graph = gr, simulation = (Force.reheat model.simulation) }
+                        { model | selectedNode = Nothing, informations = newList, graph = gr, value = newVal, simulation = (Force.reheat model.simulation) }
+
+        NewInfo ->
+            let
+                newInfo =
+                    InfoParser.Info "" "" [] "black"
+
+                newList =
+                    informations ++ [ newInfo ]
+
+                gr =
+                    Graph.mapContexts initializeNode (toData newList)
+
+                newValue =
+                    informationsToString newList
+            in
+                { model | selectedNode = Nothing, informations = newList, graph = gr, value = newValue, simulation = (Force.reheat model.simulation) }
 
 
 updateModelParseText : String -> Model -> Model

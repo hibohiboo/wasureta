@@ -27,7 +27,9 @@ port toJs : String -> Cmd msg
 view : Model -> Html Msg
 view model =
     div [ class "container" ]
-        [ editArea model
+        [ h1 [] [ text "情報項目グラフ化ツール" ]
+        , editArea model
+        , button [ onClick NewInfo ] [ text "項目追加" ]
         , updateButton model
         , button [ id "save" ] [ text "画像ダウンロード" ]
         , forceGraph model
@@ -36,7 +38,7 @@ view model =
 
 updateButton model =
     if model.editMode == TextEditMode then
-        button [ onClick InformationsUpdate ] [ text "情報項目更新" ]
+        button [ onClick InformationsUpdate ] [ text "画像に反映" ]
     else
         span [] [ text "リンク編集モード" ]
 
@@ -108,11 +110,14 @@ linkEditArea model =
             700
     in
         div [ class "editor-main" ]
-            [ Canvas.toHtml ( width, height )
-                [ class "editor-canvas" ]
-                (backCanvas width height rad r model.informations)
-            , div [ class "link-edit-area" ]
-                (Array.toList <| Array.indexedMap (\i info -> linkInfoItem i info rad r model.selectedNode) <| Array.fromList model.informations)
+            [ div [] [ text "2つの番号をクリックすると線をつなぎます。" ]
+            , div []
+                [ Canvas.toHtml ( width, height )
+                    [ class "editor-canvas" ]
+                    (backCanvas width height rad r model.informations)
+                , div [ class "link-edit-area" ]
+                    (Array.toList <| Array.indexedMap (\i info -> linkInfoItem i info rad r model.selectedNode) <| Array.fromList model.informations)
+                ]
             ]
 
 
@@ -158,11 +163,17 @@ update msg model =
         Input text ->
             ( ForceDirectedGraph.update msg model, toJs text )
 
+        ClickLinkNode i ->
+            ( ForceDirectedGraph.update msg model, toJs model.value )
+
+        ChangeTextEditMode ->
+            ( ForceDirectedGraph.update msg model, toJs model.value )
+
         _ ->
             ( ForceDirectedGraph.update msg model, Cmd.none )
 
 
-main : Program () Model Msg
+main : Program String Model Msg
 main =
     Browser.element
         { init = init
