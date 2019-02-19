@@ -31,7 +31,8 @@
             "elm-community/typed-svg": "5.0.1",
             "elm-community/graph": "6.0.0",
             "avh4/elm-fifo": "1.0.4",
-            "elm-community/intdict": "3.0.0"
+            "elm-community/intdict": "3.0.0",
+            "joakin/elm-canvas": "3.0.3"
           },
         "indirect": {
             "elm/bytes": "1.0.7",

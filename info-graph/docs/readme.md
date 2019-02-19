@@ -126,6 +126,8 @@
 [svg to png][*18]
 [css secret ][*19]
 [css animation][*20]
+[elm canvas][*21]
+[elm canvasを使おう][*22]
 
 [*1]:https://qiita.com/norami_dream/items/8751708e49a66f6352b8
 [*2]:http://nexus1.hatenablog.com/entry/2017/06/21/231548
@@ -147,3 +149,5 @@
 [*18]:https://qiita.com/skryoooo/items/a37455bef54321a6195a
 [*19]:http://play.csssecrets.io/
 [*20]:https://commte.net/5082
+[*21]:https://package.elm-lang.org/packages/joakin/elm-canvas/3.0.3/
+[*22]:https://qiita.com/uzimaru0000/items/80bf1f04bf4faf219f21

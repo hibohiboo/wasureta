@@ -186,11 +186,14 @@ nav.tabs > a::before {
 }
 
 // リンク作成空間
+$linkEditAreaWidth : 700px;
+$linkEditAreaHeight : 700px;
 
 .link-edit-area{
   position: relative;
-  width: 700px;
-  height: 700px;
+  width:$linkEditAreaWidth;
+  height: $linkEditAreaHeight;
+
   .item {
     position: absolute;
     display: grid;
@@ -205,20 +208,23 @@ nav.tabs > a::before {
       justify-content: center;
       border-radius: 15px;
       grid-row: 2;
+      background-color:white;
     }
     .item-label{
       position: absolute;
       display: block;
       white-space: nowrap;
       font-size: 10px;
+      background-color:white;
     }
     .item-links{
       position: absolute;
       display: block;
-      padding-top: 20px;
-      padding-left: 40px;
+      margin-top: 20px;
+      margin-left: 40px;
       white-space: nowrap;
       font-size: 10px;
+      background-color:white;
     }
     &.selected{
       .circle{
@@ -228,4 +234,12 @@ nav.tabs > a::before {
     }
   }
 
+}
+
+// エディタの背景のキャンバス要素
+.editor-canvas{
+  position: absolute;
+  // エディタと同じ大きさにして重ねる
+  width:$linkEditAreaWidth;
+  height: $linkEditAreaHeight;
 }

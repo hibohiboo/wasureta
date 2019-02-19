@@ -12,6 +12,8 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Array
 import InfoParser exposing (Info)
+import BackCanvas exposing (backCanvas, getPointCircleLine)
+import Canvas exposing (toHtml)
 
 
 -- ---------------------------
@@ -91,9 +93,18 @@ linkEditArea model =
 
         r =
             300
+
+        width =
+            700
+
+        height =
+            700
     in
         div [ class "editor-main" ]
-            [ div [ class "link-edit-area" ]
+            [ Canvas.toHtml ( width, height )
+                [ class "editor-canvas" ]
+                (backCanvas width height rad r model)
+            , div [ class "link-edit-area" ]
                 (Array.toList <| Array.indexedMap (\i info -> linkInfoItem i info rad r model.selectedNode) <| Array.fromList model.informations)
             ]
 
@@ -101,14 +112,8 @@ linkEditArea model =
 linkInfoItem : Int -> Info -> Float -> Float -> Maybe Int -> Html Msg
 linkInfoItem i info rad r selectedNum =
     let
-        fi =
-            toFloat i
-
-        x =
-            cos (rad * fi) * r + r
-
-        y =
-            sin (rad * fi) * r + r
+        ( x, y ) =
+            getPointCircleLine i rad r
 
         leftX =
             (String.fromFloat x) ++ "px"
