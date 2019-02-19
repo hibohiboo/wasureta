@@ -274,8 +274,13 @@ update msg ({ drag, graph, simulation, value, informations } as model) =
 
                 Just selectedId ->
                     let
+                        -- 選択中の情報項目
                         selectedInfo =
                             getInfo selectedId informations
+
+                        -- クリックした情報項目
+                        targetInfo =
+                            getInfo i informations
 
                         -- 選択したものがリストになければ追加、あれば削除
                         newInfo =
@@ -284,9 +289,27 @@ update msg ({ drag, graph, simulation, value, informations } as model) =
                                     selectedInfo.list
                             in
                                 if (List.member i list) then
+                                    -- 既に選択中のものは削除
                                     { selectedInfo | list = (List.filter (\n -> n /= i) list) }
+                                else if i == selectedId then
+                                    -- 自身を選択したときは追加しない
+                                    selectedInfo
+                                else if (List.member selectedId targetInfo.list) then
+                                    -- 自身が選択中の情報項目をすでに持っている場合は追加しない
+                                    selectedInfo
                                 else
                                     { selectedInfo | list = (i :: list) }
+
+                        newTargetInfo =
+                            let
+                                targetList =
+                                    targetInfo.list
+                            in
+                                if (List.member selectedId targetList) then
+                                    -- 既に選択中のものは削除
+                                    { targetInfo | list = (List.filter (\n -> n /= selectedId) targetList) }
+                                else
+                                    targetInfo
 
                         newList =
                             Array.fromList informations
@@ -294,6 +317,8 @@ update msg ({ drag, graph, simulation, value, informations } as model) =
                                     (\idx info ->
                                         if idx == selectedId then
                                             newInfo
+                                        else if idx == i then
+                                            newTargetInfo
                                         else
                                             info
                                     )
