@@ -32,6 +32,11 @@ view model =
         , button [ onClick NewInfo ] [ text "項目追加" ]
         , updateButton model
         , button [ id "save" ] [ text "画像ダウンロード" ]
+        , div []
+            [ span [] [ text "サンプルデータは" ]
+            , a [ href "http://transmitter.seesaa.net/article/460919085.html" ] [ text "トーキョーN◎VA 自作シナリオ入門書" ]
+            , span [] [ text "を参考にさせていただきました。" ]
+            ]
         , forceGraph model
         ]
 
