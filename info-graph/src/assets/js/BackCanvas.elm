@@ -4,40 +4,31 @@ import Canvas exposing (..)
 import Color
 import Html exposing (Html)
 import Html.Attributes exposing (style, class)
-import ForceDirectedGraph exposing (Model)
 import Array
+import InfoParser exposing (Info)
 
 
-backCanvas : Int -> Int -> Float -> Float -> Model -> List Renderable
-backCanvas width height rad r model =
-    let
-        selectedId =
-            case model.selectedNode of
-                Just a ->
-                    a
-
-                Nothing ->
-                    0
-    in
-        [ shapes [ fill Color.white ] [ rect ( 0, 0 ) (toFloat width) (toFloat height) ]
-        , shapes
-            [ stroke Color.black
-            , lineWidth 2
-            ]
-            (Array.fromList model.informations
-                |> Array.indexedMap
-                    (\i info ->
-                        info.list
-                            -- リンク先のリストごとに線を引く
-                            |> List.map
-                                -- 座標(リンク先, 自身）
-                                (\n -> drawLine ( biasPoint (getPointCircleLine n rad r), biasPoint (getPointCircleLine i rad r) ))
-                    )
-                |> Array.toList
-                |> List.concat
-             -- 二重のListになっているものを一つのリストに展開する
-            )
+backCanvas : Int -> Int -> Float -> Float -> List Info -> List Renderable
+backCanvas width height rad r informations =
+    [ shapes [ fill Color.white ] [ rect ( 0, 0 ) (toFloat width) (toFloat height) ]
+    , shapes
+        [ stroke Color.black
+        , lineWidth 2
         ]
+        (Array.fromList informations
+            |> Array.indexedMap
+                (\i info ->
+                    info.list
+                        -- リンク先のリストごとに線を引く
+                        |> List.map
+                            -- 座標(リンク先, 自身）
+                            (\n -> drawLine ( biasPoint (getPointCircleLine n rad r), biasPoint (getPointCircleLine i rad r) ))
+                )
+            |> Array.toList
+            |> List.concat
+         -- 二重のListになっているものを一つのリストに展開する
+        )
+    ]
 
 
 {-|

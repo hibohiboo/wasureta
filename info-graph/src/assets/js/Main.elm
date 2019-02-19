@@ -103,7 +103,7 @@ linkEditArea model =
         div [ class "editor-main" ]
             [ Canvas.toHtml ( width, height )
                 [ class "editor-canvas" ]
-                (backCanvas width height rad r model)
+                (backCanvas width height rad r model.informations)
             , div [ class "link-edit-area" ]
                 (Array.toList <| Array.indexedMap (\i info -> linkInfoItem i info rad r model.selectedNode) <| Array.fromList model.informations)
             ]
