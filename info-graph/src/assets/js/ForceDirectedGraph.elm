@@ -294,8 +294,11 @@ update msg ({ drag, graph, simulation, value, informations } as model) =
                                             info
                                     )
                                 |> Array.toList
+
+                        gr =
+                            Graph.mapContexts initializeNode (toData newList)
                     in
-                        { model | selectedNode = Nothing, informations = newList }
+                        { model | selectedNode = Nothing, informations = newList, graph = gr, simulation = (Force.reheat model.simulation) }
 
 
 updateModelParseText : String -> Model -> Model

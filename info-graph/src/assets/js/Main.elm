@@ -28,10 +28,17 @@ view : Model -> Html Msg
 view model =
     div [ class "container" ]
         [ editArea model
-        , button [ onClick InformationsUpdate ] [ text "情報項目更新" ]
+        , updateButton model
         , button [ id "save" ] [ text "画像ダウンロード" ]
         , forceGraph model
         ]
+
+
+updateButton model =
+    if model.editMode == TextEditMode then
+        button [ onClick InformationsUpdate ] [ text "情報項目更新" ]
+    else
+        span [] [ text "リンク編集モード" ]
 
 
 editArea : Model -> Html Msg
