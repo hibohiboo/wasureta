@@ -32,6 +32,22 @@ handouts =
     loop [] handoutsHelp
 
 
+{-| Parse Handout.
+
+以下のフォーマットのテキストをパースする
+
+[ハンドアウト名][てすと]
+[使命][しめい]
+[ショック][PC1]
+[秘密][秘密あのねのね]
+ーーーー
+[ハンドアウト名][てすと]
+[使命][しめい]
+[ショック][PC1]
+[秘密][秘密あのねのね]
+ーーーー
+
+-}
 handoutsHelp : List Handout -> Parser (Step (List Handout) (List Handout))
 handoutsHelp revHandouts =
     oneOf
@@ -55,7 +71,7 @@ handoutsHelp revHandouts =
 [秘密][秘密あのねのね]
 
 -}
-handout : Parser Handout
+handout : Parser (a -> b)
 handout =
     succeed Handout
         |. keyword "[ハンドアウト名]"
