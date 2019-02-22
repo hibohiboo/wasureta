@@ -71,7 +71,7 @@ handoutsHelp revHandouts =
 [秘密][秘密あのねのね]
 
 -}
-handout : Parser (a -> b)
+handout : Parser Handout
 handout =
     succeed Handout
         |. keyword "[ハンドアウト名]"
