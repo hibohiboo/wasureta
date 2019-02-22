@@ -22,8 +22,10 @@ parse s =
 
 
 type alias Handout =
-    { title : String
-    , info : String
+    { name : String
+    , mission : String
+    , shock : String
+    , secret : String
     }
 
 
