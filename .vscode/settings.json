@@ -28,4 +28,12 @@
     "editor.formatOnSave": true
   }
   //,"elm.formatCommand": "D:\\develop\\develop\\node_modules\\elm-test\\bin\\elm-test"
+  , // VSCODEのエクスプローラー上で非表示
+  "files.exclude": {
+    "elm-stuff": true,
+    "node_modules": true,
+    "LICENSE": true,
+    "**/.DS_Store": true,
+    "*console.log": true,
+  }
 }
