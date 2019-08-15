@@ -21,18 +21,18 @@ services:
       - ./config/webpack/tslint.json:/app/tslint.json
     command: [yarn, run, tsc, --watch]
 
-  elm:
-    build: ./webpack
-    volumes:
-      - ../src:/app/src
-      - ../pre-dist/assets:/app/dist
-      - ./config/webpack/elm.json:/app/elm.json
-      # packageのキャッシュ
-      - cacheElmStuff:/app/elm-stuff
-      - cacheDotElm:/root/.elm
-    environment:
-      - SHELL=/bin/bash
-    command: [yarn, run, elm-watch]
+  # elm:
+  #   build: ./webpack
+  #   volumes:
+  #     - ../src:/app/src
+  #     - ../pre-dist/assets:/app/dist
+  #     - ./config/webpack/elm.json:/app/elm.json
+  #     # packageのキャッシュ
+  #     - cacheElmStuff:/app/elm-stuff
+  #     - cacheDotElm:/root/.elm
+  #   environment:
+  #     - SHELL=/bin/bash
+  #   command: [yarn, run, elm-watch]
 
   js:
     build: ./webpack
