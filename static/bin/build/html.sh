@@ -11,3 +11,4 @@ cd $docker_dir  && docker-compose run $name npm run build-pug
 
 # 拡張子指定に半角空白を入れないように注意。 【{png,jpg}:OK】【{png, jpg}:NG】
 cd $docker_dir && docker-compose run  $name yarn run cpx "/app/src/**/*.{png,jpg}" /app/public 
+exit 0

@@ -36,18 +36,18 @@ services:
       - ../dist/public:/app/dist
     command: [yarn, run, cpx, "/app/src/**/*.{png,jpg}", /app/dist,  --watch]
 
-  webpack:
-    build: ./webpack
-    volumes:
-      - ../dist:/app/src
-      - ../app/public:/app/dist
-      # 設定ファイル
-      - ./config/webpack/webpack.config.js:/app/webpack.config.js
-    environment:
-      - NODE_ENV=develop
-    ports:
-      - 8080:8080
-    command: [yarn, run, webpack-dev-server, --hot]
+  # webpack:
+  #   build: ./webpack
+  #   volumes:
+  #     - ../dist:/app/src
+  #     - ../app/public:/app/dist
+  #     # 設定ファイル
+  #     - ./config/webpack/webpack.config.js:/app/webpack.config.js
+  #   environment:
+  #     - NODE_ENV=develop
+  #   ports:
+  #     - 8080:8080
+  #   command: [yarn, run, webpack-dev-server, --hot]
 
 
 

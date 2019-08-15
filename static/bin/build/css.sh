@@ -19,3 +19,4 @@ cd $docker_dir  && docker-compose run $name yarn run node-sass -r /app/src/asset
 
 name=${1:-postcss}
 cd $docker_dir  && docker-compose run $name yarn run postcss /app/src/assets/css/*.css --no-map --dir /app/dist/assets/css/
+exit 0
