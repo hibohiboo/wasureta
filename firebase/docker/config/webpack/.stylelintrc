@@ -1,8 +1,0 @@
-{
-  "syntax": "scss",
-  "extends": "stylelint-config-sass-guidelines",
-  "rules": {
-    "indentation": 2,
-    "string-quotes": "double"
-  }
-}
