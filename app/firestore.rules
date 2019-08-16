@@ -1,0 +1,24 @@
+service cloud.firestore {
+  function isOwner(uid) {
+    return request.auth.uid == request.resource.data.owner;
+  }
+  match /databases/{database}/documents {
+    match /chattools/ccfolia {
+      match /rooms/{roomId} {
+        allow read, update;
+        allow create: if request.auth.uid == request.resource.data.owner;
+        match /{document=**} {
+          allow read, write: if exists(/databases/$(database)/documents/rooms/$(roomId)); // todo
+        }
+      }
+      match /keys/{keyId} {
+        allow get;
+        allow read, update: if request.auth.uid == resource.data.owner;
+        allow create: if request.auth.uid == request.resource.data.owner;
+      }
+      match /users/{uid}/{document=**} {
+        allow read, write: if request.auth.uid == uid;
+      }
+    }
+  }
+}
