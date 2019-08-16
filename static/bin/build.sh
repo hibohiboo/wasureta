@@ -1,6 +1,6 @@
 #!/bin/bash
 bin_dir=$(cd $(dirname $0) && pwd)
-build_dir=$(cd $bin_dir/build && pwd)
+build_dir=$(cd $bin_dir/separate && pwd)
 
 msg=`$build_dir/html.sh`
 if [ $? -gt 0 ]; then
