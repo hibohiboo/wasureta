@@ -1,0 +1,73 @@
+{
+  "rules": {
+    "nekotaku": {
+      "passwords": {
+        "$roomId": {
+          ".write": "auth.uid !== null && root.child('nekotaku/rooms/' + $roomId + '/canRemove').exists()",
+          "$uid": {
+            ".write": "auth.uid === $uid && root.child('nekotaku/rooms/' + $roomId).exists() || auth.uid !== null && root.child('nekotaku/rooms/' + $roomId + '/canRemove').exists()"
+          }
+        }
+      },
+      "members": {
+        "$roomId": {
+          ".read": "auth.uid !== null && root.child('nekotaku/members/' + $roomId + '/' + auth.uid).exists()",
+          ".write": "auth.uid !== null && root.child('nekotaku/rooms/' + $roomId + '/canRemove').exists()",
+          "$uid": {
+            ".write": "auth.uid === $uid && root.child('nekotaku/rooms/' + $roomId).exists() && (!root.child('nekotaku/rooms/' + $roomId + '/password').exists() || root.child('nekotaku/rooms/' + $roomId + '/password').val() === root.child('nekotaku/passwords/' + $roomId + '/' + $uid + '/password').val()) || auth.uid !== null && root.child('nekotaku/rooms/' + $roomId + '/canRemove').exists()"
+          }
+        }
+      },
+      "rooms": {
+        ".read": "auth.uid !== null",
+        "$roomId": {
+          ".write": "auth.uid !== null && (root.child('nekotaku/members/' + $roomId + '/' + auth.uid).exists() || !data.exists() || data.child('nekotaku/canRemove').exists())"
+        }
+      },
+      "chat-paletts": {
+        "$roomId": {
+          ".read": "auth.uid !== null && root.child('nekotaku/members/' + $roomId + '/' + auth.uid).exists()",
+          "$uid": {
+            ".write": "auth.uid === $uid && root.child('nekotaku/members/' + $roomId + '/' + auth.uid).exists()"
+          }
+        }
+      },
+      "maps": {
+        "$roomId": {
+          ".write": "auth.uid !== null && root.child('nekotaku/members/' + $roomId + '/' + auth.uid).exists()",
+          ".read": "auth.uid !== null && root.child('nekotaku/members/' + $roomId + '/' + auth.uid).exists()"
+        }
+      },
+      "characters": {
+        "$roomId": {
+          ".write": "auth.uid !== null && root.child('nekotaku/members/' + $roomId + '/' + auth.uid).exists()",
+          ".read": "auth.uid !== null && root.child('nekotaku/members/' + $roomId + '/' + auth.uid).exists()"
+        }
+      },
+      "memos": {
+        "$roomId": {
+          ".write": "auth.uid !== null && root.child('nekotaku/members/' + $roomId + '/' + auth.uid).exists()",
+          ".read": "auth.uid !== null && root.child('nekotaku/members/' + $roomId + '/' + auth.uid).exists()"
+        }
+      },
+      "messages": {
+        "$roomId": {
+          ".write": "auth.uid !== null && root.child('nekotaku/members/' + $roomId + '/' + auth.uid).exists()",
+          ".read": "auth.uid !== null && root.child('nekotaku/members/' + $roomId + '/' + auth.uid).exists()"
+        }
+      },
+      "shapes": {
+        "$roomId": {
+          ".write": "auth.uid !== null && root.child('nekotaku/members/' + $roomId + '/' + auth.uid).exists()",
+          ".read": "auth.uid !== null && root.child('nekotaku/members/' + $roomId + '/' + auth.uid).exists()"
+        }
+      },
+      "files": {
+        "$roomId": {
+          ".write": "auth.uid !== null && root.child('nekotaku/members/' + $roomId + '/' + auth.uid).exists()",
+          ".read": "auth.uid !== null && root.child('nekotaku/members/' + $roomId + '/' + auth.uid).exists()"
+        }
+      }
+    }
+  }
+}
