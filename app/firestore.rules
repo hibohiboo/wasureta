@@ -8,7 +8,7 @@ service cloud.firestore {
         allow read, update;
         allow create: if request.auth.uid == request.resource.data.owner;
         match /{document=**} {
-          allow read, write: if exists(/databases/$(database)/documents/rooms/$(roomId)); // todo
+          allow read, write: if exists(/databases/$(database)/documents/chattools/ccfolia/rooms/$(roomId)); // todo
         }
       }
       match /keys/{keyId} {
