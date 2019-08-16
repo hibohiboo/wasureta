@@ -28,3 +28,7 @@ domain/ccfoliaに設置したい。
 package.jsonに   "homepage": "/ccfolia",  を追加。
 src/containers/Home/RoomListitem.jsのhrefを/room/${props.roomId}から/ccfolia/room/${props.roomId}に変更
 src/stores/index.jsのcreateBrowserHistory();をcreateBrowserHistory({ basename: '/ccfolia' });に変更
+
+## この時のソース
+
+[ソース](https://github.com/hibohiboo/ccfolia/tree/d9f2af9328dd5bf82ea5870c10eda94c8438b292)  
