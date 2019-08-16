@@ -9,6 +9,8 @@ services:
       - ../../app/.firebaserc:/app/.firebaserc
       - ../../app/firebase.json:/app/firebase.json
       - ../../app/firestore.rules:/app/firestore.rules
+      - ../../app/firestore.indexes.json:/app/firestore.indexes.json
+      - ../../app/storage.rules:/app/storage.rules
     ports:
       - 5000:5000
       - 9005:9005

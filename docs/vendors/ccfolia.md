@@ -18,3 +18,13 @@ curl https://sdk.cloud.google.com | bash
 source /root/.bashrc
 gsutil cors set cors.json  gs://{バケット名}
 ```
+
+## サブディレクトリの設定
+
+domain/ccfoliaに設置したい。
+通常ではdomain直下を想定した設定のため、修正する。
+
+
+package.jsonに   "homepage": "/ccfolia",  を追加。
+src/containers/Home/RoomListitem.jsのhrefを/room/${props.roomId}から/ccfolia/room/${props.roomId}に変更
+src/stores/index.jsのcreateBrowserHistory();をcreateBrowserHistory({ basename: '/ccfolia' });に変更
