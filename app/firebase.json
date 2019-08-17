@@ -5,6 +5,24 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/nekotaku/**",
+        "destination": "/nekotaku/index.html"
+      },
+      {
+        "source": "/udonarium/**",
+        "destination": "/udonarium/index.html"
+      },
+      {
+        "source": "/quoridorn/**",
+        "destination": "/quoridorn/index.html"
+      },
+      {
+        "source": "/ccfolia/**",
+        "destination": "/ccfolia/index.html"
+      }
     ]
   },
   "firestore": {
