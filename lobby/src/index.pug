@@ -1,0 +1,58 @@
+extends _includes/layout
+//- _layout.pugをベースに作成
+
+block main
+  .wrapper.grey.darken-4
+    .container
+      h1 ロビー
+      div.header
+        div.description
+          p 各チャットツールでチャット（文字と名前のみ）を共有させています。
+          p ※udonariumとQuoridornは部屋名をlobbyにして入室してください。
+          p これはお遊び用なので予告なく消す場合があります。
+          p 実セッションは公式サーバーがおススメです。
+        div.tables
+          table
+            tr
+              th ツール名
+              th 公式サーバ
+              th 使い方
+              th お布施
+            tr 
+              th #[a(href="http://mihikari.sakura.ne.jp/quoridorn/official/#/") Quoridorn]
+              td #[a(href="https://quoridorn.onlinesession.app/") ●]
+              td #[a(href="https://wikiwiki.jp/quoridorn/") ●]
+              td #[a(href="https://www.amazon.co.jp/registry/wishlist/1FS5M696XY40I/ref=cm_sw_r_cp_ep_ws_5QgtCbVK21Y2B") ●]
+            tr 
+              th #[a(href="https://github.com/TK11235/udonarium") ユドナリウム]
+              td #[a(href="https://nekotaku.onlinesession.app/") ●]
+              td #[a(href="https://udonarium.app/") ●]
+              td 
+            tr 
+              th #[a(href="https://github.com/esnya/nekotaku") ねこ卓]
+              td #[a(href="https://nekotaku.onlinesession.app/") ●]
+              td #[a(href="https://seesaawiki.jp/trpg_tool_guide/d/%A4%CD%A4%B3%C2%EE%B3%B5%CD%D7") ●]
+              td #[a(href="https://www.amazon.co.jp/registry/wishlist/714V3AR9V8ZL/ref=cm_sw_r_cp_ep_ws_1tzwCbSN462VZ") ●]
+            tr 
+              th #[a(href="https://rc.folia.me/home/") ココフォリア]
+              td #[a(href="https://ccfolia.com/") ●]
+              td #[a(href="https://seesaawiki.jp/ccfoliamemo/") ●]
+              td #[a(href="https://ccfolia.booth.pm/items/1012442") ●]
+            tr 
+              th #[a(style="text-decoration: line-through;" href="http://www.dodontof.com/") どどんとふ]
+              td #[a(href="https://dodontof.onlinesession.app/") ●]
+              td #[a(href="https://www.taruki.com/wp/?page_id=6202") ●]
+              td #[a(href="https://www.taruki.com/wp/?page_id=6720") ●]
+
+
+      .tools
+        div
+          a(href="https://wasureta-d6b34.firebaseapp.com/quoridorn/?roomName=lobby&roomPassword=&system=DiceBot&playerType=PL") Quoridorn
+        div
+          a(href="https://wasureta-d6b34.firebaseapp.com/udonarium/") udonarium
+        div
+          a(href="https://wasureta-d6b34.firebaseapp.com/nekotaku/Lobby/chat") ねこ卓
+        div
+          a(href="https://wasureta-d6b34.firebaseapp.com/ccfolia/rooms/Lobby") ccfolia
+      p(style="font-size1.6rem")  新着メッセージ
+      #chatlog

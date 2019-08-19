@@ -26,6 +26,7 @@ originalは元のチャットメッセージを入れる。
 
 #### ねこ卓
 
+
 * 部屋
 
 ![](img/2019-08-16.png)
@@ -73,6 +74,7 @@ originalは元のチャットメッセージを入れる。
 #### ココフォリア
 
 * 部屋
+
 
 ```
 - ccfolia
@@ -132,3 +134,21 @@ originalは元のチャットメッセージを入れる。
               - result = ": (2D6) ＞ 7[1,6] ＞ 7"
               - secret = false
 ```
+
+### udonarium
+* もともとpeerなのでDBへの接続がない。
+
+## 修正箇所
+### nekotaku
+* src\browser\backend\FirebaseBackend.ts 
+
+### ccfolia
+* src\stores\modules\entities.room.messages.js
+
+### udonarium
+* src\app\service\chat-message.service.ts
+* src\app\app.component.ts
+
+### quoridorn
+* src\store\action_operation.ts
+* src\store\action_operation.ts

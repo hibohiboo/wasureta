@@ -25,10 +25,14 @@
     "*.pcss": "less"
   },
   "[elm]": {
-    "editor.formatOnSave": true
-  }
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveTimeout": 1500
+  },
+  "elm.compiler": "..\\garden\\node_modules\\.bin\\elm",
+  "elm.makeCommand": "..\\garden\\node_modules\\.bin\\elm-make",
+  "elm.formatCommand": "..\\garden\\node_modules\\.bin\\elm-format",
   //,"elm.formatCommand": "D:\\develop\\develop\\node_modules\\elm-test\\bin\\elm-test"
-  , // VSCODEのエクスプローラー上で非表示
+  // VSCODEのエクスプローラー上で非表示
   "files.exclude": {
     "elm-stuff": true,
     "node_modules": true,
