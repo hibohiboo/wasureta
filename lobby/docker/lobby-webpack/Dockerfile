@@ -106,3 +106,5 @@ RUN yarn add --dev @types/firebase
 # RUN yarn add --dev @types/chart.js
 RUN yarn add --dev uglify-js
 RUN yarn global add uglify-js
+RUN yarn add --dev  source-map 
+RUN yarn add --dev @types/source-map@0.5.2 

@@ -1,5 +1,4 @@
-import * as firebase from "firebase/app";
-import "firebase/firestore";
+import * as firebase from 'firebase';
 
 const firebaseOptions = require("./firebaseOptions");
 firebase.initializeApp(firebaseOptions);

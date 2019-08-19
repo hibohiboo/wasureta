@@ -28,10 +28,10 @@ module.exports = {
       template: path.join(opts.src, 'index.html'),
       inject: 'body',
     }),
-    new CleanWebpackPlugin({
-      verbose: true,
-      dry: false,
-    }),
+    // new CleanWebpackPlugin({
+    //   verbose: true,
+    //   dry: false,
+    // }),
     new CopyWebpackPlugin([
       {
         from: './',
@@ -115,5 +115,6 @@ module.exports = {
     , firebase: 'firebase'
     , firebaseui: 'firebaseui'
     , M: 'M' // materialize
+    , moment: 'moment'
   },
 };
