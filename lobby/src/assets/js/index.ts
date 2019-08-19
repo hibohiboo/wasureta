@@ -16,7 +16,7 @@ const mountNode: HTMLElement = document.getElementById('chatlog')!;
 const app = Elm.Main.init({ node: mountNode, flags });
 
 lobbyRef.orderBy('createdAt', 'desc').limit(20).onSnapshot(qs => {
-  qs.docChanges().forEach(change => {
+  qs.docChanges().reverse().forEach(change => {
     if ('added' !== `${change.type}`) {
       return;
     }
