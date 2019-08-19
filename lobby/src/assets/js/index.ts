@@ -30,8 +30,3 @@ lobbyRef.orderBy('createdAt', 'desc').limit(20).onSnapshot(qs => {
   });
 });
 app.ports.errorToJs.subscribe(error => console.log(error));
-
-// app.ports.saveNewCharacter.subscribe(async json => {
-//   await addCharacter(json, storage, db, fireBase.getTimestamp(), userData.uid);
-//   app.ports.createdCharacter.send(true);
-// });
