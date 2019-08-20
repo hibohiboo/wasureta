@@ -1,0 +1,26 @@
+{
+  "name": "wasureta",
+  "version": "1.0.0",
+  "description": "形になるものならないもの。寄せ集めのかたすみ倉庫。",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hibohiboo/wasureta.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hibohiboo/wasureta/issues"
+  },
+  "homepage": "https://github.com/hibohiboo/wasureta#readme",
+  "devDependencies": {
+    "elm": "^0.19.0-no-deps",
+    "elm-format": "^0.8.2"
+  }
+}
