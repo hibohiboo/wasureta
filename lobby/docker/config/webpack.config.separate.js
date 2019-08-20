@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const MODE = 'production';
@@ -19,8 +19,8 @@ module.exports = {
   entry: path.join(opts.src, 'assets/js/index.js'),
   output: {
     path: opts.dest,
-    // spaのため、絶対パスにしないと、cssの読み込みやjsの読み込みがルート以外でおかしくなる
-    publicPath: '/',
+    // spaの場合は、絶対パスにしないと、cssの読み込みやjsの読み込みがルート以外でおかしくなる
+    publicPath: '/lobby',
     filename,
   },
   plugins: [
@@ -28,36 +28,36 @@ module.exports = {
       template: path.join(opts.src, 'index.html'),
       inject: 'body',
     }),
-    // new CleanWebpackPlugin({
-    //   verbose: true,
-    //   dry: false,
-    // }),
-    new CopyWebpackPlugin([
-      {
-        from: './',
-        to: 'assets/images/',
-      },
-    ],
-      { context: `${opts.src}/assets/images` }),
-    new CopyWebpackPlugin([
-      {
-        from: './',
-        to: 'assets/markdown/',
-      },
-    ],
-      { context: `${opts.src}/assets/markdown` }),
-    new CopyWebpackPlugin([
-      {
-        from: './',
-        to: 'assets/json/',
-      },
-    ],
-      { context: `${opts.src}/assets/json` }),
+    new CleanWebpackPlugin({
+      verbose: true,
+      dry: false,
+    }),
+    // new CopyWebpackPlugin([
+    //   {
+    //     from: './',
+    //     to: 'assets/images/',
+    //   },
+    // ],
+    //   { context: `${opts.src}/assets/images` }),
+    // new CopyWebpackPlugin([
+    //   {
+    //     from: './',
+    //     to: 'assets/markdown/',
+    //   },
+    // ],
+    //   { context: `${opts.src}/assets/markdown` }),
+    // new CopyWebpackPlugin([
+    //   {
+    //     from: './',
+    //     to: 'assets/json/',
+    //   },
+    // ],
+    //   { context: `${opts.src}/assets/json` }),
     new MiniCssExtractPlugin({
       filename: '[name]-[hash].css',
     })
     , new webpack.DefinePlugin({
-      GOOGLE_SHEET_API_KEY: JSON.stringify(process.env.GOOGLE_SHEET_API_KEY)
+      REPRACE_TEST: JSON.stringify(process.env.REPRACE_TEST)
     })
   ],
   resolve: {

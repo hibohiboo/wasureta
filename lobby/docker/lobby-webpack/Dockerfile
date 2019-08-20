@@ -1,5 +1,4 @@
-FROM node:11.15.0
-# elm webpack loaderのバグで１２にあげられない
+FROM node:12.8.1
 
 # コンテナ上の作業ディレクトリ作成
 WORKDIR /app
@@ -107,4 +106,5 @@ RUN yarn add --dev @types/firebase
 RUN yarn add --dev uglify-js
 RUN yarn global add uglify-js
 RUN yarn add --dev  source-map 
+# Cannot find module 'source-map'のエラーが出るため。
 RUN yarn add --dev @types/source-map@0.5.2 
