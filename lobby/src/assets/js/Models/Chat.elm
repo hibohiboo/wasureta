@@ -1,8 +1,15 @@
 module Models.Chat exposing (..)
-import Json.Decode as D exposing (Value, Decoder)
+
+import Json.Decode as D exposing (Decoder, Value)
 import Json.Decode.Pipeline exposing (optional, required)
 
-type alias Chat = {name:String, text: String, createdAt: String}
+
+type alias Chat =
+    { name : String
+    , text : String
+    , createdAt : String
+    }
+
 
 decodeFromValue : Value -> Maybe Chat
 decodeFromValue val =
@@ -12,7 +19,9 @@ decodeFromValue val =
 
         Ok m ->
             Just m
-decoder = 
+
+
+decoder =
     D.succeed Chat
         |> required "name" D.string
         |> required "text" D.string

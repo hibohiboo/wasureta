@@ -8,6 +8,7 @@ import Json.Decode as D exposing (Value)
 import Models.Chat as Chat exposing (Chat)
 import Url
 import Url.Builder
+import Views.ChatView as ChatView
 
 
 port errorToJs : String -> Cmd msg
@@ -72,8 +73,4 @@ view model =
 
 chatMessage : Chat -> Html msg
 chatMessage chat =
-    li [ class "collection-item grey darken-4" ]
-        [ span [ class "chatlog--title" ] [ text chat.name ]
-        , span [] [ text chat.text ]
-        , span [ class "chatlog--time" ] [ text chat.createdAt ]
-        ]
+    ChatView.chatMessage chat.name chat.text chat.createdAt
