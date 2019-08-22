@@ -98,4 +98,15 @@ h1 {
   }
 }
 
+.chat-editor {
+  padding-top: 10px;
+  label {
+    padding-right: 5px;
+  }
+  &-text input {
+    width: 100%;
+  }
+}
+
 @import "utils/spinner";
+@import "utils/form";
