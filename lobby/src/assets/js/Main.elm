@@ -71,6 +71,9 @@ type Msg
     | InputCreatedAt Int
     | GotDiceRoll (Result Http.Error String)
     | DiceRoll
+    | InputFace String
+    | InputDiceCommand String
+    | InputDiceNumber String
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -89,6 +92,15 @@ update msg model =
 
         InputText val ->
             ( { model | editor = ChatEditor.inputText val model.editor }, Cmd.none )
+
+        InputFace val ->
+            ( { model | editor = ChatEditor.inputFace val model.editor }, Cmd.none )
+
+        InputDiceNumber val ->
+            ( { model | editor = ChatEditor.inputDiceNumber val model.editor }, Cmd.none )
+
+        InputDiceCommand val ->
+            ( { model | editor = ChatEditor.inputDiceCommand val model.editor }, Cmd.none )
 
         SendChat ->
             if model.editor.chat.name == "" then
@@ -111,7 +123,21 @@ update msg model =
             ( model, err |> HttpUtil.httpErrorToString |> errorToJs )
 
         DiceRoll ->
-            ( model, DiceBotApi.fetchDiceRollResultDecoder GotDiceRoll "DiceBot" "2d6" )
+            let
+                editor =
+                    model.editor
+
+                command =
+                    String.fromInt editor.diceNumber ++ "d" ++ String.fromInt editor.diceFace ++ editor.diceCommand
+
+                newModel =
+                    if model.editor.chat.name == "" then
+                        { model | editor = ChatEditor.inputName "DiceBot" model.editor }
+
+                    else
+                        model
+            in
+            ( newModel, DiceBotApi.fetchDiceRollResultDecoder GotDiceRoll "DiceBot" command )
 
 
 subscriptions : Model -> Sub Msg
@@ -130,11 +156,15 @@ view model =
 
 chatEditor : ChatEditor -> Html Msg
 chatEditor editor =
-    chatEditorInputs editor.chat
+    chatEditorInputs editor
 
 
-chatEditorInputs : Chat -> Html Msg
-chatEditorInputs chat =
+chatEditorInputs : ChatEditor -> Html Msg
+chatEditorInputs editor =
+    let
+        chat =
+            editor.chat
+    in
     div [ class "chat-editor" ]
         [ div [ class "" ]
             [ label [ class "browser-default", for "name" ] [ text "名前" ]
@@ -146,8 +176,11 @@ chatEditorInputs chat =
             ]
         , div [ class "send-wrapper" ]
             [ button [ onClick SendChat ] [ text "送信" ]
-            , select [ id "dicebot", class "browser-default" ]
-                [ option [ value "", class "browser-default", selected True ] [ text "DiceBot" ] ]
+            , select [ id "dicebot", class "browser-default" ] [ option [ value "", class "browser-default", selected True ] [ text "DiceBot" ] ]
+            , input [ class "browser-default", autocomplete False, id "face", type_ "number", value (String.fromInt editor.diceFace), onChange InputFace ] []
+            , select [ class "browser-default", disabled True ] [ option [ value "", class "browser-default", selected True ] [ text "D" ] ]
+            , input [ class "browser-default", autocomplete False, id "dice-number", type_ "number", value (String.fromInt editor.diceNumber), onChange InputFace ] []
+            , input [ class "browser-default", autocomplete False, id "dice-command", type_ "text", value editor.diceCommand, onChange InputDiceCommand ] []
             , button [ onClick DiceRoll ] [ text "ダイスを振る" ]
             ]
         ]

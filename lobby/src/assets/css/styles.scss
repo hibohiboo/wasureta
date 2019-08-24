@@ -108,10 +108,18 @@ h1 {
   }
   .send-wrapper{
     display: flex;
+    button, input, select{
+      margin-right: 5px;
+    }
     select {
-      margin-left: 5px;
       height: initial;
       width:auto;
+    }
+    #face, #dice-number {
+      width: 40px;
+    }
+    #dice-command {
+      width: 80px;
     }
   }
 
