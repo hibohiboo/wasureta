@@ -2,7 +2,7 @@
 // import * as M from 'M'; //  tslint-disable-line
 import { Elm } from './Main'; //  eslint-disable-line import/no-unresolved
 import { lobbyRef, serverTimestamp } from './firebase/firebase';
-import * as moment from 'moment';
+import moment from 'moment';
 
 require('../css/styles.scss'); // tslint:disable-line no-var-requires
 
