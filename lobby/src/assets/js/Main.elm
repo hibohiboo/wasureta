@@ -50,7 +50,7 @@ type alias Model =
 
 init : Value -> ( Model, Cmd Msg )
 init flags =
-    ( Model [] ChatEditor.init, Cmd.none )
+    ( Model [] ChatEditor.init, Cmd.batch [ DiceBotApi.fetchSystemNames GotSystems ] )
 
 
 timeInMillis : Task x Int
@@ -74,6 +74,8 @@ type Msg
     | InputFace String
     | InputDiceCommand String
     | InputDiceNumber String
+    | GotSystems (Result Http.Error String)
+    | InputSelectedSystem String
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -101,6 +103,9 @@ update msg model =
 
         InputDiceCommand val ->
             ( { model | editor = ChatEditor.inputDiceCommand val model.editor }, Cmd.none )
+
+        InputSelectedSystem val ->
+            ( { model | editor = ChatEditor.inputSelectedSystemName val model.editor }, Cmd.none )
 
         SendChat ->
             if model.editor.chat.name == "" then
@@ -132,12 +137,23 @@ update msg model =
 
                 newModel =
                     if model.editor.chat.name == "" then
-                        { model | editor = ChatEditor.inputName "DiceBot" model.editor }
+                        { model | editor = ChatEditor.inputName model.editor.selectedSystemName model.editor }
 
                     else
                         model
             in
-            ( newModel, DiceBotApi.fetchDiceRollResultDecoder GotDiceRoll "DiceBot" command )
+            ( newModel, DiceBotApi.fetchDiceRollResult GotDiceRoll model.editor.selectedSystemName command )
+
+        GotSystems (Ok result) ->
+            case D.decodeString DiceBotApi.namesDecoder result of
+                Ok names ->
+                    ( { model | editor = ChatEditor.inputNames names model.editor }, Cmd.none )
+
+                Err err ->
+                    ( model, D.errorToString err |> errorToJs )
+
+        GotSystems (Err err) ->
+            ( model, err |> HttpUtil.httpErrorToString |> errorToJs )
 
 
 subscriptions : Model -> Sub Msg
@@ -176,7 +192,7 @@ chatEditorInputs editor =
             ]
         , div [ class "send-wrapper" ]
             [ button [ onClick SendChat ] [ text "送信" ]
-            , select [ id "dicebot", class "browser-default" ] [ option [ value "", class "browser-default", selected True ] [ text "DiceBot" ] ]
+            , select [ id "dicebot", class "browser-default" ] (editor.names |> List.map (\names_ -> option [ class "browser-default", value names_.system, selected (editor.selectedSystemName == names_.system) ] [ text names_.name ]))
             , input [ class "browser-default", autocomplete False, id "face", type_ "number", value (String.fromInt editor.diceFace), onChange InputFace ] []
             , select [ class "browser-default", disabled True ] [ option [ value "", class "browser-default", selected True ] [ text "D" ] ]
             , input [ class "browser-default", autocomplete False, id "dice-number", type_ "number", value (String.fromInt editor.diceNumber), onChange InputFace ] []

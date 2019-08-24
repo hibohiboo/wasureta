@@ -3,6 +3,7 @@ module Models.DiceBotApi exposing (..)
 import Array exposing (Array)
 import Http
 import Json.Decode as D exposing (Decoder)
+import Models.SystemInfo exposing (SystemInfo, SystemNames)
 import Utils.HttpUtil as HttpUtil
 
 
@@ -21,37 +22,40 @@ diceRollResultDecoder =
     D.field "result" D.string
 
 
-fetchDiceRollResultDecoder : (Result Http.Error String -> msg) -> String -> String -> Cmd msg
-fetchDiceRollResultDecoder toMsg system command =
+fetchDiceRollResult : (Result Http.Error String -> msg) -> String -> String -> Cmd msg
+fetchDiceRollResult toMsg system command =
     HttpUtil.fetchJsonData toMsg (diceRollUrl system command) diceRollResultDecoder
 
 
+namesUrl : String
+namesUrl =
+    apiUrl ++ "names"
 
--- type alias SystemInfoResult =
---     { ok : Bool
---     , systemInfo : SystemInfo
---     }
--- type alias SystemInfo =
---     { name : String
---     , gameType : String
---     , prefixs : List String
---     , info : String
---     }
+
+namesDecoder : Decoder (List SystemNames)
+namesDecoder =
+    D.field "names" (D.list <| D.map2 SystemNames (D.field "system" D.string) (D.field "name" D.string))
+
+
+fetchSystemNames : (Result Http.Error String -> msg) -> Cmd msg
+fetchSystemNames toMsg =
+    HttpUtil.fetchStringData toMsg namesUrl
+
+
+systemInfoUrl : String -> String
+systemInfoUrl system =
+    apiUrl ++ "systeminfo?system=" ++ system
+
+
+fetchSystemInfo : (Result Http.Error String -> msg) -> String -> Cmd msg
+fetchSystemInfo toMsg system =
+    HttpUtil.fetchStringData toMsg system
+
+
+
 -- versionUrl : String
 -- versionUrl =
 --     apiUrl ++ "version"
--- namesUrl : String
--- namesUrl =
---     apiUrl ++ "names"
--- systemsUrl : String
--- systemsUrl =
---     apiUrl ++ "systems"
--- diceRollUrl : String -> String -> String
--- diceRollUrl system command =
---     apiUrl ++ "diceroll?" ++ system ++ "&command=" ++ command
--- systemInfoUrl : String -> String
--- systemInfoUrl system =
---     apiUrl ++ "systeminfo?system=" ++ system
 -- type alias ApiVersion =
 --     Float
 -- type alias BotVersion =

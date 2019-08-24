@@ -3,6 +3,7 @@ module Models.ChatEditor exposing (..)
 import Json.Decode as D exposing (Decoder, Value)
 import Json.Decode.Pipeline exposing (optional, required)
 import Models.Chat as Chat exposing (Chat)
+import Models.SystemInfo exposing (SystemInfo, SystemNames)
 
 
 type alias ChatEditor =
@@ -10,6 +11,8 @@ type alias ChatEditor =
     , diceFace : Int
     , diceNumber : Int
     , diceCommand : String
+    , names : List SystemNames
+    , selectedSystemName : String
     }
 
 
@@ -24,7 +27,7 @@ defaultDiceFace =
 
 
 init =
-    ChatEditor Chat.init defaultDiceFace defaultDiceNumber ">5"
+    ChatEditor Chat.init defaultDiceFace defaultDiceNumber ">5" [] "DiceBot"
 
 
 inputName : String -> ChatEditor -> ChatEditor
@@ -52,6 +55,16 @@ inputDiceNumber val editor =
     { editor | diceNumber = Maybe.withDefault defaultDiceFace (String.toInt val) }
 
 
+inputNames : List SystemNames -> ChatEditor -> ChatEditor
+inputNames val editor =
+    { editor | names = val }
+
+
 inputDiceCommand : String -> ChatEditor -> ChatEditor
 inputDiceCommand val editor =
     { editor | diceCommand = val }
+
+
+inputSelectedSystemName : String -> ChatEditor -> ChatEditor
+inputSelectedSystemName val editor =
+    { editor | selectedSystemName = val }

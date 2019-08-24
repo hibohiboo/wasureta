@@ -12,6 +12,14 @@ fetchJsonData toMsg url decoder =
         }
 
 
+fetchStringData : (Result Error String -> msg) -> String -> Cmd msg
+fetchStringData toMsg url =
+    get
+        { url = url
+        , expect = expectString toMsg
+        }
+
+
 
 -- -- expectJson : (Result Error a -> msg) -> D.Decoder a -> Expect msg
 -- -- expectJson toMsg decoder =
@@ -51,12 +59,3 @@ httpErrorToString err =
 
         BadBody s ->
             "BadBody: " ++ s
-
-
-
--- fetchStringData : (Result Error String -> msg) -> String -> Cmd msg
--- fetchStringData toMsg url =
---     get
---         { url = url
---         , expect = expectString toMsg
---         }
