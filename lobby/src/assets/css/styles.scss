@@ -106,6 +106,15 @@ h1 {
   &-text input {
     width: 100%;
   }
+  .send-wrapper{
+    display: flex;
+    select {
+      margin-left: 5px;
+      height: initial;
+      width:auto;
+    }
+  }
+
 }
 
 @import "utils/spinner";

@@ -10,10 +10,12 @@ import Json.Decode as D exposing (Value)
 import Models.Chat as Chat exposing (Chat)
 import Models.ChatEditor as ChatEditor exposing (ChatEditor)
 import Models.ChatView as ChatView exposing (ChatView)
+import Models.DiceBotApi as DiceBotApi
 import Task exposing (Task)
 import Time
 import Url
 import Url.Builder
+import Utils.HttpUtil as HttpUtil
 import Views.ChatView as ChatView
 
 
@@ -67,6 +69,8 @@ type Msg
     | InputText String
     | SendChat
     | InputCreatedAt Int
+    | GotDiceRoll (Result Http.Error String)
+    | DiceRoll
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -77,8 +81,8 @@ update msg model =
                 Ok chat ->
                     ( { model | messages = chat :: model.messages }, Cmd.none )
 
-                Err a ->
-                    ( model, D.errorToString a |> errorToJs )
+                Err err ->
+                    ( model, D.errorToString err |> errorToJs )
 
         InputName val ->
             ( { model | editor = ChatEditor.inputName val model.editor }, Cmd.none )
@@ -87,15 +91,27 @@ update msg model =
             ( { model | editor = ChatEditor.inputText val model.editor }, Cmd.none )
 
         SendChat ->
-            if model.editor.chat.name == "" || model.editor.chat.text == "" then
-                ( model, "名前か本文が空です。送信に失敗しました" |> errorToJs )
+            if model.editor.chat.name == "" then
+                ( model, "名前が空です。送信に失敗しました" |> errorToJs )
+
+            else if model.editor.chat.text == "" then
+                ( model, "本文が空です。送信に失敗しました" |> errorToJs )
 
             else
                 ( model, Task.perform InputCreatedAt timeInMillis )
 
         InputCreatedAt ms ->
             -- 送信日時を付与して送信。Editorのクリア
-            ( { model | editor = ChatEditor.init }, Chat.inputCreatedAt ms model.editor.chat |> Chat.encodeToValue |> sendChat )
+            ( { model | editor = ChatEditor.inputText "" model.editor }, Chat.inputCreatedAt ms model.editor.chat |> Chat.encodeToValue |> sendChat )
+
+        GotDiceRoll (Ok result) ->
+            update SendChat { model | editor = model.editor |> ChatEditor.inputText (model.editor.chat.text ++ " | " ++ result) }
+
+        GotDiceRoll (Err err) ->
+            ( model, err |> HttpUtil.httpErrorToString |> errorToJs )
+
+        DiceRoll ->
+            ( model, DiceBotApi.fetchDiceRollResultDecoder GotDiceRoll "DiceBot" "2d6" )
 
 
 subscriptions : Model -> Sub Msg
@@ -112,10 +128,12 @@ view model =
         ]
 
 
+chatEditor : ChatEditor -> Html Msg
 chatEditor editor =
     chatEditorInputs editor.chat
 
 
+chatEditorInputs : Chat -> Html Msg
 chatEditorInputs chat =
     div [ class "chat-editor" ]
         [ div [ class "" ]
@@ -126,7 +144,12 @@ chatEditorInputs chat =
             [ -- label [ class "browser-default", for "name" ] [ text "本文" ],
               input [ class "browser-default", placeholder "本文は必須です", autocomplete False, id "name", type_ "text", required True, value chat.text, onChange InputText ] []
             ]
-        , button [ onClick SendChat ] [ text "送信" ]
+        , div [ class "send-wrapper" ]
+            [ button [ onClick SendChat ] [ text "送信" ]
+            , select [ id "dicebot", class "browser-default" ]
+                [ option [ value "", class "browser-default", selected True ] [ text "DiceBot" ] ]
+            , button [ onClick DiceRoll ] [ text "ダイスを振る" ]
+            ]
         ]
 
 
