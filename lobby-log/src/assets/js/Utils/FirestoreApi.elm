@@ -14,7 +14,12 @@ databaseUrl =
 
 chatsUrl : String
 chatsUrl =
-    databaseUrl ++ "/(default)/documents/chattools/lobby/rooms/Lobby/messages/"
+    databaseUrl ++ "/(default)/documents/chattools/lobby/rooms/Lobby/messages/?orderBy=createdAt"
+
+
+
+-- REST API から返される結果は並べ替えられません
+-- https://firebase.google.com/docs/database/rest/retrieve-data
 
 
 pageLimit : Int
@@ -24,12 +29,12 @@ pageLimit =
 
 chatsUrlWithLimit : String
 chatsUrlWithLimit =
-    chatsUrl ++ "?pageSize=" ++ String.fromInt pageLimit
+    chatsUrl ++ "&pageSize=" ++ String.fromInt pageLimit
 
 
 chatsUrlWithPageToken : String -> String
 chatsUrlWithPageToken token =
-    chatsUrl ++ "?pageSize=" ++ String.fromInt pageLimit ++ "&pageToken=" ++ token
+    chatsUrl ++ "&pageSize=" ++ String.fromInt pageLimit ++ "&pageToken=" ++ token
 
 
 
