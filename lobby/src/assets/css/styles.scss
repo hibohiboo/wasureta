@@ -116,13 +116,19 @@ h1 {
       width:auto;
     }
     #face, #dice-number {
-      width: 40px;
+      width: 50px;
     }
     #dice-command {
       width: 80px;
     }
   }
 
+}
+// PC向け
+@media (min-width: 800px) {
+  .chat-editor  .send-wrapper #face {
+    width: 80px; // autocompleteの選択分、広く必要
+  }
 }
 
 @import "utils/spinner";

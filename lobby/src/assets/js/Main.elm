@@ -193,12 +193,13 @@ chatEditorInputs editor =
         , div [ class "send-wrapper" ]
             [ button [ onClick SendChat ] [ text "送信" ]
             , select [ id "dicebot", class "browser-default" ] (editor.names |> List.map (\names_ -> option [ class "browser-default", value names_.system, selected (editor.selectedSystemName == names_.system) ] [ text names_.name ]))
-            , input [ class "browser-default", autocomplete False, id "face", type_ "number", value (String.fromInt editor.diceFace), onChange InputFace ] []
-            , select [ class "browser-default", disabled True ] [ option [ value "", class "browser-default", selected True ] [ text "D" ] ]
             , input [ class "browser-default", autocomplete False, id "dice-number", type_ "number", value (String.fromInt editor.diceNumber), onChange InputFace ] []
+            , select [ class "browser-default", disabled True ] [ option [ value "", class "browser-default", selected True ] [ text "D" ] ]
+            , input [ class "browser-default", autocomplete True, id "face", list "face-list", type_ "number", value (String.fromInt editor.diceFace), onChange InputFace ] []
             , input [ class "browser-default", autocomplete False, id "dice-command", type_ "text", value editor.diceCommand, onChange InputDiceCommand ] []
             , button [ onClick DiceRoll ] [ text "ダイスを振る" ]
             ]
+        , datalist [ id "face-list" ] (List.map (\s -> option [ value (String.fromInt s) ] [ text (String.fromInt s) ]) [ 2, 4, 6, 8, 12, 20, 100 ])
         ]
 
 
