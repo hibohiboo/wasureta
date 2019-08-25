@@ -12,6 +12,7 @@ import Json.Decode as D exposing (Value)
 import Models.Chat as Chat exposing (Chat)
 import Models.ChatView exposing (ChatView)
 import Task exposing (Task)
+import Time exposing (Zone)
 import Url
 import Url.Builder
 import Utils.HttpUtil as HttpUtil
@@ -38,12 +39,13 @@ main =
 type alias Model =
     { messages : List ChatView
     , nextToken : String
+    , zone : Zone
     }
 
 
 init : Value -> ( Model, Cmd Msg )
 init flags =
-    ( Model [] "", Cmd.batch [ Chat.fetchMessages GotMessages "" ] )
+    ( Model [] "" Time.utc, Cmd.batch [ Task.perform AdjustTimeZone Time.here ] )
 
 
 
@@ -52,27 +54,25 @@ init flags =
 
 type Msg
     = GotMessages (Result Http.Error String)
+    | AdjustTimeZone Zone
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        AdjustTimeZone zone ->
+            ( { model | zone = zone }, Cmd.batch [ Chat.fetchMessages GotMessages "" ] )
+
         GotMessages (Ok result) ->
-            let
-                _ =
-                    Debug.log "result" "ここまでOK"
-            in
+            -- let
+            --     _ =
+            --         Debug.log "result" result
+            -- in
             case D.decodeString Chat.chatsDecoderFromFS result of
                 Ok messages ->
                     let
-                        _ =
-                            Debug.log "テスト" "test"
-
                         cvMessages =
-                            List.map Models.ChatView.fromChat messages
-
-                        _ =
-                            Debug.log "cvMessages" cvMessages
+                            List.map (\m -> Models.ChatView.fromChat model.zone m) messages
                     in
                     ( { model | messages = cvMessages }, Cmd.none )
 

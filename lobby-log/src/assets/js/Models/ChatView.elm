@@ -3,6 +3,7 @@ module Models.ChatView exposing (..)
 import Json.Decode as D exposing (Decoder, Value)
 import Json.Decode.Pipeline exposing (optional, required)
 import Models.Chat exposing (Chat)
+import Time exposing (Zone)
 import Utils.Time exposing (toDateFromMS)
 
 
@@ -30,6 +31,6 @@ decoder =
         |> required "createdAt" D.string
 
 
-fromChat : Chat -> ChatView
-fromChat chat =
-    ChatView chat.name chat.text (toDateFromMS chat.createdAt)
+fromChat : Zone -> Chat -> ChatView
+fromChat zone chat =
+    ChatView chat.name chat.text (toDateFromMS zone chat.createdAt)

@@ -6,9 +6,9 @@ module Utils.Time exposing (toDateFromMS)
 import Time exposing (Month(..), Posix, Weekday(..), Zone)
 
 
-toDateFromMS : Int -> String
-toDateFromMS ms =
-    toDate Time.utc (Time.millisToPosix ms)
+toDateFromMS : Zone -> Int -> String
+toDateFromMS zone ms =
+    toDate zone (Time.millisToPosix ms)
 
 
 toDate : Zone -> Posix -> String
