@@ -108,6 +108,7 @@ h1 {
   }
   .send-wrapper{
     display: flex;
+    flex-wrap: wrap;
     button, input, select{
       margin-right: 5px;
     }
@@ -122,7 +123,17 @@ h1 {
       width: 80px;
     }
   }
-
+  .command-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .system-info {
+    align-self: flex-end;
+    span {
+      color: skyblue;
+      text-decoration-line: underline;
+    }
+  }
 }
 // PC向け
 @media (min-width: 800px) {

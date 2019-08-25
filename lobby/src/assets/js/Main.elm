@@ -77,6 +77,10 @@ type Msg
     | GotSystems (Result Http.Error String)
     | InputSelectedSystem String
     | FocusDiceFace
+    | GotSystemInfo (Result Http.Error String)
+    | InputSelectedPrefix String
+    | InputTableCommand String
+    | DiceBotRoll
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -109,7 +113,13 @@ update msg model =
             ( { model | editor = ChatEditor.inputDiceCommand val model.editor }, Cmd.none )
 
         InputSelectedSystem val ->
-            ( { model | editor = ChatEditor.inputSelectedSystemName val model.editor }, Cmd.none )
+            ( { model | editor = ChatEditor.inputSelectedSystemName val model.editor }, DiceBotApi.fetchSystemInfo GotSystemInfo val )
+
+        InputSelectedPrefix val ->
+            ( { model | editor = ChatEditor.inputSelectedPrefix val model.editor }, Cmd.none )
+
+        InputTableCommand val ->
+            ( { model | editor = ChatEditor.inputTableCommand val model.editor }, Cmd.none )
 
         SendChat ->
             if model.editor.chat.name == "" then
@@ -159,6 +169,34 @@ update msg model =
         GotSystems (Err err) ->
             ( model, err |> HttpUtil.httpErrorToString |> errorToJs )
 
+        GotSystemInfo (Ok result) ->
+            case D.decodeString DiceBotApi.systemInfoDecoder result of
+                Ok info ->
+                    ( { model | editor = ChatEditor.inputSystemInfo info model.editor }, Cmd.none )
+
+                Err err ->
+                    ( model, D.errorToString err |> errorToJs )
+
+        GotSystemInfo (Err err) ->
+            ( model, err |> HttpUtil.httpErrorToString |> errorToJs )
+
+        DiceBotRoll ->
+            let
+                editor =
+                    model.editor
+
+                command =
+                    editor.tableCommand
+
+                newModel =
+                    if model.editor.chat.name == "" then
+                        { model | editor = ChatEditor.inputName model.editor.selectedSystemName model.editor }
+
+                    else
+                        model
+            in
+            ( newModel, DiceBotApi.fetchDiceRollResult GotDiceRoll model.editor.selectedSystemName command )
+
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
@@ -196,14 +234,25 @@ chatEditorInputs editor =
             ]
         , div [ class "send-wrapper" ]
             [ button [ onClick SendChat ] [ text "送信" ]
-            , select [ id "dicebot", class "browser-default" ] (editor.names |> List.map (\names_ -> option [ class "browser-default", value names_.system, selected (editor.selectedSystemName == names_.system) ] [ text names_.name ]))
             , input [ class "browser-default", autocomplete False, id "dice-number", type_ "number", value (String.fromInt editor.diceNumber), onChange InputDiceNumber ] []
             , select [ class "browser-default", disabled True ] [ option [ value "", class "browser-default", selected True ] [ text "D" ] ]
             , input [ class "browser-default", autocomplete True, id "face", list "face-list", type_ "number", value (ChatEditor.toStringDiceFace editor.diceFace), onChange InputFace, onFocus FocusDiceFace ] []
             , input [ class "browser-default", autocomplete False, id "dice-command", type_ "text", value editor.diceCommand, onChange InputDiceCommand ] []
             , button [ onClick DiceRoll ] [ text "ダイスを振る" ]
+            , dicebotCommand editor
+            , div [ class "system-info", title editor.selectedSystemInfo.info ] [ span [] [ text "info" ] ]
             ]
         , datalist [ id "face-list" ] (List.map (\s -> option [ value (String.fromInt s) ] [ text (String.fromInt s) ]) [ 2, 4, 6, 8, 12, 20, 100 ])
+        ]
+
+
+dicebotCommand : ChatEditor -> Html Msg
+dicebotCommand editor =
+    div [ class "command-wrapper" ]
+        [ select [ id "dicebot", class "browser-default", onChange InputSelectedSystem ] (editor.names |> List.map (\names_ -> option [ class "browser-default", value names_.system, selected (editor.selectedSystemName == names_.system) ] [ text names_.name ]))
+        , datalist [ class "browser-default", id "bot-command-lis", onChange InputSelectedPrefix ] (List.map (\s -> option [ value s ] [ text s ]) editor.selectedSystemInfo.prefixes)
+        , input [ class "browser-default", autocomplete True, list "bot-command-lis", id "bot-command", type_ "text", value editor.tableCommand, onChange InputTableCommand ] []
+        , button [ onClick DiceBotRoll ] [ text "ダイスボットを振る" ]
         ]
 
 

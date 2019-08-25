@@ -49,7 +49,17 @@ systemInfoUrl system =
 
 fetchSystemInfo : (Result Http.Error String -> msg) -> String -> Cmd msg
 fetchSystemInfo toMsg system =
-    HttpUtil.fetchStringData toMsg system
+    HttpUtil.fetchStringData toMsg (systemInfoUrl system)
+
+
+systemInfoDecoder =
+    D.field "systeminfo" <|
+        D.map4 SystemInfo
+            (D.field "name" D.string)
+            (D.field "gameType" D.string)
+            -- api側がタイポしているので注意 prefixs prefixes
+            (D.field "prefixs" (D.list D.string))
+            (D.field "info" D.string)
 
 
 

@@ -3,7 +3,7 @@ module Models.ChatEditor exposing (..)
 import Json.Decode as D exposing (Decoder, Value)
 import Json.Decode.Pipeline exposing (optional, required)
 import Models.Chat as Chat exposing (Chat)
-import Models.SystemInfo exposing (SystemInfo, SystemNames)
+import Models.SystemInfo exposing (SystemInfo, SystemNames, initSystemInfo)
 
 
 type alias ChatEditor =
@@ -13,6 +13,9 @@ type alias ChatEditor =
     , diceCommand : String
     , names : List SystemNames
     , selectedSystemName : String
+    , selectedSystemInfo : SystemInfo
+    , selectedPrefix : String
+    , tableCommand : String
     }
 
 
@@ -27,7 +30,7 @@ defaultDiceFace =
 
 
 init =
-    ChatEditor Chat.init defaultDiceFace defaultDiceNumber ">5" [] "DiceBot"
+    ChatEditor Chat.init defaultDiceFace defaultDiceNumber ">5" [] "DiceBot" initSystemInfo "" ""
 
 
 inputName : String -> ChatEditor -> ChatEditor
@@ -60,6 +63,11 @@ inputNames val editor =
     { editor | names = val }
 
 
+inputSystemInfo : SystemInfo -> ChatEditor -> ChatEditor
+inputSystemInfo val editor =
+    { editor | selectedSystemInfo = val }
+
+
 inputDiceCommand : String -> ChatEditor -> ChatEditor
 inputDiceCommand val editor =
     { editor | diceCommand = val }
@@ -68,6 +76,16 @@ inputDiceCommand val editor =
 inputSelectedSystemName : String -> ChatEditor -> ChatEditor
 inputSelectedSystemName val editor =
     { editor | selectedSystemName = val }
+
+
+inputSelectedPrefix : String -> ChatEditor -> ChatEditor
+inputSelectedPrefix val editor =
+    { editor | selectedPrefix = val }
+
+
+inputTableCommand : String -> ChatEditor -> ChatEditor
+inputTableCommand val editor =
+    { editor | tableCommand = val }
 
 
 toStringDiceFace : Int -> String
