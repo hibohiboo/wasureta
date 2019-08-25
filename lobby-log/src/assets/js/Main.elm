@@ -37,28 +37,50 @@ main =
 
 type alias Model =
     { messages : List ChatView
+    , nextToken : String
     }
 
 
 init : Value -> ( Model, Cmd Msg )
 init flags =
-    ( Model [], Cmd.none )
+    ( Model [] "", Cmd.batch [ Chat.fetchMessages GotMessages "" ] )
 
 
 
---Cmd.batch [ DiceBotApi.fetchSystemNames GotMessages ] )
 -- UPDATE
 
 
 type Msg
-    = GotMessages Value
+    = GotMessages (Result Http.Error String)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        GotMessages val ->
-            ( model, Cmd.none )
+        GotMessages (Ok result) ->
+            let
+                _ =
+                    Debug.log "result" "ここまでOK"
+            in
+            case D.decodeString Chat.chatsDecoderFromFS result of
+                Ok messages ->
+                    let
+                        _ =
+                            Debug.log "テスト" "test"
+
+                        cvMessages =
+                            List.map Models.ChatView.fromChat messages
+
+                        _ =
+                            Debug.log "cvMessages" cvMessages
+                    in
+                    ( { model | messages = cvMessages }, Cmd.none )
+
+                Err err ->
+                    ( model, D.errorToString err |> errorToJs )
+
+        GotMessages (Err err) ->
+            ( model, err |> HttpUtil.httpErrorToString |> errorToJs )
 
 
 subscriptions : Model -> Sub Msg

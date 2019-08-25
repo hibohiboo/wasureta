@@ -2,6 +2,8 @@ module Models.ChatView exposing (..)
 
 import Json.Decode as D exposing (Decoder, Value)
 import Json.Decode.Pipeline exposing (optional, required)
+import Models.Chat exposing (Chat)
+import Utils.Time exposing (toDateFromMS)
 
 
 type alias ChatView =
@@ -26,3 +28,8 @@ decoder =
         |> required "name" D.string
         |> required "text" D.string
         |> required "createdAt" D.string
+
+
+fromChat : Chat -> ChatView
+fromChat chat =
+    ChatView chat.name chat.text (toDateFromMS chat.createdAt)

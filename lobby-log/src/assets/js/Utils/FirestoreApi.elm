@@ -1,4 +1,4 @@
-module FirestoreApi exposing (array, arrayFromJson, bool, boolFromJson, characterDetailsUrlWithPageToken, characterUrl, characterUrlFromFireStore, charactersUrl, charactersUrlWithLimit, charactersUrlWithPageToken, enemiesUrl, enemyUrlFromFireStore, fields, int, intFromJson, list, nextTokenFromJson, string, stringFromJson, timestamp, timestampFromJson)
+module Utils.FirestoreApi exposing (..)
 
 import Array exposing (Array)
 import Json.Decode as D exposing (Decoder)
@@ -19,7 +19,7 @@ chatsUrl =
 
 pageLimit : Int
 pageLimit =
-    10
+    1
 
 
 chatsUrlWithLimit : String
@@ -29,7 +29,7 @@ chatsUrlWithLimit =
 
 chatsUrlWithPageToken : String -> String
 chatsUrlWithPageToken token =
-    charactersUrl ++ "?pageSize=" ++ String.fromInt pageLimit ++ "&pageToken=" ++ token
+    chatsUrl ++ "?pageSize=" ++ String.fromInt pageLimit ++ "&pageToken=" ++ token
 
 
 

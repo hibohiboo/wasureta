@@ -1,8 +1,11 @@
 module Models.Chat exposing (..)
 
+import Http
 import Json.Decode as D exposing (Decoder, Value)
 import Json.Decode.Pipeline exposing (optional, required)
 import Json.Encode as E
+import Utils.FirestoreApi as FS
+import Utils.HttpUtil as HttpUtil
 
 
 type alias Chat =
@@ -55,3 +58,21 @@ encodeToValue chat =
         , ( "text", E.string chat.text )
         , ( "createdAt", E.int chat.createdAt )
         ]
+
+
+fetchMessages : (Result Http.Error String -> msg) -> String -> Cmd msg
+fetchMessages toMsg token =
+    HttpUtil.fetchStringData toMsg (FS.chatsUrlWithPageToken token)
+
+
+decoderFromFS : Decoder Chat
+decoderFromFS =
+    D.succeed Chat
+        |> required "name" FS.string
+        |> required "text" FS.string
+        |> required "createdAt" FS.int
+
+
+chatsDecoderFromFS : Decoder (List Chat)
+chatsDecoderFromFS =
+    D.at [ "documents" ] <| (D.list <| FS.fields <| D.at [ "common", "mapValue", "fields" ] <| decoderFromFS)
