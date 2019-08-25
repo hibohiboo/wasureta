@@ -5,6 +5,8 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onFocus)
 import Html.Events.Extra exposing (onChange)
+import Html.Keyed as Keyed
+import Html.Lazy exposing (..)
 import Http
 import Json.Decode as D exposing (Value)
 import Models.Chat as Chat exposing (Chat)
@@ -136,7 +138,7 @@ update msg model =
             ( { model | editor = ChatEditor.inputText "" model.editor }, Chat.inputCreatedAt ms model.editor.chat |> Chat.encodeToValue |> sendChat )
 
         GotDiceRoll (Ok result) ->
-            update SendChat { model | editor = model.editor |> ChatEditor.inputText (model.editor.chat.text ++ " | " ++ result) }
+            update SendChat { model | editor = model.editor |> ChatEditor.inputText (model.editor.chat.text ++ " (ころころ) " ++ result) }
 
         GotDiceRoll (Err err) ->
             ( model, err |> HttpUtil.httpErrorToString |> errorToJs )
@@ -206,9 +208,9 @@ subscriptions model =
 view : Model -> Html Msg
 view model =
     div []
-        [ chatEditor model.editor
+        [ lazy chatEditor model.editor
         , p [ style "font-size" "1.2rem" ] [ text "新着メッセージ" ]
-        , chatLogs model.messages
+        , lazy chatLogs model.messages
         ]
 
 
@@ -258,9 +260,13 @@ dicebotCommand editor =
 
 chatLogs : List ChatView -> Html Msg
 chatLogs messages =
-    ul [ class "collection chatlog" ] (List.map chatMessage messages)
+    Keyed.node "ul" [ class "collection chatlog" ] (List.map chatMessage messages)
 
 
-chatMessage : ChatView -> Html msg
+chatMessage : ChatView -> ( String, Html msg )
 chatMessage chat =
-    ChatView.chatMessage chat.name chat.text chat.createdAt
+    let
+        key =
+            chat.name ++ chat.createdAt
+    in
+    ( key, ChatView.chatMessage chat.name chat.text chat.createdAt )
