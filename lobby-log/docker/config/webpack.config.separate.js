@@ -20,7 +20,7 @@ module.exports = {
   output: {
     path: opts.dest,
     // spaの場合は、絶対パスにしないと、cssの読み込みやjsの読み込みがルート以外でおかしくなる
-    publicPath: '/lobby',
+    publicPath: '/lobby-log',
     filename,
   },
   plugins: [
