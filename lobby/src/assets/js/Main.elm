@@ -236,10 +236,10 @@ chatEditorInputs editor =
             ]
         , div [ class "send-wrapper" ]
             [ button [ onClick SendChat ] [ text "送信" ]
-            , input [ class "browser-default", autocomplete False, id "dice-number", type_ "number", value (String.fromInt editor.diceNumber), onChange InputDiceNumber ] []
+            , input [ class "browser-default", attribute "inputmode" "latin", autocomplete False, id "dice-number", type_ "number", value (String.fromInt editor.diceNumber), onChange InputDiceNumber ] []
             , select [ class "browser-default", disabled True ] [ option [ value "", class "browser-default", selected True ] [ text "D" ] ]
-            , input [ class "browser-default", autocomplete True, id "face", list "face-list", type_ "number", value (ChatEditor.toStringDiceFace editor.diceFace), onChange InputFace, onFocus FocusDiceFace ] []
-            , input [ class "browser-default", autocomplete False, id "dice-command", type_ "text", value editor.diceCommand, onChange InputDiceCommand ] []
+            , input [ class "browser-default", attribute "inputmode" "latin", autocomplete True, id "face", list "face-list", type_ "number", value (ChatEditor.toStringDiceFace editor.diceFace), onChange InputFace, onFocus FocusDiceFace ] []
+            , input [ class "browser-default", pattern "^[0-9A-Za-z-+* ()<>=/%]*$", attribute "inputmode" "latin", autocomplete False, id "dice-command", type_ "text", value editor.diceCommand, onChange InputDiceCommand ] []
             , button [ onClick DiceRoll ] [ text "ダイスを振る" ]
             , dicebotCommand editor
             , div [ class "system-info", title editor.selectedSystemInfo.info ] [ span [] [ text "info" ] ]
@@ -252,8 +252,8 @@ dicebotCommand : ChatEditor -> Html Msg
 dicebotCommand editor =
     div [ class "command-wrapper" ]
         [ select [ id "dicebot", class "browser-default", onChange InputSelectedSystem ] (editor.names |> List.map (\names_ -> option [ class "browser-default", value names_.system, selected (editor.selectedSystemName == names_.system) ] [ text names_.name ]))
-        , datalist [ class "browser-default", id "bot-command-lis", onChange InputSelectedPrefix ] (List.map (\s -> option [ value s ] [ text s ]) editor.selectedSystemInfo.prefixes)
-        , input [ class "browser-default", autocomplete True, list "bot-command-lis", id "bot-command", type_ "text", value editor.tableCommand, onChange InputTableCommand ] []
+        , datalist [ class "browser-default", id "bot-command-list", onChange InputSelectedPrefix ] (List.map (\s -> option [ value s ] [ text s ]) editor.selectedSystemInfo.prefixes)
+        , input [ class "browser-default", pattern "^[0-9A-Za-z-+* ()<>=/%]*$", attribute "inputmode" "latin", autocomplete True, list "bot-command-list", id "bot-command", type_ "text", value editor.tableCommand, onChange InputTableCommand ] []
         , button [ onClick DiceBotRoll ] [ text "ダイスボットを振る" ]
         ]
 
