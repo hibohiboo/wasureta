@@ -19,7 +19,7 @@ chatsUrl =
 
 pageLimit : Int
 pageLimit =
-    1
+    1000
 
 
 chatsUrlWithLimit : String
@@ -99,4 +99,4 @@ nextTokenFromJson json =
             token
 
         Err _ ->
-            ""
+            "last"

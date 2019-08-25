@@ -15,6 +15,7 @@ import Task exposing (Task)
 import Time exposing (Zone)
 import Url
 import Url.Builder
+import Utils.FirestoreApi as FS
 import Utils.HttpUtil as HttpUtil
 import Views.ChatView as ChatView
 
@@ -55,6 +56,7 @@ init flags =
 type Msg
     = GotMessages (Result Http.Error String)
     | AdjustTimeZone Zone
+    | NextPage
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -73,14 +75,20 @@ update msg model =
                     let
                         cvMessages =
                             List.map (\m -> Models.ChatView.fromChat model.zone m) messages
+
+                        token =
+                            FS.nextTokenFromJson result
                     in
-                    ( { model | messages = cvMessages }, Cmd.none )
+                    ( { model | messages = List.concat [ model.messages, cvMessages ], nextToken = token }, Cmd.none )
 
                 Err err ->
                     ( model, D.errorToString err |> errorToJs )
 
         GotMessages (Err err) ->
             ( model, err |> HttpUtil.httpErrorToString |> errorToJs )
+
+        NextPage ->
+            ( model, Cmd.batch [ Chat.fetchMessages GotMessages model.nextToken ] )
 
 
 subscriptions : Model -> Sub Msg
@@ -93,7 +101,16 @@ view model =
     div []
         [ p [] [ text "チャットログ" ]
         , lazy chatLogs model.messages
+        , lazy nextPage model
         ]
+
+
+nextPage model =
+    if model.nextToken == "last" then
+        span [] [ text "" ]
+
+    else
+        button [ onClick NextPage ] [ text "さらに読み込む" ]
 
 
 chatLogs : List ChatView -> Html Msg
