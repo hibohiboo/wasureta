@@ -208,7 +208,8 @@ subscriptions model =
 view : Model -> Html Msg
 view model =
     div []
-        [ lazy chatEditor model.editor
+        [ p [] [ text "チャットサンプル" ]
+        , lazy chatEditor model.editor
         , p [ style "font-size" "1.2rem" ] [ text "新着メッセージ" ]
         , lazy chatLogs model.messages
         ]
