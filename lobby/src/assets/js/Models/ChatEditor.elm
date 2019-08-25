@@ -47,7 +47,7 @@ inputCreatedAt val editor =
 
 inputFace : String -> ChatEditor -> ChatEditor
 inputFace val editor =
-    { editor | diceFace = Maybe.withDefault defaultDiceNumber (String.toInt val) }
+    { editor | diceFace = Maybe.withDefault 0 (String.toInt val) }
 
 
 inputDiceNumber : String -> ChatEditor -> ChatEditor
@@ -68,3 +68,12 @@ inputDiceCommand val editor =
 inputSelectedSystemName : String -> ChatEditor -> ChatEditor
 inputSelectedSystemName val editor =
     { editor | selectedSystemName = val }
+
+
+toStringDiceFace : Int -> String
+toStringDiceFace face =
+    if face == 0 then
+        ""
+
+    else
+        String.fromInt face

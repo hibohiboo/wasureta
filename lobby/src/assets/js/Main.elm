@@ -3,7 +3,7 @@ port module Main exposing (Model, Msg(..), init, main, subscriptions, update, vi
 import Browser
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (onClick)
+import Html.Events exposing (onClick, onFocus)
 import Html.Events.Extra exposing (onChange)
 import Http
 import Json.Decode as D exposing (Value)
@@ -76,6 +76,7 @@ type Msg
     | InputDiceNumber String
     | GotSystems (Result Http.Error String)
     | InputSelectedSystem String
+    | FocusDiceFace
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -97,6 +98,9 @@ update msg model =
 
         InputFace val ->
             ( { model | editor = ChatEditor.inputFace val model.editor }, Cmd.none )
+
+        FocusDiceFace ->
+            ( { model | editor = ChatEditor.inputFace "0" model.editor }, Cmd.none )
 
         InputDiceNumber val ->
             ( { model | editor = ChatEditor.inputDiceNumber val model.editor }, Cmd.none )
@@ -193,9 +197,9 @@ chatEditorInputs editor =
         , div [ class "send-wrapper" ]
             [ button [ onClick SendChat ] [ text "送信" ]
             , select [ id "dicebot", class "browser-default" ] (editor.names |> List.map (\names_ -> option [ class "browser-default", value names_.system, selected (editor.selectedSystemName == names_.system) ] [ text names_.name ]))
-            , input [ class "browser-default", autocomplete False, id "dice-number", type_ "number", value (String.fromInt editor.diceNumber), onChange InputFace ] []
+            , input [ class "browser-default", autocomplete False, id "dice-number", type_ "number", value (String.fromInt editor.diceNumber), onChange InputDiceNumber ] []
             , select [ class "browser-default", disabled True ] [ option [ value "", class "browser-default", selected True ] [ text "D" ] ]
-            , input [ class "browser-default", autocomplete True, id "face", list "face-list", type_ "number", value (String.fromInt editor.diceFace), onChange InputFace ] []
+            , input [ class "browser-default", autocomplete True, id "face", list "face-list", type_ "number", value (ChatEditor.toStringDiceFace editor.diceFace), onChange InputFace, onFocus FocusDiceFace ] []
             , input [ class "browser-default", autocomplete False, id "dice-command", type_ "text", value editor.diceCommand, onChange InputDiceCommand ] []
             , button [ onClick DiceRoll ] [ text "ダイスを振る" ]
             ]
