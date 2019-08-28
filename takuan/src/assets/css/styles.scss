@@ -1,0 +1,131 @@
+@charset "UTF-8";
+
+// 基本色
+:root {
+  --main-color: #5d9ab2;
+  --accent-color: #bf6a7a;
+  --dark-color: #15202b;
+  --text-bright-color: #fff; // テキストの色
+  --icon-color: #fff; // アイコンの色
+  --icon-bk-color: #ddd; // 丸型ボックスの色
+  --gray-color: #ddd;
+  
+  --dark-border-color: #253341;
+  --large-width: 1000px; // 横幅の最大値
+  --middle-width: 800px;
+}
+
+// 基本設定：フォントサイズ
+// スマートフォン向け
+@media (max-width: 599px) {
+  :root {
+    font-size: 14px;
+  }
+}
+
+// タブレット向け
+@media (min-width: 600px) and (max-width: 799px) {
+  :root {
+    font-size: 16px;
+  }
+}
+
+// PC向け
+@media (min-width: 800px) {
+  :root {
+    font-size: 18px;
+  }
+}
+/*
+  フォント名は Win と Mac で少しだけ異なる。
+  Windows: "游ゴシック", "Yu Gothic"
+  Mac: "游ゴシック体", "YuGothic"
+*/
+@font-face {
+  font-family: "YuGothic M";
+  src: local("Yu Gothic Medium"),
+       local("Yu Gothic");
+  font-weight: 500;
+       /*
+         Chrome 58.0.3029.110 (64-bit) では
+         "Yu Gothic Medium" を認識しないバグあるため
+         "Yu Gothic" と font-weight も併せて指定。
+       */
+}
+body {
+  font-family: Helvetica , "游ゴシック体", YuGothic, "YuGothic M", sans-serif;
+  margin: 0;
+  background-color: var(--dark-color);
+  color: var(--text-bright-color);
+}
+
+
+// 基本設定
+a {
+  color: var(--text-bright-color);
+}
+// ヘッダ
+header {
+  height: 60px;
+  border-bottom: solid 1px;
+  border-bottom-color: var(--dark-border-color);
+  display: flex;
+  .left {
+    padding-left: 10px;
+  }
+  .right {
+    margin-left: auto;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+
+    .material-icons.settings {
+      font-size: 2rem;
+      cursor: pointer;
+    }
+    padding-right: 10px;
+  }
+  h1 {
+    margin:0;
+    padding: 5px;
+  }
+  img {
+    vertical-align: bottom; // 余計な余白が入るのを防ぐ
+    width: 80px;
+  }
+}
+nav {
+  display: none;
+  position: absolute;
+  right: 10px;
+  border: solid 1px var(--dark-border-color);
+  margin: 0;
+  ul {
+    padding: 0 10px;
+    margin: 0;
+
+    li {
+      display: inline-block;
+      a {
+        display: block;
+        width: 100%;
+      }
+    }
+  }
+}
+nav.active {
+  display: block;
+}
+
+.wrapper {
+  display: relative;
+}
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  border: solid 1px var(--dark-border-color);
+  border-top: none;
+  border-bottom:none;
+  min-height: 100vh;
+}
+@import "utils/spinner";
