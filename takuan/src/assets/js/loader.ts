@@ -8,15 +8,16 @@ interface Options {
 
 export const loader = (options: Options) => {
   return new Promise((resolve, reject) => {
+    // プラグインを読み込む
+    const startTime = performance.now(); // 開始時間
+    console.log('読込開始', options.plugins);
     $.ajaxSetup({
       cache: true
     });
     const plugins = options.plugins.filter(plugin => plugin.activate).map(plugin => plugin.name);
+    const pluginUrls = plugins.map(name => `/plugins/${name}/index.js`);
 
-    // プラグインを読み込む
-    const startTime = performance.now(); // 開始時間
-    console.log('読込開始', plugins);
-    $.when(...plugins.map(name => $.getScript(`/plugins/${name}.js`)))
+    $.when(...pluginUrls.map(url => $.getScript(url)))
       .done(function (script, textStatus) {
         plugins.forEach(name => {
           Takuyuan.plugins[name].init(document.getElementById('main-content'));
