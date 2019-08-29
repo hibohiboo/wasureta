@@ -1,8 +1,9 @@
-import { loader } from './loader';
+import { pluginLoader } from './core/pluginLoader';
+import { PanelService } from './core/PanelService';
 require('../css/styles.scss'); // tslint:disable-line no-var-requires
 
 (async () => {
-  await loader({ plugins: [{ name: 'room', activate: true }] });
+  await pluginLoader({ plugins: [{ name: 'room', activate: true }] }, new PanelService());
   $('body').removeClass('loading');
   console.log('sppiner off');
 
@@ -10,5 +11,3 @@ require('../css/styles.scss'); // tslint:disable-line no-var-requires
   const $nav = $('nav');
   $('#settings').click(() => { $nav.toggleClass('active') });
 })();
-
-

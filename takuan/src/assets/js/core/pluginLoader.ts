@@ -1,12 +1,13 @@
 interface Plugin {
-  name: string;
-  activate: boolean;
+  name: string;      // 
+  activate: boolean; // プラグインが有効かどうか
 }
 interface Options {
   plugins: Plugin[]
 }
 
-export const loader = (options: Options) => {
+
+export const pluginLoader = (options: Options, panel) => {
   return new Promise((resolve, reject) => {
     // プラグインを読み込む
     const startTime = performance.now(); // 開始時間
@@ -17,10 +18,11 @@ export const loader = (options: Options) => {
     const plugins = options.plugins.filter(plugin => plugin.activate).map(plugin => plugin.name);
     const pluginUrls = plugins.map(name => `/plugins/${name}/index.js`);
 
+    // 有効なプラグインをすべて読み込む
     $.when(...pluginUrls.map(url => $.getScript(url)))
       .done(function (script, textStatus) {
         plugins.forEach(name => {
-          Takuyuan.plugins[name].init(document.getElementById('main-content'));
+          Takuyuan.plugins[name].init(panel);
         });
         const endTime = performance.now(); // 終了時間
         console.log('読み込み終了', endTime - startTime);
