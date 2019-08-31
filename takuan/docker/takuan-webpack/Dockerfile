@@ -30,7 +30,7 @@ RUN yarn add --dev html-webpack-plugin
 RUN yarn add --dev babel-loader
 RUN yarn add --dev file-loader
 RUN yarn add --dev style-loader
-RUN yarn add --dev css-loader
+RUN yarn add --dev css-loadervag
 RUN yarn add --dev html-loader
 RUN yarn add --dev resolve-url-loader
 RUN yarn add --dev sass-loader
@@ -85,4 +85,4 @@ RUN yarn add --dev cpx
 
 # Cannot find module 'source-map'のエラーが出るため。
 RUN yarn add --dev @types/source-map@0.5.2 
-RUN npm i --save-dev @types/jquery
+RUN yarn add --dev @types/jquery

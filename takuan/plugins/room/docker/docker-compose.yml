@@ -1,0 +1,16 @@
+version: '3'
+services:
+  web_components_vue:
+    build: ./vue
+    ports:
+      - 8080:8080
+    volumes:
+      - ../src:/app/src
+      - ./config/webpack.config.js:/app/webpack.config.js
+      - ./config/.babelrc:/app/.babelrc
+      - ./config/tsconfig.json:/app/tsconfig.json
+      # - ../../../src/plugins/room:/dist
+      - ../dist:/app/dist
+    environment:
+      - NODE_ENV=prod
+    command: [yarn, webpack-dev-server ]
