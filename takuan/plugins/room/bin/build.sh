@@ -12,11 +12,11 @@ docker ps | grep $container_name
 # grepの戻り値$?の評価。 grep戻り値 0:一致した 1:一致しなかった
 if [ $? -eq 0 ]; then
   # 一致したときの処理
-  cd $docker_dir && docker-compose exec $container_name NODE_ENV=prod yarn webpack
+  cd $docker_dir && docker-compose exec --env NODE_ENV=production $container_name yarn build
 else
   # 一致しなかった時の処理
   # コンテナを立ち上げて接続
-  cd $docker_dir && docker-compose run $container_name /bin/sh -c 'NODE_ENV=prod yarn webpack'
+  cd $docker_dir && docker-compose run -e NODE_ENV=production $container_name yarn build
 fi
 
 

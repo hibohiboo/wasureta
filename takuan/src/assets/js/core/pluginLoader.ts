@@ -5,7 +5,7 @@ interface Plugin {
 interface Options {
   plugins: Plugin[]
 }
-
+import window from './window';
 
 export const pluginLoader = (options: Options, panel) => {
   return new Promise((resolve, reject) => {
@@ -21,6 +21,7 @@ export const pluginLoader = (options: Options, panel) => {
     // 有効なプラグインをすべて読み込む
     $.when(...pluginUrls.map(url => $.getScript(url)))
       .done(function (script, textStatus) {
+        window.Takuyuan = { plugins: {} };
         plugins.forEach(name => {
           Takuyuan.plugins[name].init(panel);
         });

@@ -6,11 +6,17 @@ services:
       - 8080:8080
     volumes:
       - ../src:/app/src
-      - ./config/webpack.config.js:/app/webpack.config.js
-      - ./config/.babelrc:/app/.babelrc
+      - ../public:/app/public
+      - ../tests:/app/tests
+      - ./config/.browserslistrc:/app/.browserslistrc
+      - ./config/.eslintrc.js:/app/.eslintrc.js
+      - ./config/cypress.json:/app/cypress.json
+      - ./config/jest.config.js:/app/jest.config.js
+      - ./config/package.json:/app/package.json
+      - ./config/postcss.config.js:/app/postcss.config.js
       - ./config/tsconfig.json:/app/tsconfig.json
-      # - ../../../src/plugins/room:/dist
-      - ../dist:/app/dist
-    environment:
-      - NODE_ENV=prod
-    command: [yarn, webpack-dev-server ]
+      - ./config/vue.config.js:/app/vue.config.js
+      - ../dist:/dist
+    # environment:
+      # - NODE_ENV=production
+    command: [yarn, serve ]
