@@ -3,7 +3,7 @@ import { PanelService } from './core/PanelService';
 require('../css/styles.scss'); // tslint:disable-line no-var-requires
 
 (async () => {
-  await pluginLoader({ plugins: [{ name: 'room', activate: true }] }, new PanelService());
+  await pluginLoader({ plugins: [{ name: 'room', activate: true, dependencies: ['chunk-vendors.js'], pluginRootId: 'app' }] }, new PanelService());
   $('body').removeClass('loading');
   console.log('sppiner off');
 

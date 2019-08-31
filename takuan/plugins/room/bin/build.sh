@@ -6,8 +6,14 @@ parent_dir=$bin_dir/..
 docker_dir=$parent_dir/docker
 container_name=${1:-web_components_vue}
 
+# 出力ディレクトリのクリーン
+rm -rf $parent_dir/dist/js 
+
+
 # $container_nameの有無をgrepで調べる
 docker ps | grep $container_name
+
+
 
 # grepの戻り値$?の評価。 grep戻り値 0:一致した 1:一致しなかった
 if [ $? -eq 0 ]; then
@@ -19,4 +25,5 @@ else
   cd $docker_dir && docker-compose run -e NODE_ENV=production $container_name yarn build
 fi
 
-
+cp $parent_dir/dist/js/app.*.js $parent_dir/app/app.js
+cp $parent_dir/dist/js/chunk-vendors.*.js $parent_dir/app/chunk-vendors.js
