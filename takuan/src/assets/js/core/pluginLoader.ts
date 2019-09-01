@@ -21,14 +21,13 @@ export const pluginLoader = (options: Options, panel) => {
       $content.append($('<div>').attr('id', plugin.pluginRootId));
     });
 
-
     // ファイルを追加で読み込む
     $.ajaxSetup({
       cache: true
     });
-    const plugins = options.plugins.filter(plugin => plugin.activate).map(plugin => plugin.name);
-    const pluginUrls = plugins.map(name => `/plugins/${name}/index.js`);
-    const dependencies = options.plugins.map(plugin => plugin.dependencies.map(name => `${plugin.name}/${name}`)).reduce((acc, val) => acc.concat(val), []);
+    const plugins = options.plugins.filter(plugin => plugin.activate);
+    const pluginUrls = plugins.map(plugin => plugin.name).map(name => `/plugins/${name}/index.js`);
+    const dependencies = plugins.map(plugin => plugin.dependencies.map(name => `${plugin.name}/${name}`)).reduce((acc, val) => acc.concat(val), []);
     const dependenciesUrl = dependencies.map(name => `/plugins/${name}`);
     const urls = dependenciesUrl.concat(pluginUrls);
 
@@ -45,6 +44,6 @@ export const pluginLoader = (options: Options, panel) => {
         console.log(exception);
         reject();
       });
-  })
+  });
 
 }
