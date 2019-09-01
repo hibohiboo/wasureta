@@ -6,8 +6,8 @@ Vue.config.productionTip = false;
 new Vue({
   render: h => h(App),
 }).$mount('#app');
-lobbyRef.orderBy('createdAt', 'desc').limit(20).onSnapshot(qs => {
-  qs.docChanges().reverse().forEach(change => {
+lobbyRef.orderBy('createdAt', 'desc').limit(20).onSnapshot((qs: firebase.firestore.QuerySnapshot) => {
+  qs.docChanges().reverse().forEach((change: firebase.firestore.DocumentChange) => {
     if ('added' !== `${change.type}`) {
       return;
     }

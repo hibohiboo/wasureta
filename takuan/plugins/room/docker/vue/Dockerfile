@@ -38,3 +38,5 @@ RUN yarn add --dev eslint-plugin-vue
 RUN yarn add --dev ts-jest
 RUN yarn add --dev typescript
 RUN yarn add --dev vue-template-compiler
+
+RUN yarn add --dev @types/firebase
