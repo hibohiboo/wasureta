@@ -1,6 +1,7 @@
 import * as firebase from 'firebase';
 
 const firebaseOptions = require('./firebaseOptions');
+
 firebase.initializeApp(firebaseOptions);
 export const lobbyRef = firebase
   .firestore()
