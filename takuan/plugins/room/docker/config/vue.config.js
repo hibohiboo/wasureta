@@ -1,10 +1,12 @@
 
 module.exports = {
   configureWebpack: {
+    // https://qiita.com/wadahiro/items/345c255f4c23152bd972
     externals: {
       jquery: 'jQuery'
       , firebase: 'firebase'
       , moment: 'moment'
+      , vue: 'Vue'
     },
   },
   devServer: {
