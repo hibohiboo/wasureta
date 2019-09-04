@@ -2,8 +2,8 @@
 
 # このシェルスクリプトのディレクトリの絶対パスを取得。
 bin_dir=$(cd $(dirname $0) && pwd)
-parent_dir=$bin_dir/..
-docker_dir=$parent_dir/docker
+parent_dir=$(cd $bin_dir/.. && pwd)
+docker_dir=$(cd $parent_dir/docker && pwd)
 
 # up.sh docker-compose.camp.yml
 composeFile=${1:-"docker-compose.yml"}
