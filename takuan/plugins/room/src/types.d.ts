@@ -2,3 +2,4 @@
 declare module 'moment';
 declare module 'firebase';
 declare module 'vue';
+declare module 'vuex';

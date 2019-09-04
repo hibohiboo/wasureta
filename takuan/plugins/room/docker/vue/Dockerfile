@@ -40,3 +40,4 @@ RUN yarn add --dev typescript
 RUN yarn add --dev vue-template-compiler
 
 RUN yarn add --dev @types/firebase
+RUN yarn add --dev vuex
