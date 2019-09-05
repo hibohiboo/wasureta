@@ -635,6 +635,105 @@ new Vue({
 
 ブラウザでアクセスして、consoleに表示されているか確認する。
 
+[この時点のソース](https://github.com/hibohiboo/wasureta/tree/5664226c7d157c1490c84be8d77d44a8aace2b90/takuan/plugins/room)  
+
+### 定義の整理
+
+```ts:store/types.ts
+type Getters<S, G, RS = {}, RG = {}> = {
+  [K in keyof G]: (state: S, getters: G, rootState: RS, rootGetters: RG) => G[K]
+}
+type Mutations<S, M> = {
+  [K in keyof M]: (state: S, payload: M[K]) => void
+}
+type Commit<M> = <T extends keyof M>(type: T, payload?: M[T]) => void;
+type Dispatch<A> = <T extends keyof A>(type: T, payload?: A[T]) => any;
+type Context<S, A, G, M, RS, RG> = {
+  commit: Commit<M>;
+  dispatch: Dispatch<A>;
+  state: S;
+  getters: G;
+  rootState: RS;
+  rootGetters: RG;
+}
+type Actions<S, A, G = {}, M = {}, RS = {}, RG = {}> = {
+  [K in keyof A]: (ctx: Context<S, A, G, M, RS, RG>, payload: A[K]) => any
+}
+```
+
+```ts:store/todoTypes.ts
+export type Todo = {
+  id: number;
+  text: string;
+}
+export interface State {
+  todos: Todo[];
+}
+// getters向け、getter関数の戻り型を定義
+export interface IGetters {
+  todos: Todo[];
+  todosCount: number;
+}
+export const ADD_TODO_TEXT = "ADD_TODO_TEXT";
+// mutations向け、mutation関数のpayloadを定義
+export interface IMutations {
+  [ADD_TODO_TEXT]: string;
+}
+// actions向け、action関数のpayloadを定義
+export interface IActions {
+  asyncSetTodoText: string;
+}
+```
+
+```ts
+import Vue from 'vue';
+import Vuex from 'vuex';
+import { Getters, Mutations, Actions } from './types';
+import { State, IGetters, IMutations, IActions, ADD_TODO_TEXT } from './todoType';
+
+Vue.use(Vuex);
+
+const state: State = ({ todos: [] } as State);
+
+const getters: Getters<State, IGetters> = {
+  todos: () => state.todos,
+  todosCount: () => state.todos.length,
+};
+
+const mutations: Mutations<State, IMutations> = {
+  [ADD_TODO_TEXT](state, text) {
+    const todo = {
+      id: 0,
+      text
+    };
+    if (state.todos.length !== 0) {
+      todo.id = state.todos[state.todos.length - 1].id + 1;
+    }
+    state.todos.push(todo);
+  },
+};
+
+const actions: Actions<
+  State,
+  IActions,
+  IGetters,
+  IMutations
+> = {
+  asyncSetTodoText({ commit }, text) {
+    commit(ADD_TODO_TEXT, text);
+  },
+};
+
+export default new Vuex.Store({
+  state,
+  mutations,
+  getters,
+  actions,
+});
+```
+
+## 3. storeで保持したstateをViewで表示する
+
 
 ## 参考
 
