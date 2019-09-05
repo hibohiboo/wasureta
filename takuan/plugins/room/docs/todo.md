@@ -463,7 +463,177 @@ http://192.168.50.10:8080/
 [この時点のソース](https://github.com/hibohiboo/wasureta/tree/cd260d7aae50fff525bbd406d4d4e0167540b6f0/takuan/plugins/room)  
 
 
-## 2. actionCreatorで発行したactionをreducerに渡してstoreのstateを更新する
+## 2. actionでcommitを呼び出してmutationでstateを更新する
+Reduxの「2. actionCreatorで発行したactionをreducerに渡してstoreのstateを更新する」に該当する部分。
+
+### Store
+
+Reduxとほぼ同じ概念。
+アプリケーションで単一のもので、stateを保持する。
+
+* ストアの状態を直接変更することはできない。明示的にミューテーションをコミットすることによってのみ、ストアの状態を変更する。
+
+```ts:src/store/index.ts
+import Vue from 'vue';
+import Vuex from 'vuex';
+
+// ルートコンポーネントに store オプションを指定することですべての子コンポーネントにストアを注入。
+Vue.use(Vuex);
+
+// 各プロパティの詳細は後述
+
+export default new Vuex.Store({
+  state,
+  mutations,
+  getters,
+  actions,
+});
+```
+
+
+### State
+
+ReduxでいうところのStore。
+アプリケーションで単一のもので、state(状態)を保持する。
+
+```ts:src/store/index.ts
+export type Todo = {
+  id: number;
+  text: string;
+}
+
+export interface State {
+  todos: Todo[];
+}
+
+// 状態管理用state
+export const state: State = ({ todos: [] } as State);
+```
+
+### Getter
+ストアの状態を算出したいときに使える。
+例えば項目のリストをフィルタリングしたりカウントしたりできる。
+
+```ts:src/store/index.ts
+// getter関数の定義でプログラマが自由に決めることができるのは「関数名」と「戻り型」のみ。
+interface IGetters {
+  // 関数名:戻り型
+  todos: Todo[];
+  todosCount: number;
+}
+
+// getter関数の引数は固定のため、インデックスシグネチャを利用して全てのgetter関数にState型とgetter関数の型参照を定義
+type Getters<S, G, RS = {}, RG = {}> = {
+  // [K in keyof G]: 定義されている関数名を取得
+  // G[K] ： 取得した戻り型を付与
+  // RS,RG : 第三引数、第四引数については保留
+  [K in keyof G]: (state: S, getters: G, rootState: RS, rootGetters: RG) => G[K]
+}
+
+// 値の取得
+export const getters: Getters<State, IGetters> = {
+  todos: () => state.todos,
+  todosCount: () => state.todos.length,
+};
+```
+
+### Mutation
+
+実際に Vuex のストアの状態を変更できる唯一の方法。
+ReduxだとReducerがやっている役割。
+
+```ts:src/store/index.ts
+// 状態の変化
+export const ADD_TODO_TEXT = "ADD_TODO_TEXT";
+
+// mutation関数の戻り値はvoidで固定。自由に決めることができるのは「関数名」と「payload」
+interface IMutations {
+  // 関数名:payloadの型
+  [ADD_TODO_TEXT]: string;
+}
+type Mutations<S, M> = {
+  [K in keyof M]: (state: S, payload: M[K]) => void
+}
+
+// Vuexのストアの状態を変更できる唯一の方法
+export const mutations: Mutations<State, IMutations> = {
+  // 定数を関数名として使用できる ES2015 の算出プロパティ名（computed property name）機能を使用
+  [ADD_TODO_TEXT](state, text) {
+    const todo = {
+      id: 0,
+      text
+    };
+    if (state.todos.length !== 0) {
+      todo.id = state.todos[state.todos.length - 1].id + 1;
+    }
+    state.todos.push(todo);
+  },
+};
+```
+
+### Action
+
+* アクションは、状態を変更するのではなく、ミューテーションをコミットする。
+* アクションは任意の非同期処理を含むことができる。
+
+```ts
+// Actionはgetters・mutations・同じModuleの参照・Rootの参照を第一引数のcontextに持っている
+interface IActions {
+  // 関数名:payloadの型
+  asyncSetTodoText: string;
+}
+// Actionsの戻り値は保留してanyに。async functionを指定でき、同期的に書いてもライブラリ中でPromiseとなるため、複雑になる。
+type Actions<S, A, G = {}, M = {}, RS = {}, RG = {}> = {
+  [K in keyof A]: (ctx: Context<S, A, G, M, RS, RG>, payload: A[K]) => any
+}
+type Context<S, A, G, M, RS, RG> = {
+  commit: Commit<M>;
+  dispatch: Dispatch<A>;
+  state: S;
+  getters: G;
+  rootState: RS;
+  rootGetters: RG;
+}
+// Mで渡ってくるIMutationのkeyofで定義されている関数名を特定する。
+// keyof Mは '[ADD_TODO_TEXT]'
+// 関数型直前に <T extends keyof M>と付与することでTはkeyof Mで定義されているいずれかしか入力できなくなる
+// 第一引数に、これらいずれかの文字列が入力されたとき、第二引数の型がM[T]として確定する。
+// Lookup Typesを利用して引数同士の関連付けを行っている。
+type Commit<M> = <T extends keyof M>(type: T, payload?: M[T]) => void;
+type Dispatch<A> = <T extends keyof A>(type: T, payload?: A[T]) => any;
+
+// ミューテーションをコミットする。非同期処理を含むことができる。
+export const actions: Actions<
+  State,
+  IActions,
+  IGetters,
+  IMutations
+> = {
+  asyncSetTodoText({ commit }, text) {
+    commit(ADD_TODO_TEXT, text);
+  },
+};
+
+```
+
+### 実行
+
+```ts:src/main.ts
+import Vue from 'vue';
+import App from './App.vue';
+import store from './store'
+
+store.dispatch('asyncSetTodoText', 'Hello World!');
+store.dispatch('asyncSetTodoText', 'Hello World!!');
+
+console.log('todos', store.getters.todos);
+console.log('count', store.getters.todosCount);
+new Vue({
+  render: (h: (app: any) => Vue.VNode) => h(App),
+}).$mount('#app');
+```
+
+ブラウザでアクセスして、consoleに表示されているか確認する。
 
 
 ## 参考
@@ -477,6 +647,7 @@ http://192.168.50.10:8080/
 [vue.js todo mvc][*7]
 [vuex][*8]
 [vue cli TypeScript のサポート][*9]
+[Vue + Vuex を使ってみた感想と、Redux との比較][*10]
 
 [*1]:https://qiita.com/xkumiyu/items/9dfe51d2bcb3bdb06da3
 [*2]:https://qiita.com/hibohiboo/items/e344d2bbbaaab0ba8a66
@@ -487,3 +658,4 @@ http://192.168.50.10:8080/
 [*7]:https://jp.vuejs.org/v2/examples/todomvc.html
 [*8]:https://vuex.vuejs.org/ja/guide/state.html
 [*9]:https://jp.vuejs.org/v2/guide/typescript.html#%E5%9F%BA%E6%9C%AC%E7%9A%84%E3%81%AA%E4%BD%BF%E3%81%84%E6%96%B9
+[*10]:https://torounit.com/blog/2016/11/29/2495/
