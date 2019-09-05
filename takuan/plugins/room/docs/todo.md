@@ -459,6 +459,10 @@ h1 {
 
 http://192.168.50.10:8080/
 
+
+[この時点のソース](https://github.com/hibohiboo/wasureta/tree/cd260d7aae50fff525bbd406d4d4e0167540b6f0/takuan/plugins/room)  
+
+
 ## 2. actionCreatorで発行したactionをreducerに渡してstoreのstateを更新する
 
 
