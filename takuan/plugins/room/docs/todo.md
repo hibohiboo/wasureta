@@ -830,6 +830,65 @@ export default class App extends Vue {
 
 フォームからtodoを追加するために、AddTodoコンポーネントを作る。
 
+```vue:src/components/AddTodo.vue
+<template>
+  <div>
+    <input type="text" v-model="text" />
+    <button @click="addTodo">Add Todo</button>
+  </div>
+</template>
+<script lang="ts">
+import { Prop, Component, Vue } from "vue-property-decorator";
+@Component
+export default class AddTodo extends Vue {
+  @Prop({})
+  public text: string;
+
+  public addTodo() {
+    this.$store.dispatch("asyncSetTodoText", this.text);
+  }
+}
+</script>
+```
+
+AppコンポーネントにAddTodoコンポーネントを追加する。
+
+```diff
+<template>
+  <div id="app">
+    <AddTodo />
++    <TodoList :todos="todos" />
+  </div>
+</template>
+
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+import TodoList from "./components/TodoList.vue";
++ import AddTodo from "./components/AddTodo.vue";
+
+@Component({
+  components: {
+    TodoList
++    , AddTodo
+  }
+})
+export default class App extends Vue {
+  get todos() {
+    return this.$store.getters.todos;
+  }
+}
+</script>
+
+<style>
+#app {
+  text-align: center;
+  margin-top: 60px;
+}
+</style>
+```
+
+## 次回
+Todoの完了・未完了を切り替える「Toggle Todo」機能を実装。
 
 
 ## 参考
@@ -847,6 +906,7 @@ export default class App extends Vue {
 [Vue.js と TypeScript で Todo リストアプリを実装した][*11]
 [【Nuxt.js】Todoリストで理解するTypeScriptでVuex入門][*12]
 [Vue.js+TypeScriptで外部APIを使ったTODOリストを作ってみた][*13]
+[Vue.js + Vuexでデータが循環する全体像を図解してみた][*14]
 
 [*1]:https://qiita.com/xkumiyu/items/9dfe51d2bcb3bdb06da3
 [*2]:https://qiita.com/hibohiboo/items/e344d2bbbaaab0ba8a66
@@ -861,3 +921,4 @@ export default class App extends Vue {
 [*11]:https://qiita.com/Nossa/items/b2e38bea4bda87a1de12
 [*12]:https://qiita.com/kawa64372358/items/7f84d8b1b765837ae9dd
 [*13]:https://taisablog.com/archives/1669
+[*14]:https://qiita.com/m_mitsuhide/items/f16d988ec491b7800ace
