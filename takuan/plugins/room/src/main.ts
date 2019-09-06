@@ -2,8 +2,8 @@ import Vue from 'vue';
 import App from './App.vue';
 import store from './store';
 
-store.dispatch('asyncSetTodoText', 'Hello World!');
-store.dispatch('asyncSetTodoText', 'Hello World!!');
+store.dispatch('todo/asyncSetTodoText', 'Hello World!');
+store.dispatch('todo/asyncSetTodoText', 'Hello World!!');
 
 console.log('todos', store.getters.todos);
 console.log('count', store.getters.todosCount);

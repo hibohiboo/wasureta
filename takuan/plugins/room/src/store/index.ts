@@ -44,9 +44,14 @@ const actions: Actions<
   },
 };
 
-export default new Vuex.Store({
+const todoModule = {
+  namespaced: true,
   state: todoState,
   mutations,
   getters,
   actions,
+}
+
+export default new Vuex.Store({
+  modules: { todo: todoModule }
 });

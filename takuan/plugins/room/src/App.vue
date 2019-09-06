@@ -6,19 +6,19 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import TodoList from './components/TodoList.vue';
-import AddTodo from './components/AddTodo.vue';
+import { Component, Vue } from "vue-property-decorator";
+import TodoList from "./components/TodoList.vue";
+import AddTodo from "./components/AddTodo.vue";
 
 @Component({
   components: {
     TodoList,
-    AddTodo,
-  },
+    AddTodo
+  }
 })
 export default class App extends Vue {
   get todos() {
-    return this.$store.getters.todos;
+    return this.$store.getters["todo/todos"];
   }
 }
 </script>

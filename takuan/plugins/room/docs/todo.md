@@ -697,11 +697,11 @@ import { State, IGetters, IMutations, IActions, ADD_TODO_TEXT } from './todoType
 
 Vue.use(Vuex);
 
-const state: State = ({ todos: [] } as State);
+const todoState: State = ({ todos: [] } as State);
 
 const getters: Getters<State, IGetters> = {
-  todos: () => state.todos,
-  todosCount: () => state.todos.length,
+  todos: (state) => state.todos,
+  todosCount: (state) => state.todos.length,
 };
 
 const mutations: Mutations<State, IMutations> = {
@@ -729,7 +729,7 @@ const actions: Actions<
 };
 
 export default new Vuex.Store({
-  state,
+  state : todoState,
   mutations,
   getters,
   actions,
