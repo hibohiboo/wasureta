@@ -12,7 +12,8 @@ export interface IGetters {
   todosCount: number;
 }
 
-export const ADD_TODO_TEXT = "ADD_TODO_TEXT";
+export const ADD_TODO_TEXT = 'ADD_TODO_TEXT';
+export const DONE_TODO_TEXT = 'DONE_TODO_TEXT';
 
 // mutations向け、mutation関数のpayloadを定義
 export interface IMutations {

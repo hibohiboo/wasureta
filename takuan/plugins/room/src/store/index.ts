@@ -1,27 +1,29 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { Getters, Mutations, Actions } from './types';
-import { State, IGetters, IMutations, IActions, ADD_TODO_TEXT } from './todoType';
+import {
+  State, IGetters, IMutations, IActions, ADD_TODO_TEXT,
+} from './todoType';
 
 // ルートコンポーネントに store オプションを指定することですべての子コンポーネントにストアを注入。
 Vue.use(Vuex);
 
 // 状態管理用state
-export const state: State = ({ todos: [] } as State);
+const todoState: State = ({ todos: [] } as State);
 
 // 値の取得
-export const getters: Getters<State, IGetters> = {
-  todos: () => state.todos,
-  todosCount: () => state.todos.length,
+const getters: Getters<State, IGetters> = {
+  todos: (state) => state.todos,
+  todosCount: (state) => state.todos.length,
 };
 
 // Vuexのストアの状態を変更できる唯一の方法
-export const mutations: Mutations<State, IMutations> = {
+const mutations: Mutations<State, IMutations> = {
   // 定数を関数名として使用できる ES2015 の算出プロパティ名（computed property name）機能を使用
   [ADD_TODO_TEXT](state, text) {
     const todo = {
       id: 0,
-      text
+      text,
     };
     if (state.todos.length !== 0) {
       todo.id = state.todos[state.todos.length - 1].id + 1;
@@ -31,7 +33,7 @@ export const mutations: Mutations<State, IMutations> = {
 };
 
 // ミューテーションをコミットする。非同期処理を含むことができる。
-export const actions: Actions<
+const actions: Actions<
   State,
   IActions,
   IGetters,
@@ -43,7 +45,7 @@ export const actions: Actions<
 };
 
 export default new Vuex.Store({
-  state,
+  state: todoState,
   mutations,
   getters,
   actions,

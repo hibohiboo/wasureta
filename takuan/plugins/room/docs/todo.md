@@ -869,7 +869,7 @@ import TodoList from "./components/TodoList.vue";
 @Component({
   components: {
     TodoList
-+    , AddTodo
++   AddTodo
   }
 })
 export default class App extends Vue {
@@ -878,14 +878,14 @@ export default class App extends Vue {
   }
 }
 </script>
-
-<style>
-#app {
-  text-align: center;
-  margin-top: 60px;
-}
-</style>
 ```
+
+[この時点のソース](https://github.com/hibohiboo/wasureta/tree/ef5a113c2a3ebf40a31f5413edec3930f438bbba/takuan/plugins/room)  
+
+## モジュール化
+
+Vuexの機能でもう一つ、モジュールを使っていなかったので試してみる。
+Vuex ではストアをモジュールに分割できるようになっている。
 
 ## 次回
 Todoの完了・未完了を切り替える「Toggle Todo」機能を実装。

@@ -5,9 +5,11 @@
   </ul>
 </template>
 <script lang="ts">
-import { Prop, Component, Vue, Emit } from "vue-property-decorator";
-import Todo from "./Todo.vue";
-import { TodoItem } from "../models/TodoItem";
+import {
+  Prop, Component, Vue, Emit,
+} from 'vue-property-decorator';
+import Todo from './Todo.vue';
+import { TodoItem } from '../models/TodoItem';
 
 @Component({ components: { Todo } })
 export default class TodoList extends Vue {
