@@ -497,13 +497,13 @@ ReduxでいうところのStore。
 アプリケーションで単一のもので、state(状態)を保持する。
 
 ```ts:src/store/index.ts
-export type Todo = {
+export type TodoItem = {
   id: number;
   text: string;
 }
 
 export interface State {
-  todos: Todo[];
+  todos: TodoItem[];
 }
 
 // 状態管理用state
@@ -518,7 +518,7 @@ export const state: State = ({ todos: [] } as State);
 // getter関数の定義でプログラマが自由に決めることができるのは「関数名」と「戻り型」のみ。
 interface IGetters {
   // 関数名:戻り型
-  todos: Todo[];
+  todos: TodoItem[];
   todosCount: number;
 }
 
@@ -639,6 +639,14 @@ new Vue({
 
 ### 定義の整理
 
+```ts:store/models/TodoItem.ts
+export type TodoItem = {
+  id: number;
+  text: string;
+};
+```
+
+
 ```ts:store/types.ts
 type Getters<S, G, RS = {}, RG = {}> = {
   [K in keyof G]: (state: S, getters: G, rootState: RS, rootGetters: RG) => G[K]
@@ -662,16 +670,12 @@ type Actions<S, A, G = {}, M = {}, RS = {}, RG = {}> = {
 ```
 
 ```ts:store/todoTypes.ts
-export type Todo = {
-  id: number;
-  text: string;
-}
 export interface State {
-  todos: Todo[];
+  todos: TodoItem[];
 }
 // getters向け、getter関数の戻り型を定義
 export interface IGetters {
-  todos: Todo[];
+  todos: TodoItem[];
   todosCount: number;
 }
 export const ADD_TODO_TEXT = "ADD_TODO_TEXT";
@@ -681,11 +685,11 @@ export interface IMutations {
 }
 // actions向け、action関数のpayloadを定義
 export interface IActions {
-  asyncSetTodoText: string;
+  asyncSetTodoItemText: string;
 }
 ```
 
-```ts
+```ts:src/store/index.ts
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { Getters, Mutations, Actions } from './types';
@@ -719,7 +723,7 @@ const actions: Actions<
   IGetters,
   IMutations
 > = {
-  asyncSetTodoText({ commit }, text) {
+  asyncSetTodoItemText({ commit }, text) {
     commit(ADD_TODO_TEXT, text);
   },
 };
@@ -731,9 +735,88 @@ export default new Vuex.Store({
   actions,
 });
 ```
+[この時点のソース](https://github.com/hibohiboo/wasureta/tree/70a2807d5eb5f23f7fa3125e4633fd9a02e17d57/takuan/plugins/room)  
 
 ## 3. storeで保持したstateをViewで表示する
 
+ルートインスタンスに store オプションを渡すことで、渡されたストアをルートの全ての子コンポーネントに注入する。
+これは this.$store で各コンポーネントから参照することができる。
+
+```diff:src/main.ts
+new Vue({
+  render: (h: (app: any) => Vue.VNode) => h(App),
++  store,
+}).$mount('#app');
+```
+
+### ToDoコンポーネントとToDoListコンポーネントを作る
+
+Todoコンポーネントは、propとして渡されてきたtodoのtextを表示するだけ。
+
+```vue:src/components/Todo.vue
+<template>
+  <li>{{text}}</li>
+</template>
+
+<script lang="ts">
+import { Component, Prop, Vue } from "vue-property-decorator";
+import { TodoItem } from "../models/TodoItem";
+
+@Component
+export default class Todo extends Vue {
+  @Prop()
+  public todo: TodoItem;
+  get text() {
+    return this.todo.text;
+  }
+}
+</script>
+```
+
+TodoListコンポーネントは、todosの各要素をTodoコンポーネントに
+渡す。ここで、配列としてコンポーネントを複数生成するときkeyが必要になる。
+
+```vue:src/components/TodoList.vue
+
+<template>
+  <ul class="todos">
+    <Todo v-for="todo in todos" :key="todo.id" :todo="todo" />
+  </ul>
+</template>
+<script lang="ts">
+import { Prop, Component, Vue, Emit } from "vue-property-decorator";
+import Todo from "./Todo.vue";
+
+@Component({ components: { Todo } })
+export default class TodoList extends Vue {
+  get todos() {
+    return this.$store.getters.todos;
+  }
+}
+</script>
+```
+
+### ブラウザに表示
+
+```ts:src/App.vue
+<template>
+  <div id="app">
+    <TodoList />
+  </div>
+</template>
+
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+import TodoList from "./components/TodoList.vue";
+
+@Component({
+  components: {
+    TodoList
+  }
+})
+export default class App extends Vue {}
+</script>
+```
 
 ## 参考
 
@@ -747,6 +830,9 @@ export default new Vuex.Store({
 [vuex][*8]
 [vue cli TypeScript のサポート][*9]
 [Vue + Vuex を使ってみた感想と、Redux との比較][*10]
+[Vue.js と TypeScript で Todo リストアプリを実装した][*11]
+[【Nuxt.js】Todoリストで理解するTypeScriptでVuex入門][*12]
+[Vue.js+TypeScriptで外部APIを使ったTODOリストを作ってみた][*13]
 
 [*1]:https://qiita.com/xkumiyu/items/9dfe51d2bcb3bdb06da3
 [*2]:https://qiita.com/hibohiboo/items/e344d2bbbaaab0ba8a66
@@ -758,3 +844,6 @@ export default new Vuex.Store({
 [*8]:https://vuex.vuejs.org/ja/guide/state.html
 [*9]:https://jp.vuejs.org/v2/guide/typescript.html#%E5%9F%BA%E6%9C%AC%E7%9A%84%E3%81%AA%E4%BD%BF%E3%81%84%E6%96%B9
 [*10]:https://torounit.com/blog/2016/11/29/2495/
+[*11]:https://qiita.com/Nossa/items/b2e38bea4bda87a1de12
+[*12]:https://qiita.com/kawa64372358/items/7f84d8b1b765837ae9dd
+[*13]:https://taisablog.com/archives/1669

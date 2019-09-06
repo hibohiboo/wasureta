@@ -3,3 +3,4 @@ documentation.json
 *.log
 node_modules
 package-lock.json
+tsconfig.json

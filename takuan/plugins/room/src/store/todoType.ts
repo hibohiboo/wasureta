@@ -1,16 +1,14 @@
-export type Todo = {
-  id: number;
-  text: string;
-}
+
+import { TodoItem } from '../models/TodoItem';
 
 export interface State {
-  todos: Todo[];
+  todos: TodoItem[];
 }
 
 // getters向け、getter関数の戻り型を定義
 export interface IGetters {
   // 関数名:戻り型
-  todos: Todo[];
+  todos: TodoItem[];
   todosCount: number;
 }
 

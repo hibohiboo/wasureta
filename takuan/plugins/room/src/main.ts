@@ -9,4 +9,5 @@ console.log('todos', store.getters.todos);
 console.log('count', store.getters.todosCount);
 new Vue({
   render: (h: (app: any) => Vue.VNode) => h(App),
+  store,
 }).$mount('#app');
