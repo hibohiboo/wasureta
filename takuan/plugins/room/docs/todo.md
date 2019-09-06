@@ -773,11 +773,10 @@ export default class Todo extends Vue {
 </script>
 ```
 
-TodoListコンポーネントは、todosの各要素をTodoコンポーネントに
-渡す。ここで、配列としてコンポーネントを複数生成するときkeyが必要になる。
+TodoListコンポーネントは、todosの各要素をTodoコンポーネントに渡す。
+ここで、配列としてコンポーネントを複数生成するときkeyが必要になる。
 
 ```vue:src/components/TodoList.vue
-
 <template>
   <ul class="todos">
     <Todo v-for="todo in todos" :key="todo.id" :todo="todo" />
@@ -786,22 +785,25 @@ TodoListコンポーネントは、todosの各要素をTodoコンポーネント
 <script lang="ts">
 import { Prop, Component, Vue, Emit } from "vue-property-decorator";
 import Todo from "./Todo.vue";
+import { TodoItem } from "../models/TodoItem";
 
 @Component({ components: { Todo } })
 export default class TodoList extends Vue {
-  get todos() {
-    return this.$store.getters.todos;
-  }
+  @Prop()
+  public todos: TodoItem[];
 }
 </script>
 ```
 
 ### ブラウザに表示
 
+Hellow Worldを表示させているだけのAppコンポーネントにTodoListコンポーネントを表示させる。
+ここでstoreから値を取得してTodoListコンポーネントに与えている。
+
 ```ts:src/App.vue
 <template>
   <div id="app">
-    <TodoList />
+    <TodoList :todos="todos" />
   </div>
 </template>
 
@@ -814,9 +816,21 @@ import TodoList from "./components/TodoList.vue";
     TodoList
   }
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  get todos() {
+    return this.$store.getters.todos;
+  }
+}
 </script>
 ```
+
+[この時点のソース](https://github.com/hibohiboo/wasureta/tree/7a644357181dfb6e755d0a8863b151fe93fffab4/takuan/plugins/room)  
+
+## 4. フォームからtodoを追加
+
+フォームからtodoを追加するために、AddTodoコンポーネントを作る。
+
+
 
 ## 参考
 

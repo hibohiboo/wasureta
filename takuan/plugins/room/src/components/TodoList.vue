@@ -11,8 +11,7 @@ import { TodoItem } from "../models/TodoItem";
 
 @Component({ components: { Todo } })
 export default class TodoList extends Vue {
-  get todos() {
-    return this.$store.getters.todos;
-  }
+  @Prop()
+  public todos: TodoItem[];
 }
 </script>

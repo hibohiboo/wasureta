@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <TodoList />
+    <TodoList :todos="todos" />
   </div>
 </template>
 
@@ -13,7 +13,11 @@ import TodoList from "./components/TodoList.vue";
     TodoList
   }
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  get todos() {
+    return this.$store.getters.todos;
+  }
+}
 </script>
 
 <style>
