@@ -880,12 +880,64 @@ export default class App extends Vue {
 </script>
 ```
 
-[この時点のソース](https://github.com/hibohiboo/wasureta/tree/ef5a113c2a3ebf40a31f5413edec3930f438bbba/takuan/plugins/room)  
+[この時点のソース](https://github.com/hibohiboo/wasureta/tree/8b56225fb8367a8fa66b9a90376d0636111c3df4/takuan/plugins/room)  
 
 ## モジュール化
 
 Vuexの機能でもう一つ、モジュールを使っていなかったので試してみる。
 Vuex ではストアをモジュールに分割できるようになっている。
+
+```diff:src/store/index.ts
+- export default new Vuex.Store({
+-    state: todoState,
+-    mutations,
+-    getters,
+-    actions,
+- });
++ const todoModule = {
++    namespaced: true,
++    state: todoState,
++    mutations,
++    getters,
++    actions,
++ }
++
++ export default new Vuex.Store({
++   modules: { todo: todoModule }
++ });
+```
+
+使う側では、名前空間を区切って使うようにする。
+
+```diff:src/main.ts
+-store.dispatch('asyncSetTodoText', 'Hello World!');
+-store.dispatch('asyncSetTodoText', 'Hello World!!');
++store.dispatch('todo/asyncSetTodoText', 'Hello World!');
++store.dispatch('todo/asyncSetTodoText', 'Hello World!!');
+console.log('todos', store.getters.todos);
+console.log('count', store.getters.todosCount);
+new Vue({
+  render: (h: (app: any) => Vue.VNode) => h(App),
+  store,
+}).$mount('#app');
+```
+
+```diff:src/App.vue
+ export default class App extends Vue {
+   get todos() {
+-    return this.$store.getters.todos;
++    return this.$store.getters["todo/todos"];
+   }
+```
+
+```diff:src/components/AddTodo.vue
+   public addTodo() {
+-    this.$store.dispatch('asyncSetTodoText', this.text);
++    this.$store.dispatch("todo/asyncSetTodoText", this.text);
+   }
+```
+
+[この時点のソース](https://github.com/hibohiboo/wasureta/tree/5dd2fb4a6765778f24bf3a377023b369e25330e8/takuan/plugins/room)  
 
 ## 次回
 Todoの完了・未完了を切り替える「Toggle Todo」機能を実装。

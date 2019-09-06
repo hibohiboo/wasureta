@@ -1,5 +1,5 @@
 
-import { TodoItem } from '../models/TodoItem';
+import { TodoItem } from '../../models/TodoItem';
 
 export interface State {
   todos: TodoItem[];
