@@ -1008,7 +1008,67 @@ export default {
 };
 ```
 
+型定義ファイルをsrc/typesフォルダにまとめる。
+また、vuexのStoreの拡張を行う。
+vscodeで行ったが、定義後再起動しないと型が反映されないトラブルがあった。
 
+```ts:src/types/shims-vuex.d.ts
+import 'vuex';
+import * as Todo from '../store/todo/types';
+
+declare module 'vuex' {
+  type Getters<S, G, RS = {}, RG = {}> = {
+    [K in keyof G]: (state: S, getters: G, rootState: RS, rootGetters: RG) => G[K]
+  }
+  type Mutations<S, M> = {
+    [K in keyof M]: (state: S, payload: M[K]) => void
+  }
+  type ExCommit<M> = <T extends keyof M>(type: T, payload?: M[T]) => void;
+  type ExDispatch<A> = <T extends keyof A>(type: T, payload?: A[T]) => any;
+  type ExActionContext<S, A, G, M, RS, RG> = {
+    commit: ExCommit<M>;
+    dispatch: ExDispatch<A>;
+    state: S;
+    getters: G;
+    rootState: RS;
+    rootGetters: RG;
+  }
+  type Actions<S, A, G = {}, M = {}, RS = {}, RG = {}> = {
+    [K in keyof A]: (ctx: ExActionContext<S, A, G, M, RS, RG>, payload: A[K]) => any
+  }
+  type RootGetters = Todo.RootGetter; // 増えたら、& Hoge.RootGetter のように、Intersection Typesで連結していく。
+  interface ExStore extends Store<{}> {
+    // ここに拡張型を追加していく。
+    getters: RootGetters
+  }
+}
+```
+
+```diff:src/App.vue
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
++ import * as Vuex from 'vuex';
+import TodoList from './components/TodoList.vue';
+import AddTodo from './components/AddTodo.vue';
+
+@Component({
+  components: {
+    TodoList,
+    AddTodo,
+  },
+})
+export default class App extends Vue {
++  $store!: Vuex.ExStore;
+
+  get todos() {
+    return this.$store.getters['todo/todos'];
+  }
+}
+</script>
+```
+
+
+[この時点のソース](https://github.com/hibohiboo/wasureta/tree/43ba6c097aaeeffda595e3f4b626a3cbba506e70/takuan/plugins/room)  
 
 ## 次回
 Todoの完了・未完了を切り替える「Toggle Todo」機能を実装。
