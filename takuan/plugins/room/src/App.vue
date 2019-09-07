@@ -7,6 +7,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import * as Vuex from 'vuex';
 import TodoList from './components/TodoList.vue';
 import AddTodo from './components/AddTodo.vue';
 
@@ -17,6 +18,8 @@ import AddTodo from './components/AddTodo.vue';
   },
 })
 export default class App extends Vue {
+  $store!: Vuex.ExStore;
+
   get todos() {
     return this.$store.getters['todo/todos'];
   }

@@ -1,4 +1,6 @@
 import 'vuex';
+import * as Todo from '../takuan/plugins/room/src/store/todo/types';
+
 declare module 'vuex' {
   type Getters<S, G, RS = {}, RG = {}> = {
     [K in keyof G]: (state: S, getters: G, rootState: RS, rootGetters: RG) => G[K]
@@ -19,8 +21,10 @@ declare module 'vuex' {
   type Actions<S, A, G = {}, M = {}, RS = {}, RG = {}> = {
     [K in keyof A]: (ctx: ExActionContext<S, A, G, M, RS, RG>, payload: A[K]) => any
   }
+  type RootGetters = Todo.RootGetter; // 増えたら、& Hoge.RootGetter のように、Intersection Typesで連結していく。
   interface ExStore extends Store<{}> {
     // ここに拡張型を追加していく。
+    getters: RootGetters
   }
 
 }
