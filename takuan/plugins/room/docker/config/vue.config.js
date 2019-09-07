@@ -7,6 +7,7 @@ module.exports = {
       firebase: 'firebase',
       moment: 'moment',
       vue: 'Vue',
+      vuex: 'Vuex',
     },
   },
   devServer: {
