@@ -1,7 +1,7 @@
 
 import { Getters, Mutations, Actions } from '../types';
 import {
-  State, IGetters, IMutations, IActions, ADD_TODO_TEXT,
+  State, IGetters, IMutations, IActions,
 } from './types';
 
 
@@ -16,8 +16,7 @@ const getters: Getters<State, IGetters> = {
 
 // Vuexのストアの状態を変更できる唯一の方法
 const mutations: Mutations<State, IMutations> = {
-  // 定数を関数名として使用できる ES2015 の算出プロパティ名（computed property name）機能を使用
-  [ADD_TODO_TEXT](state, text) {
+  addTodoText(state, text) {
     const todo = {
       id: 0,
       text,
@@ -37,7 +36,7 @@ const actions: Actions<
   IMutations
 > = {
   asyncSetTodoText({ commit }, text) {
-    commit(ADD_TODO_TEXT, text);
+    commit('addTodoText', text);
   },
 };
 

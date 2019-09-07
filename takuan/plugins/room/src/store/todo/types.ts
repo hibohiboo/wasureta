@@ -12,13 +12,20 @@ export interface IGetters {
   todosCount: number;
 }
 
-export const ADD_TODO_TEXT = 'ADD_TODO_TEXT';
-export const DONE_TODO_TEXT = 'DONE_TODO_TEXT';
+export interface RootGetter {
+  'todo/todos': IGetters['todos'];
+  'todo/todosCount': IGetters['todosCount'];
+}
 
 // mutations向け、mutation関数のpayloadを定義
 export interface IMutations {
   // 関数名:payloadの型
-  [ADD_TODO_TEXT]: string;
+  addTodoText: string;
+}
+
+export interface RootMutations {
+  // 関数名:payloadの型
+  'todo/addTodoText': IMutations['addTodoText'];
 }
 
 // actions向け、action関数のpayloadを定義
@@ -26,3 +33,10 @@ export interface IActions {
   // 関数名:payloadの型
   asyncSetTodoText: string;
 }
+
+export interface RootActions {
+  // 関数名:payloadの型
+  'todo/asyncSetTodoText': IActions['asyncSetTodoText'];
+}
+
+// actions
