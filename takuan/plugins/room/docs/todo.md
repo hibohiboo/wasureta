@@ -1512,6 +1512,21 @@ storeの初期値としてSHOW_ALLが格納されており、setVisibilityFilter
 
 [この時点のソース](https://github.com/hibohiboo/wasureta/tree/3361cd303f4422743b202f58421ff297f68be205/takuan/plugins/room)  
 
+確認するときに、storeのコード補完が効いていなかったので修正。
+
+```diff:src/store/index.ts
+import Vue from 'vue';
+import * as Vuex from 'vuex';
+import todo from './todo';
+// ルートコンポーネントに store オプションを指定することですべての子コンポーネントにストアを注入。
+Vue.use(Vuex);
+
+export default new Vuex.Store({
+  modules: { todo },
+- });
++ }) as Vuex.ExStore;
+```
+
 ## 4. フィルターの値によってviewを変更（手動でフィルターを操作して動作確認）
 
 ```diff
@@ -1530,8 +1545,10 @@ const getters: Getters<State, IGetters> = {
   todosCount: state => state.todos.length,
   visibilityFilter: state => state.visibilityFilter,
 };
-
 ```
+
+[この時点のソース](https://github.com/hibohiboo/wasureta/tree/3361cd303f4422743b202f58421ff297f68be205/takuan/plugins/room)  
+
 
 ## 参考
 [Redux ExampleのTodo ListをはじめからていねいにVue.jsで(1)][*2-1]
