@@ -1670,17 +1670,48 @@ export default class Link extends Vue {
 * storeに格納されているフィルターの値が更新される
 * その値にしたがってviewが書き換わる
 
-[この時点のソース](https://github.com/hibohiboo/wasureta/tree/385308c0f4d3f58c028bb9c8928e64e74ded07a7/takuan/plugins/room)  
+[この時点のソース](https://github.com/hibohiboo/wasureta/tree/6d11ac1635ac37c082fbae027b8a8f2ec85a5b30/takuan/plugins/room)  
 
-## activeな状態なリンクを押せないようにする
+## activeな状態のリンクを押せないようにする
 
+```diff:src/componetns/Link.vue
+<template>
++  <span v-if="active">
++    <slot></slot>
++  </span>
+-  <a href="#" v-on:click="onClick">
++  <a href="#" v-on:click="onClick" v-else>
+    <slot></slot>
+  </a>
+</template>
+
+<script lang="ts">
+import { Prop, Component, Vue } from "vue-property-decorator";
+import { VisibilityFilter } from "../store/todo/types";
+import * as Vuex from "vuex";
+
+@Component
+export default class Link extends Vue {
+  ...
+
++  get active() {
++    return this.$store.getters["todo/visibilityFilter"] === this.filter;
++  }
+   ...
+}
+</script>
+```
+
+[この時点のソース](https://github.com/hibohiboo/wasureta/tree/6d11ac1635ac37c082fbae027b8a8f2ec85a5b30/takuan/plugins/room)  
 
 
 ### 参考
 [Redux ExampleのTodo ListをはじめからていねいにVue.jsで(1)][*2-1]
 [Redux ExampleのTodo Listをはじめからていねいに(2)][*2-2]
 [Redux ExampleのTodo Listをはじめからていねいに(3)][*2-3]
+[ToDoリストを作りながら学習しよう！][*2-4]
 
 [*2-1]:https://qiita.com/hibohiboo/items/e3030350ecc83cb2c3bc
 [*2-2]:https://qiita.com/xkumiyu/items/e7e1e8ed6a5d6a6e20dd
 [*2-3]:https://qiita.com/xkumiyu/items/1ba476b8043b71561f52
+[*2-4]:https://cr-vue.mio3io.com/tutorials/#%E3%81%93%E3%81%AE%E3%83%81%E3%83%A5%E3%83%BC%E3%83%88%E3%83%AA%E3%82%A2%E3%83%AB%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6
