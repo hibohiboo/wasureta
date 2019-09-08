@@ -1236,6 +1236,91 @@ export default class Todo extends Vue {
 これで、stateで保持されるtodoのcompletedがtrueのとき取り消し線がつく。
 一時的にsrc/store/todo/index.tsのcompleted: falseをtrueに変えて動作確認をする。
 
+
+[この時点のソース](https://github.com/hibohiboo/wasureta/tree/16fe695bd270ef99a84778ed8a75f67a8d0a74a4/takuan/plugins/room)  
+
+### actionCreatorからcompleted要素を操作する
+次に、action経由で取り消し線のON/OFFを行うために、actionCreatorとmutationの作成を行う。
+必要となるのはidだけ。
+addTodoTextとasyncSetTodoTextが長く感じてきたのでaddTodoに修正をついでに行った。
+
+```diff:src/store/todo/types.ts
+export interface IActions {
+  addTodo: string;
++  toggleTodo: number;
+}
+
+export interface RootActions {
+  'todo/addTodo': IActions['addTodo'];
++  'todo/toggleTodo': IActions['toggleTodo'];
+}
+```
+
+```diff:src/store/todo/index.ts
+const actions: Actions<
+  State,
+  IActions,
+  IGetters,
+  IMutations
+> = {
+  async addTodo({ commit }, text) {
+    commit('addTodo', text);
+  },
++  async toggleTodo({ commit }, id) {
++    commit('toggleTodo', id);
++  },
+};
+```
+
+mutationではpayloadで受け取ったidのcompletedを反転させる。
+
+```diff:src/store/todo/types.ts
+export interface IMutations {
+  addTodo: string;
++  toggleTodo: number;
+}
+export interface RootMutations {
+  'todo/addTodo': IMutations['addTodo'];
++  'todo/toggleTodo': IMutations['toggleTodo'];
+}
+```
+
+```diff:src/store/todo/index.ts
+const mutations: Mutations<State, IMutations> = {
+  addTodo(state, text) {
+    const todo = {
+      id: 0,
+      text,
+      completed: false,
+    };
+    if (state.todos.length !== 0) {
+      todo.id = state.todos[state.todos.length - 1].id + 1;
+    }
+    state.todos.push(todo);
+  },
++  toggleTodo(state, id) {
++    const target = state.todos.find(todo => todo.id === id);
++    if (target === undefined) {
++      throw new Error(`not found id:${id}`);
++    }
++    target.completed = !target.completed;
++  }
+};
+```
+
+main.tsからtoggleTodoを使って動作確認。
+
+```diff:src/main.ts
+store.dispatch('todo/addTodo', 'Hello World!');
+store.dispatch('todo/addTodo', 'Hello World!!');
++ store.dispatch('todo/toggleTodo', 0);
+
+new Vue({
+  render: (h: (app: any) => Vue.VNode) => h(App),
+  store,
+}).$mount('#app');
+```
+
 ## 参考
 [Redux ExampleのTodo ListをはじめからていねいにVue.jsで(1)][*2-1]
 [Redux ExampleのTodo Listをはじめからていねいに(2)][*2-2]

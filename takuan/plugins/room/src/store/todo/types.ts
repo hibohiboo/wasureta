@@ -20,23 +20,28 @@ export interface RootGetter {
 // mutations向け、mutation関数のpayloadを定義
 export interface IMutations {
   // 関数名:payloadの型
-  addTodoText: string;
+  addTodo: string;
+  toggleTodo: number;
 }
 
 export interface RootMutations {
   // 関数名:payloadの型
-  'todo/addTodoText': IMutations['addTodoText'];
+  'todo/addTodo': IMutations['addTodo'];
+  'todo/toggleTodo': IMutations['toggleTodo'];
 }
 
 // actions向け、action関数のpayloadを定義
 export interface IActions {
   // 関数名:payloadの型
-  asyncSetTodoText: string;
+  addTodo: string;
+  toggleTodo: number;
 }
 
 export interface RootActions {
   // 関数名:payloadの型
-  'todo/asyncSetTodoText': IActions['asyncSetTodoText'];
+  'todo/addTodo': IActions['addTodo'];
+  'todo/toggleTodo': IActions['toggleTodo'];
+
 }
 
 // actions

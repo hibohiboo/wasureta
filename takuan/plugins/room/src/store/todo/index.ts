@@ -16,7 +16,7 @@ const getters: Getters<State, IGetters> = {
 
 // Vuexのストアの状態を変更できる唯一の方法
 const mutations: Mutations<State, IMutations> = {
-  addTodoText(state, text) {
+  addTodo(state, text) {
     const todo = {
       id: 0,
       text,
@@ -27,6 +27,13 @@ const mutations: Mutations<State, IMutations> = {
     }
     state.todos.push(todo);
   },
+  toggleTodo(state, id) {
+    const target = state.todos.find(todo => todo.id === id);
+    if (target === undefined) {
+      throw new Error(`not found id:${id}`);
+    }
+    target.completed = !target.completed;
+  }
 };
 
 // ミューテーションをコミットする。非同期処理を含むことができる。
@@ -36,8 +43,11 @@ const actions: Actions<
   IGetters,
   IMutations
 > = {
-  asyncSetTodoText({ commit }, text) {
-    commit('addTodoText', text);
+  async addTodo({ commit }, text) {
+    commit('addTodo', text);
+  },
+  async toggleTodo({ commit }, id) {
+    commit('toggleTodo', id);
   },
 };
 
