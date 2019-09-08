@@ -1618,8 +1618,58 @@ export default class App extends Vue {
 ```
 
 これで、とりあえずリンクが表示された。
-[この時点のソース](https://github.com/hibohiboo/wasureta/tree/e20f9e940edfdaa575b2b4ffb0ae1580413527ce/takuan/plugins/room)  
+[この時点のソース](https://github.com/hibohiboo/wasureta/tree/85c88effc93f007449a3b0859e9789a568f44136/takuan/plugins/room)  
 
+
+#### Linkコンテナをクリックしたときにdispatchを呼び出す。
+
+```diff
+
+<template>
+-  <a href="#">
++  <a href="#" v-on:click="onClick">
+    <slot></slot>
+  </a>
+</template>
+<script lang="ts">
+import { Prop, Component, Vue } from "vue-property-decorator";
+import { VisibilityFilter } from "../store/todo/types";
++ import * as Vuex from "vuex";
+
+@Component
+export default class Link extends Vue {
++   $store!: Vuex.ExStore;
+
+  @Prop()
+  public filter: VisibilityFilter;
+
++   onClick() {
++     this.$store.dispatch("todo/setVisibilityFilter", this.filter);
++   }
+}
+</script>
+```
+
+```diff:src/components/Footer.vue
+<template>
+  <p>
+    Show:
+-    <Link>All</Link>,
+-    <Link>Active</Link>,
+-    <Link>Completed</Link>
++    <Link filter="SHOW_ALL">All</Link>,
++    <Link filter="SHOW_ACTIVE">Active</Link>,
++    <Link filter="SHOW_COMPLETED">Completed</Link>
+  </p>
+</template>
+```
+
+これで一連の流れが実装できた。
+
+* リンクを押すとonClick()が呼び出される
+* その中でdispatchが呼び出される
+* storeに格納されているフィルターの値が更新される
+* その値にしたがってviewが書き換わる
 
 ### 参考
 [Redux ExampleのTodo ListをはじめからていねいにVue.jsで(1)][*2-1]
