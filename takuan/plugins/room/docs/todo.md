@@ -1105,3 +1105,141 @@ Todoの完了・未完了を切り替える「Toggle Todo」機能を実装。
 [*12]:https://qiita.com/kawa64372358/items/7f84d8b1b765837ae9dd
 [*13]:https://taisablog.com/archives/1669
 [*14]:https://qiita.com/m_mitsuhide/items/f16d988ec491b7800ace
+
+## 概要
+1回目では、TodoをTodo Listに追加する「Add Todo」を作った。
+今回は、Todoの完了・未完了を切り替える「Toggle Todo」の機能を作っていく。
+
+[Redux ExampleのTodo ListをはじめからていねいにVue.jsで(1)][*2-1]
+
+## ディレクトリ構成（Add Todo時）
+
+```console
+.
+├── bin
+│   ├── bash.sh
+│   ├── build.sh
+│   ├── container_build.sh
+│   ├── fix.sh
+│   └── up.sh
+├── docker
+│   ├── docker-compose.yml
+│   ├── config
+│   │   ├── cypress.json
+│   │   ├── jest.config.js
+│   │   ├── package.json
+│   │   ├── postcss.config.js
+│   │   └── vue.config.js
+│   └── vue
+│       └── Dockerfile
+├── docs
+│   ├── readme.md
+│   └── todo.md
+├── public
+│   ├── favicon.ico
+│   └── index.html
+├── src
+│   ├── main.ts
+│   ├── App.vue
+│   ├── assets
+│   │   └── logo.png
+│   ├── components
+│   │   ├── AddTodo.vue
+│   │   ├── HelloWorld.vue
+│   │   ├── Todo.vue
+│   │   └── TodoList.vue
+│   ├── models
+│   │   └── TodoItem.ts
+│   ├── store
+│   │   ├── index.ts
+│   │   ├── todo
+│   │   │   ├── index.ts
+│   │   │   └── types.ts
+│   │   └── types.ts
+│   └── types
+│       ├── shims-tsx.d.ts
+│       ├── shims-vue.d.ts
+│       ├── shims-vuex.d.ts
+│       └── types.d.ts
+├── tests
+└── tsconfig.json
+```
+
+## 1. 完了・未完了を表すcompletedによってスタイルを変える
+
+### todoにcompleted要素を追加して、とりあえず取り消し線を表示する
+
+まず、todoごとに完了・未完了を区別するために、completedという要素を追加。
+
+```diff:src/models/TodoItem.ts
+export type TodoItem = {
+  id: number;
+  text: string;
++  completed: boolean;
+};
+```
+
+前回つくったmutationを修正。
+todo作成時は、未完了なので、デフォルトでfalseとする。
+
+
+```diff:src/store/todo/index.ts
+// Vuexのストアの状態を変更できる唯一の方法
+const mutations: Mutations<State, IMutations> = {
+  addTodoText(state, text) {
+    const todo = {
+      id: 0,
+      text,
++      completed: false,
+    };
+    if (state.todos.length !== 0) {
+      todo.id = state.todos[state.todos.length - 1].id + 1;
+    }
+    state.todos.push(todo);
+  },
+};
+```
+
+completedによってviewを変えるので、Todoコンポーネントを修正する。
+completedがtrueだったらtextDecorationをline-throughとする。
+
+```vue:src/components/Todo.vue
+<template>
+  <li 
++  v-bind:style="{ textDecoration: textDecoration }"
+  >
+    {{text}}
+  </li>
+</template>
+
+<script lang="ts">
+import { Component, Prop, Vue } from "vue-property-decorator";
+import { TodoItem } from "../models/TodoItem";
+
+@Component
+export default class Todo extends Vue {
+  @Prop()
+  public todo: TodoItem;
+
+  get text() {
+    return this.todo.text;
+  }
+
++  get textDecoration() {
++    return this.todo.completed ? "line-through" : "none";
++  }
+}
+</script>
+
+```
+
+これで、stateで保持されるtodoのcompletedがtrueのとき取り消し線がつく。
+一時的にsrc/store/todo/index.tsのcompleted: falseをtrueに変えて動作確認をする。
+
+## 参考
+[Redux ExampleのTodo ListをはじめからていねいにVue.jsで(1)][*2-1]
+[Redux ExampleのTodo Listをはじめからていねいに(2)][*2-2]
+
+
+[*2-1]:https://qiita.com/hibohiboo/items/e3030350ecc83cb2c3bc
+[*2-2]:https://qiita.com/xkumiyu/items/e7e1e8ed6a5d6a6e20dd

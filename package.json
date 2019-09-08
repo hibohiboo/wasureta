@@ -20,7 +20,10 @@
   },
   "homepage": "https://github.com/hibohiboo/wasureta#readme",
   "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.11.0",
     "elm": "^0.19.0-no-deps",
-    "elm-format": "^0.8.2"
+    "elm-format": "^0.8.2",
+    "vue-property-decorator": "^8.2.2",
+    "vue-template-compiler": "^2.6.10"
   }
 }

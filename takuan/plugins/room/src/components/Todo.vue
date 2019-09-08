@@ -1,15 +1,10 @@
 <template>
-  <li>{{text}}</li>
+  <li v-bind:style="{ textDecoration: textDecoration }">{{text}}</li>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import { TodoItem } from '../models/TodoItem';
-
-export type TodoItem = {
-  id: number;
-  text: string;
-};
+import { Component, Prop, Vue } from "vue-property-decorator";
+import { TodoItem } from "../models/TodoItem";
 
 @Component
 export default class Todo extends Vue {
@@ -18,6 +13,10 @@ export default class Todo extends Vue {
 
   get text() {
     return this.todo.text;
+  }
+
+  get textDecoration() {
+    return this.todo.completed ? "line-through" : "none";
   }
 }
 </script>

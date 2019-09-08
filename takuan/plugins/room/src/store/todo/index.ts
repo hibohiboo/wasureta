@@ -20,6 +20,7 @@ const mutations: Mutations<State, IMutations> = {
     const todo = {
       id: 0,
       text,
+      completed: false,
     };
     if (state.todos.length !== 0) {
       todo.id = state.todos[state.todos.length - 1].id + 1;

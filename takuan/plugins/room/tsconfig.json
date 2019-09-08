@@ -9,11 +9,10 @@
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "strictPropertyInitialization": false,
+    "isolatedModules": false,
     "sourceMap": true,
     "baseUrl": ".",
-    "typeRoots": [
-      "types"
-    ],
     "types": [
       "webpack-env",
       "jest"
@@ -31,9 +30,9 @@
     ]
   },
   "include": [
-    "takuan/plugins/room/src/**/*.ts",
-    "takuan/plugins/room/src/**/*.tsx",
-    "takuan/plugins/room/src/**/*.vue",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx"
   ],
