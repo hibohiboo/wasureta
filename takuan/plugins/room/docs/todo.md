@@ -1510,6 +1510,28 @@ console.log('after', store.getters['todo/visibilityFilter']);
 storeの初期値としてSHOW_ALLが格納されており、setVisibilityFilterによって、
 値が変更されていることを確認する。
 
+[この時点のソース](https://github.com/hibohiboo/wasureta/tree/3361cd303f4422743b202f58421ff297f68be205/takuan/plugins/room)  
+
+## 4. フィルターの値によってviewを変更（手動でフィルターを操作して動作確認）
+
+```diff
+const getters: Getters<State, IGetters> = {
+-  todos: state => state.todos,
++  todos: state => {
++    switch (state.visibilityFilter) {
++      case 'SHOW_ALL':
++        return state.todos;
++      case 'SHOW_ACTIVE':
++        return state.todos.filter(todo => !todo.completed);
++      case 'SHOW_COMPLETED':
++        return state.todos.filter(todo => todo.completed);
++    }
++  },
+  todosCount: state => state.todos.length,
+  visibilityFilter: state => state.visibilityFilter,
+};
+
+```
 
 ## 参考
 [Redux ExampleのTodo ListをはじめからていねいにVue.jsで(1)][*2-1]
