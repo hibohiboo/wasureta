@@ -22,9 +22,13 @@ declare module 'vuex' {
     [K in keyof A]: (ctx: ExActionContext<S, A, G, M, RS, RG>, payload: A[K]) => any
   }
   type RootGetters = Todo.RootGetter; // 増えたら、& Hoge.RootGetter のように、Intersection Typesで連結していく。
+  type RootMutations = Todo.RootMutations;
+  type RootActions = Todo.RootActions;
   interface ExStore extends Store<{}> {
     // ここに拡張型を追加していく。
-    getters: RootGetters
+    getters: RootGetters,
+    commit: ExCommit<RootMutations>,
+    dispatch: ExDispatch<RootActions>
   }
 
 }

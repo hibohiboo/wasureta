@@ -33,7 +33,7 @@ const mutations: Mutations<State, IMutations> = {
       throw new Error(`not found id:${id}`);
     }
     target.completed = !target.completed;
-  }
+  },
 };
 
 // ミューテーションをコミットする。非同期処理を含むことができる。

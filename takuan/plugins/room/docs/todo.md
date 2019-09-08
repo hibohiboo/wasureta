@@ -1203,13 +1203,10 @@ const mutations: Mutations<State, IMutations> = {
 completedによってviewを変えるので、Todoコンポーネントを修正する。
 completedがtrueだったらtextDecorationをline-throughとする。
 
-```vue:src/components/Todo.vue
+```diff:src/components/Todo.vue
 <template>
-  <li 
-+  v-bind:style="{ textDecoration: textDecoration }"
-  >
-    {{text}}
-  </li>
+-  <li>{{text}}</li>
++  <li v-bind:style="{ textDecoration: textDecoration }" >{{text}}</li>
 </template>
 
 <script lang="ts">
@@ -1236,13 +1233,12 @@ export default class Todo extends Vue {
 これで、stateで保持されるtodoのcompletedがtrueのとき取り消し線がつく。
 一時的にsrc/store/todo/index.tsのcompleted: falseをtrueに変えて動作確認をする。
 
-
 [この時点のソース](https://github.com/hibohiboo/wasureta/tree/16fe695bd270ef99a84778ed8a75f67a8d0a74a4/takuan/plugins/room)  
 
-### actionCreatorからcompleted要素を操作する
-次に、action経由で取り消し線のON/OFFを行うために、actionCreatorとmutationの作成を行う。
+### actionからcompleted要素を操作する
+次に、action経由で取り消し線のON/OFFを行うために、actionとmutationの作成を行う。
 必要となるのはidだけ。
-addTodoTextとasyncSetTodoTextが長く感じてきたのでaddTodoに修正をついでに行った。
+addTodoTextとasyncSetTodoTextが長く感じてきたので、addTodoにリネームを行った。
 
 ```diff:src/store/todo/types.ts
 export interface IActions {
@@ -1320,6 +1316,62 @@ new Vue({
   store,
 }).$mount('#app');
 ```
+
+[この時点のソース](https://github.com/hibohiboo/wasureta/tree/16fe695bd270ef99a84778ed8a75f67a8d0a74a4/takuan/plugins/room)  
+
+## 2. クリックしてcompletedの値を変える
+
+コンポーネントでdispatchが使えるように型を拡張。
+
+```diff:src/types/shims-vuex.d.ts
+  type RootGetters = Todo.RootGetter; // 増えたら、& Hoge.RootGetter のように、Intersection Typesで連結していく。
++  type RootMutations = Todo.RootMutations;
++  type RootActions = Todo.RootActions;
+  interface ExStore extends Store<{}> {
+    // ここに拡張型を追加していく。
+    getters: RootGetters,
++    commit: ExCommit<RootMutations>,
++    dispatch: ExDispatch<RootActions>
+  }
+```
+
+```diff:src/components/Todo.vue
+<template>
+-  <li v-bind:style="{ textDecoration: textDecoration }" >{{text}}</li>
++  <li v-bind:style="{ textDecoration: textDecoration }" v-on:click="onClick">{{text}}</li>
+</template>
+
+<script lang="ts">
++ import * as Vuex from 'vuex';
+import { Component, Prop, Vue } from 'vue-property-decorator';
+import { TodoItem } from '../models/TodoItem';
+
+@Component
+export default class Todo extends Vue {
++   $store!: Vuex.ExStore;
+
+  @Prop()
+  public todo: TodoItem;
+
+  get text() {
+    return this.todo.text;
+  }
+
+  get textDecoration() {
+    return this.todo.completed ? 'line-through' : 'none';
+  }
+
++   onClick() {
++     this.$store.dispatch('todo/toggleTodo', this.todo.id);
++   }
+}
+</script>
+```
+
+「Toggle Todo」機能が完成。
+
+[この時点のソース](https://github.com/hibohiboo/wasureta/tree/16fe695bd270ef99a84778ed8a75f67a8d0a74a4/takuan/plugins/room)  
+
 
 ## 参考
 [Redux ExampleのTodo ListをはじめからていねいにVue.jsで(1)][*2-1]
