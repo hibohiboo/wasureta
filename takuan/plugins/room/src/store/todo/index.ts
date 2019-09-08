@@ -10,7 +10,7 @@ const todoState: State = ({ todos: [], visibilityFilter: 'SHOW_ALL' } as State);
 
 // 値の取得
 const getters: Getters<State, IGetters> = {
-  todos: state => {
+  todos: (state) => {
     switch (state.visibilityFilter) {
       case 'SHOW_ALL':
         return state.todos;
@@ -18,6 +18,8 @@ const getters: Getters<State, IGetters> = {
         return state.todos.filter(todo => !todo.completed);
       case 'SHOW_COMPLETED':
         return state.todos.filter(todo => todo.completed);
+      default:
+        throw Error('not reach');
     }
   },
   todosCount: state => state.todos.length,
