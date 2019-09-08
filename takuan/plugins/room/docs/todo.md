@@ -1240,33 +1240,6 @@ export default class Todo extends Vue {
 必要となるのはidだけ。
 addTodoTextとasyncSetTodoTextが長く感じてきたので、addTodoにリネームを行った。
 
-```diff:src/store/todo/types.ts
-export interface IActions {
-  addTodo: string;
-+  toggleTodo: number;
-}
-
-export interface RootActions {
-  'todo/addTodo': IActions['addTodo'];
-+  'todo/toggleTodo': IActions['toggleTodo'];
-}
-```
-
-```diff:src/store/todo/index.ts
-const actions: Actions<
-  State,
-  IActions,
-  IGetters,
-  IMutations
-> = {
-  async addTodo({ commit }, text) {
-    commit('addTodo', text);
-  },
-+  async toggleTodo({ commit }, id) {
-+    commit('toggleTodo', id);
-+  },
-};
-```
 
 mutationではpayloadで受け取ったidのcompletedを反転させる。
 
@@ -1301,6 +1274,36 @@ const mutations: Mutations<State, IMutations> = {
 +    }
 +    target.completed = !target.completed;
 +  }
+};
+```
+
+actionはmutationを呼び出すだけ。
+
+```diff:src/store/todo/types.ts
+export interface IActions {
+  addTodo: string;
++  toggleTodo: number;
+}
+
+export interface RootActions {
+  'todo/addTodo': IActions['addTodo'];
++  'todo/toggleTodo': IActions['toggleTodo'];
+}
+```
+
+```diff:src/store/todo/index.ts
+const actions: Actions<
+  State,
+  IActions,
+  IGetters,
+  IMutations
+> = {
+  async addTodo({ commit }, text) {
+    commit('addTodo', text);
+  },
++  async toggleTodo({ commit }, id) {
++    commit('toggleTodo', id);
++  },
 };
 ```
 
@@ -1370,13 +1373,149 @@ export default class Todo extends Vue {
 
 「Toggle Todo」機能が完成。
 
-[この時点のソース](https://github.com/hibohiboo/wasureta/tree/16fe695bd270ef99a84778ed8a75f67a8d0a74a4/takuan/plugins/room)  
+[この時点のソース](https://github.com/hibohiboo/wasureta/tree/da36c0fb1087bc311c886f4f19c918c26726e587/takuan/plugins/room)  
+
+## Filter Todoの作成
+
+### フィルターの定義
+
+以下のフィルターによって表示を変更する
+
+* SHOW_ALL: 全部表示
+* SHOW_COMPLETED: 完了しているtodoのみ
+* SHOW_ACTIVE: 完了していないtodoのみ
+
+### 実装の順番
+
+1. フィルターの値をstore(state)に格納
+1. フィルターの値によってviewを変更（手動でフィルターを操作して動作確認）
+1. リンクをクリックしてフィルターを操作してviewを変更 
+
+## 3. フィルターの値をstore(state)に格納
+
+まずは定義から作成。
+
+```diff:src/store/todo/types.ts
++ // String Lieral Typesでとりうる値を限定
++ export type VisibilityFilter = 'SHOW_ALL' | 'SHOW_COMPLETED' | 'SHOW_ACTIVE';
+
+export interface State {
+  todos: TodoItem[];
++  visibilityFilter: VisibilityFilter;
+}
+```
+
+```diff:src/store/todo/index.ts
+- const todoState: State = ({ todos: []} as State);
++ const todoState: State = ({ todos: [], visibilityFilter: 'SHOW_ALL' } as State);
+```
+
+visibilityStateを取得するgetterを追加する。
+
+```diff:src/store/todo/types.ts
+export interface IGetters {
+  todos: TodoItem[];
+  todosCount: number;
++  visibilityFilter: VisibilityFilter;
+}
+
+export interface RootGetter {
+  'todo/todos': IGetters['todos'];
+  'todo/todosCount': IGetters['todosCount'];
++  'todo/visibilityFilter': IGetters['visibilityFilter'];
+}
+```
+
+```diff:src/store/todo/index.ts
+const getters: Getters<State, IGetters> = {
+  todos: state => state.todos,
+  todosCount: state => state.todos.length,
++  visibilityFilter: state => state.visibilityFilter
+};
+```
+
+mutationはfilterを更新する。
+
+```diff:src/store/todo/types.ts
+export interface IMutations {
+  addTodo: string;
+  toggleTodo: number;
++  setVisibilityFilter: VisibilityFilter;
+}
+
+export interface RootMutations {
+  'todo/addTodo': IMutations['addTodo'];
+  'todo/toggleTodo': IMutations['toggleTodo'];
++  'todo/setVisibilityFilter': IMutations['setVisibilityFilter'];
+}
+```
+
+```diff:src/store/todo/index.ts
+const mutations: Mutations<State, IMutations> = {
+  
+  ...
+
++  setVisibilityFilter(state, filter) {
++    state.visibilityFilter = filter;
++  }
+};
+```
+
+actionはmutationを呼び出す。
+
+```diff:src/store/todo/types.ts
+export interface IActions {
+  addTodo: string;
+  toggleTodo: number;
++  setVisibilityFilter: string;
+}
+
+export interface RootActions {
+  'todo/addTodo': IActions['addTodo'];
+  'todo/toggleTodo': IActions['toggleTodo'];
++  'todo/setVisibilityFilter': IActions['setVisibilityFilter'];
+}
+```
+
+```diff:src/store/todo/index.ts
+const actions: Actions<
+
+  ...
+
++  async setVisibilityFilter({ commit }, filter) {
++    switch (filter) {
++      case 'SHOW_ALL':
++      case 'SHOW_COMPLETED':
++      case 'SHOW_ACTIVE':
++        commit('setVisibilityFilter', filter);
++        return;
++      default:
++        throw new Error(`cannot set filter:${filter}`)
++    }
++  }
+};
+```
+
+
+
+### 手動で動作確認
+正しく格納できるか確認。
+
+```ts:src/main.ts
+console.log('before', store.getters['todo/visibilityFilter']);
+store.dispatch('todo/setVisibilityFilter', 'SHOW_COMPLETED');
+console.log('after', store.getters['todo/visibilityFilter']);
+```
+
+storeの初期値としてSHOW_ALLが格納されており、setVisibilityFilterによって、
+値が変更されていることを確認する。
 
 
 ## 参考
 [Redux ExampleのTodo ListをはじめからていねいにVue.jsで(1)][*2-1]
 [Redux ExampleのTodo Listをはじめからていねいに(2)][*2-2]
-
+[Redux ExampleのTodo Listをはじめからていねいに(3)][*2-3]
 
 [*2-1]:https://qiita.com/hibohiboo/items/e3030350ecc83cb2c3bc
 [*2-2]:https://qiita.com/xkumiyu/items/e7e1e8ed6a5d6a6e20dd
+[*2-3]:https://qiita.com/xkumiyu/items/1ba476b8043b71561f52

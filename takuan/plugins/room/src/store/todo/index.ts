@@ -1,17 +1,18 @@
 
 import { Getters, Mutations, Actions } from '../types';
 import {
-  State, IGetters, IMutations, IActions,
+  State, IGetters, IMutations, IActions, VisibilityFilter,
 } from './types';
 
 
 // 状態管理用state
-const todoState: State = ({ todos: [] } as State);
+const todoState: State = ({ todos: [], visibilityFilter: 'SHOW_ALL' } as State);
 
 // 値の取得
 const getters: Getters<State, IGetters> = {
   todos: state => state.todos,
   todosCount: state => state.todos.length,
+  visibilityFilter: state => state.visibilityFilter,
 };
 
 // Vuexのストアの状態を変更できる唯一の方法
@@ -34,6 +35,9 @@ const mutations: Mutations<State, IMutations> = {
     }
     target.completed = !target.completed;
   },
+  setVisibilityFilter(state, filter) {
+    state.visibilityFilter = filter;
+  },
 };
 
 // ミューテーションをコミットする。非同期処理を含むことができる。
@@ -48,6 +52,17 @@ const actions: Actions<
   },
   async toggleTodo({ commit }, id) {
     commit('toggleTodo', id);
+  },
+  async setVisibilityFilter({ commit }, filter) {
+    switch (filter) {
+      case 'SHOW_ALL':
+      case 'SHOW_COMPLETED':
+      case 'SHOW_ACTIVE':
+        commit('setVisibilityFilter', filter);
+        return;
+      default:
+        throw new Error(`cannot set filter:${filter}`);
+    }
   },
 };
 
