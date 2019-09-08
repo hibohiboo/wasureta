@@ -1624,7 +1624,6 @@ export default class App extends Vue {
 #### Linkコンテナをクリックしたときにdispatchを呼び出す。
 
 ```diff
-
 <template>
 -  <a href="#">
 +  <a href="#" v-on:click="onClick">
@@ -1670,6 +1669,12 @@ export default class Link extends Vue {
 * その中でdispatchが呼び出される
 * storeに格納されているフィルターの値が更新される
 * その値にしたがってviewが書き換わる
+
+[この時点のソース](https://github.com/hibohiboo/wasureta/tree/385308c0f4d3f58c028bb9c8928e64e74ded07a7/takuan/plugins/room)  
+
+## activeな状態なリンクを押せないようにする
+
+
 
 ### 参考
 [Redux ExampleのTodo ListをはじめからていねいにVue.jsで(1)][*2-1]
