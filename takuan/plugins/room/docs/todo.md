@@ -1,8 +1,8 @@
 # Redux ExampleのTodo ListをはじめからていねいにVue.jsで。
-## 概要
+### 概要
 [Redux ExampleのTodo Listをはじめからていねいに][*1]をVue.js*Typescriptを使って行ったメモ。
 
-## 環境
+### 環境
 
 * Windows 10
 * Vagrant 2.2.5
@@ -15,7 +15,7 @@
 
 ブラウザはchromeで確認。
 
-## ディレクトリ構成(Hello world時)
+### ディレクトリ構成(Hello world時)
 
 * vue-cliで生成されるソースコードを参考としている。
 
@@ -68,7 +68,7 @@
 └── .gitignore
 ```
 
-### ビルドツール
+#### ビルドツール
 
 ```dockerfile:docker/vue/Dockerfile
 FROM node:12.9.1
@@ -301,7 +301,7 @@ module.exports = {
 ```
 
 
-### 開発サーバ用html
+#### 開発サーバ用html
 
 開発サーバにはwebpack-dev-serverを利用する。
 
@@ -326,7 +326,7 @@ module.exports = {
 </html>
 ```
 
-### shell
+#### shell
 
 docker-composeのコマンドを毎回タイプするのが面倒なのでシェルにしている。
 
@@ -384,7 +384,7 @@ else
 fi
 ```
 
-## 1. Hello world
+### 1. Hello world
 
 ```ts:src/main.ts
 import Vue from 'vue';
@@ -448,7 +448,7 @@ h1 {
 ```
 
 
-### 実行
+#### 実行
 
 開発用サーバを起動。
 
@@ -463,10 +463,10 @@ http://192.168.50.10:8080/
 [この時点のソース](https://github.com/hibohiboo/wasureta/tree/cd260d7aae50fff525bbd406d4d4e0167540b6f0/takuan/plugins/room)  
 
 
-## 2. actionでcommitを呼び出してmutationでstateを更新する
+### 2. actionでcommitを呼び出してmutationでstateを更新する
 Reduxの「2. actionCreatorで発行したactionをreducerに渡してstoreのstateを更新する」に該当する部分。
 
-### Store
+#### Store
 
 Reduxとほぼ同じ概念。
 アプリケーションで単一のもので、stateを保持する。
@@ -491,7 +491,7 @@ export default new Vuex.Store({
 ```
 
 
-### State
+#### State
 
 ReduxでいうところのStore。
 アプリケーションで単一のもので、state(状態)を保持する。
@@ -510,7 +510,7 @@ export interface State {
 export const state: State = ({ todos: [] } as State);
 ```
 
-### Getter
+#### Getter
 ストアの状態を算出したいときに使える。
 例えば項目のリストをフィルタリングしたりカウントしたりできる。
 
@@ -537,7 +537,7 @@ export const getters: Getters<State, IGetters> = {
 };
 ```
 
-### Mutation
+#### Mutation
 
 実際に Vuex のストアの状態を変更できる唯一の方法。
 ReduxだとReducerがやっている役割。
@@ -571,7 +571,7 @@ export const mutations: Mutations<State, IMutations> = {
 };
 ```
 
-### Action
+#### Action
 
 * アクションは、状態を変更するのではなく、ミューテーションをコミットする。
 * アクションは任意の非同期処理を含むことができる。
@@ -616,7 +616,7 @@ export const actions: Actions<
 
 ```
 
-### 実行
+#### 実行
 
 ```ts:src/main.ts
 import Vue from 'vue';
@@ -637,7 +637,7 @@ new Vue({
 
 [この時点のソース](https://github.com/hibohiboo/wasureta/tree/5664226c7d157c1490c84be8d77d44a8aace2b90/takuan/plugins/room)  
 
-### 定義の整理
+#### 定義の整理
 
 ```ts:store/models/TodoItem.ts
 export type TodoItem = {
@@ -737,7 +737,7 @@ export default new Vuex.Store({
 ```
 [この時点のソース](https://github.com/hibohiboo/wasureta/tree/70a2807d5eb5f23f7fa3125e4633fd9a02e17d57/takuan/plugins/room)  
 
-## 3. storeで保持したstateをViewで表示する
+### 3. storeで保持したstateをViewで表示する
 
 ルートインスタンスに store オプションを渡すことで、渡されたストアをルートの全ての子コンポーネントに注入する。
 これは this.$store で各コンポーネントから参照することができる。
@@ -749,7 +749,7 @@ new Vue({
 }).$mount('#app');
 ```
 
-### ToDoコンポーネントとToDoListコンポーネントを作る
+#### ToDoコンポーネントとToDoListコンポーネントを作る
 
 Todoコンポーネントは、propとして渡されてきたtodoのtextを表示するだけ。
 
@@ -795,7 +795,7 @@ export default class TodoList extends Vue {
 </script>
 ```
 
-### ブラウザに表示
+#### ブラウザに表示
 
 Hellow Worldを表示させているだけのAppコンポーネントにTodoListコンポーネントを表示させる。
 ここでstoreから値を取得してTodoListコンポーネントに与えている。
@@ -826,7 +826,7 @@ export default class App extends Vue {
 
 [この時点のソース](https://github.com/hibohiboo/wasureta/tree/7a644357181dfb6e755d0a8863b151fe93fffab4/takuan/plugins/room)  
 
-## 4. フォームからtodoを追加
+### 4. フォームからtodoを追加
 
 フォームからtodoを追加するために、AddTodoコンポーネントを作る。
 
@@ -882,7 +882,7 @@ export default class App extends Vue {
 
 [この時点のソース](https://github.com/hibohiboo/wasureta/tree/8b56225fb8367a8fa66b9a90376d0636111c3df4/takuan/plugins/room)  
 
-## モジュール化
+### モジュール化
 
 Vuexの機能でもう一つ、モジュールを使っていなかったので試してみる。
 Vuex ではストアをモジュールに分割できるようになっている。
@@ -939,7 +939,7 @@ new Vue({
 
 [この時点のソース](https://github.com/hibohiboo/wasureta/tree/5dd2fb4a6765778f24bf3a377023b369e25330e8/takuan/plugins/room)  
 
-### フォルダ整理
+#### フォルダ整理
 
 todoの定義をstore/todo/index.tsに移し替える。
 todoTypes.tsもstore/todo/type.tsに合わせてリネーム。
@@ -1070,11 +1070,11 @@ export default class App extends Vue {
 
 [この時点のソース](https://github.com/hibohiboo/wasureta/tree/43ba6c097aaeeffda595e3f4b626a3cbba506e70/takuan/plugins/room)  
 
-## 次回
+### 次回
 Todoの完了・未完了を切り替える「Toggle Todo」機能を実装。
 
 
-## 参考
+### 参考
 
 [Redux ExampleのTodo Listをはじめからていねいに][*1]
 [Redux ExampleのTodo Listをはじめからていねいにtypescriptで][*2]
@@ -1165,9 +1165,10 @@ Todoの完了・未完了を切り替える「Toggle Todo」機能を実装。
 └── tsconfig.json
 ```
 
-## 1. 完了・未完了を表すcompletedによってスタイルを変える
+## Toggle Todo
+### 1. 完了・未完了を表すcompletedによってスタイルを変える
 
-### todoにcompleted要素を追加して、とりあえず取り消し線を表示する
+#### todoにcompleted要素を追加して、とりあえず取り消し線を表示する
 
 まず、todoごとに完了・未完了を区別するために、completedという要素を追加。
 
@@ -1235,7 +1236,7 @@ export default class Todo extends Vue {
 
 [この時点のソース](https://github.com/hibohiboo/wasureta/tree/16fe695bd270ef99a84778ed8a75f67a8d0a74a4/takuan/plugins/room)  
 
-### actionからcompleted要素を操作する
+#### actionからcompleted要素を操作する
 次に、action経由で取り消し線のON/OFFを行うために、actionとmutationの作成を行う。
 必要となるのはidだけ。
 addTodoTextとasyncSetTodoTextが長く感じてきたので、addTodoにリネームを行った。
@@ -1322,7 +1323,7 @@ new Vue({
 
 [この時点のソース](https://github.com/hibohiboo/wasureta/tree/16fe695bd270ef99a84778ed8a75f67a8d0a74a4/takuan/plugins/room)  
 
-## 2. クリックしてcompletedの値を変える
+### 2. クリックしてcompletedの値を変える
 
 コンポーネントでdispatchが使えるように型を拡張。
 
@@ -1375,9 +1376,8 @@ export default class Todo extends Vue {
 
 [この時点のソース](https://github.com/hibohiboo/wasureta/tree/da36c0fb1087bc311c886f4f19c918c26726e587/takuan/plugins/room)  
 
-## Filter Todoの作成
-
-### フィルターの定義
+## Filter
+### 概要
 
 以下のフィルターによって表示を変更する
 
@@ -1385,13 +1385,13 @@ export default class Todo extends Vue {
 * SHOW_COMPLETED: 完了しているtodoのみ
 * SHOW_ACTIVE: 完了していないtodoのみ
 
-### 実装の順番
+#### 実装の順番
 
 1. フィルターの値をstore(state)に格納
 1. フィルターの値によってviewを変更（手動でフィルターを操作して動作確認）
 1. リンクをクリックしてフィルターを操作してviewを変更 
 
-## 3. フィルターの値をstore(state)に格納
+### 1. フィルターの値をstore(state)に格納
 
 まずは定義から作成。
 
@@ -1498,7 +1498,7 @@ const actions: Actions<
 
 
 
-### 手動で動作確認
+#### 手動で動作確認
 正しく格納できるか確認。
 
 ```ts:src/main.ts
@@ -1527,7 +1527,7 @@ export default new Vuex.Store({
 + }) as Vuex.ExStore;
 ```
 
-## 4. フィルターの値によってviewを変更（手動でフィルターを操作して動作確認）
+### 2. フィルターの値によってviewを変更（手動でフィルターを操作して動作確認）
 
 ```diff
 const getters: Getters<State, IGetters> = {
@@ -1547,10 +1547,81 @@ const getters: Getters<State, IGetters> = {
 };
 ```
 
-[この時点のソース](https://github.com/hibohiboo/wasureta/tree/3361cd303f4422743b202f58421ff297f68be205/takuan/plugins/room)  
+[この時点のソース](https://github.com/hibohiboo/wasureta/tree/e20f9e940edfdaa575b2b4ffb0ae1580413527ce/takuan/plugins/room)  
+
+### 3. リンクをクリックしてフィルターを操作してviewを変更
+フィルターの値を格納することと、その値によって表示を変更することができた。
+手動ではなくリンクをクリックしてフィルターの値を変え、viewに反映するとこを作っていく。
+
+#### とりあえず、リンクを表示させる
+
+<slot></slot>はコンポーネントの中身を取得。
+Linkコンポーネントを使うときの、<Link>xxx</Link>のxxx。
+
+```vue:src/components/Link.vue
+<template>
+  <a href="#">
+    <slot></slot>
+  </a>
+</template>
+<script lang="ts">
+import { Prop, Component, Vue } from "vue-property-decorator";
+@Component
+export default class Link extends Vue {}
+</script>
+```
+
+LinkコンポーネントはFooterコンポーネントで表示。
+FooterコンポーネントはAppコンポーネントに表示。
+
+```vue:src/components/Footer.vue
+<template>
+  <p>
+    Show:
+    <Link>All</Link>,
+    <Link>Active</Link>,
+    <Link>Completed</Link>
+  </p>
+</template>
+<script lang="ts">
+import { Prop, Component, Vue } from "vue-property-decorator";
+import Link from "./Link.vue";
+@Component({ components: { Link } })
+export default class Footer extends Vue {}
+</script>
+```
+
+```diff:src/App.vue
+<template>
+  <div id="app">
+    <AddTodo />
+    <TodoList :todos="todos" />
++     <Footer />
+  </div>
+</template>
+
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+import * as Vuex from "vuex";
+import TodoList from "./components/TodoList.vue";
+import AddTodo from "./components/AddTodo.vue";
++ import Footer from "./components/Footer.vue";
+
+@Component({
+  components: {
+    TodoList,
+    AddTodo,
++    Footer
+  }
+})
+export default class App extends Vue {
+```
+
+これで、とりあえずリンクが表示された。
+[この時点のソース](https://github.com/hibohiboo/wasureta/tree/e20f9e940edfdaa575b2b4ffb0ae1580413527ce/takuan/plugins/room)  
 
 
-## 参考
+### 参考
 [Redux ExampleのTodo ListをはじめからていねいにVue.jsで(1)][*2-1]
 [Redux ExampleのTodo Listをはじめからていねいに(2)][*2-2]
 [Redux ExampleのTodo Listをはじめからていねいに(3)][*2-3]
